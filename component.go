@@ -1,5 +1,5 @@
 package gowrtr
 
 type Component interface {
-	String() string
+	GenerateCode() (string, error)
 }

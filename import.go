@@ -14,9 +14,9 @@ func NewImport(names ...string) *Import {
 	}
 }
 
-func (imp *Import) String() string {
+func (imp *Import) GenerateCode() (string, error) {
 	if len(imp.Names) <= 0 {
-		return ""
+		return "", nil
 	}
 
 	stmt := "import (\n"
@@ -25,5 +25,5 @@ func (imp *Import) String() string {
 	}
 	stmt += ")"
 
-	return stmt
+	return stmt, nil
 }

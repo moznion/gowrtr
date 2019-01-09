@@ -2,6 +2,8 @@ package gowrtr
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
@@ -12,9 +14,10 @@ func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
 	"math"
 	"os"
 )`
-	if gen := importComponent.String(); gen != expected {
-		t.Errorf("got unexpected generated code:\n%s", gen)
-	}
+
+	gen, err := importComponent.GenerateCode()
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
 }
 
 func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T) {
@@ -23,15 +26,16 @@ func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T
 	expected := `import (
 	"fmt"
 )`
-	if gen := importComponent.String(); gen != expected {
-		t.Errorf("got unexpected generated code:\n%s", gen)
-	}
+
+	gen, err := importComponent.GenerateCode()
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
 }
 
 func TestShouldGenerateImportStatementBeEmpty(t *testing.T) {
 	importComponent := NewImport()
 
-	if importComponent.String() != "" {
-		t.Errorf("generated code is not empty")
-	}
+	gen, err := importComponent.GenerateCode()
+	assert.NoError(t, err)
+	assert.Equal(t, "", gen)
 }

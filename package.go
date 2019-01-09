@@ -10,6 +10,6 @@ func NewPackage(packageName string) *Package {
 	}
 }
 
-func (p *Package) String() string {
-	return "package " + p.Name
+func (p *Package) GenerateCode() (string, error) {
+	return "package " + p.Name, nil
 }

@@ -3,6 +3,8 @@ package gowrtr
 import (
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/moznion/gowrtr/errmsg"
 )
 
@@ -24,54 +26,46 @@ func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 		},
 	}
 
-	structComponent, err := NewStruct(structName, fields)
-	if err != nil {
-		t.Fatalf("unexpected error has come: %s", err)
-	}
+	structComponent := NewStruct(structName, fields)
 
 	expected := "type TestStruct struct {\n" +
 		"	Foo string\n" +
 		"	Bar int64 `json:\"bar\"`\n" +
 		"	buz []byte\n" +
 		"}"
-	if gen := structComponent.String(); gen != expected {
-		t.Errorf("got unexpected generated code: %s", gen)
-	}
+
+	gen, err := structComponent.GenerateCode()
+	assert.NoError(t, err)
+	assert.Equal(t, gen, expected)
 }
 
 func TestShouldRaiseErrorWhenStructNameIsEmpty(t *testing.T) {
-	_, err := NewStruct("", []*StructField{})
+	structComponent := NewStruct("", []*StructField{})
 
-	expectedErr := errmsg.StructNameIsNilErr()
-	if err == nil || err.Error() != expectedErr.Error() {
-		t.Fatalf(`got unexpected error: got="%s", expected="%s"`, err, expectedErr)
-	}
+	_, err := structComponent.GenerateCode()
+	assert.EqualError(t, err, errmsg.StructNameIsNilErr().Error())
 }
 
 func TestShouldRaiseErrorWhenFieldNameIsEmpty(t *testing.T) {
-	_, err := NewStruct("TestStruct", []*StructField{
+	structComponent := NewStruct("TestStruct", []*StructField{
 		{
 			Name: "",
 			Type: "string",
 		},
 	})
 
-	expectedErr := errmsg.StructFieldNameIsEmptyErr()
-	if err == nil || err.Error() != expectedErr.Error() {
-		t.Fatalf(`got unexpected error: got="%s", expected="%s"`, err, expectedErr)
-	}
+	_, err := structComponent.GenerateCode()
+	assert.EqualError(t, err, errmsg.StructFieldNameIsEmptyErr().Error())
 }
 
 func TestShouldRaiseErrorWhenFieldTypeIsEmpty(t *testing.T) {
-	_, err := NewStruct("TestStruct", []*StructField{
+	structComponent := NewStruct("TestStruct", []*StructField{
 		{
 			Name: "Foo",
 			Type: "",
 		},
 	})
 
-	expectedErr := errmsg.StructFieldTypeIsEmptyErr()
-	if err == nil || err.Error() != expectedErr.Error() {
-		t.Fatalf(`got unexpected error: got="%s", expected="%s"`, err, expectedErr)
-	}
+	_, err := structComponent.GenerateCode()
+	assert.EqualError(t, err, errmsg.StructFieldTypeIsEmptyErr().Error())
 }
