@@ -13,3 +13,6 @@
 
 .idea/
 *.iml
+
+/author/bin/*
+!/author/bin/.gitkeep
