@@ -1,6 +1,6 @@
 .PHONY: errgen
 
-PKGS := $(shell go list ./...)
+PKGS := $(shell go list ./... | grep -v go-errgen)
 
 check: test lint vet fmt-check
 
@@ -26,11 +26,13 @@ fmt:
 	goimports -w *.go
 
 installdeps:
-	go mod vendor
-	go mod tidy
+	GO111MODULE=on go mod vendor
+	GO111MODULE=on go mod tidy
 
 bootstrap: installdeps
+	git submodule init
 	git submodule update
+	(cd go-errgen && git checkout 1.3.0)
 
 build-errgen:
 	if [ ! -f author/bin/errgen ]; then \

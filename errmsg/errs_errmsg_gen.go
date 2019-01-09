@@ -5,18 +5,22 @@ package errmsg
 
 import "errors"
 
+// StructNameIsNilErr returns the error.
 func StructNameIsNilErr() error {
 	return errors.New("[GOWRTR-1] struct name must not be empty, but it gets empty")
 }
 
+// StructFieldNameIsEmptyErr returns the error.
 func StructFieldNameIsEmptyErr() error {
 	return errors.New("[GOWRTR-2] field name must not be empty, but it gets empty")
 }
 
+// StructFieldTypeIsEmptyErr returns the error.
 func StructFieldTypeIsEmptyErr() error {
 	return errors.New("[GOWRTR-3] field type must not be empty, but it gets empty")
 }
 
+// ErrsList returns the list of errors.
 func ErrsList() []string {
 	return []string{
 		`[GOWRTR-1] struct name must not be empty, but it gets empty`,
