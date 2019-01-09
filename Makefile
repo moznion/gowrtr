@@ -29,6 +29,9 @@ installdeps:
 	go mod vendor
 	go mod tidy
 
+bootstrap: installdeps
+	git submodule update
+
 build-errgen:
 	if [ ! -f author/bin/errgen ]; then \
 		go build -o author/bin/errgen go-errgen/cmd/errgen/errgen.go; \
