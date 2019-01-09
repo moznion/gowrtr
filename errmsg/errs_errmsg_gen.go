@@ -35,6 +35,11 @@ func FuncNameIsEmptyError() error {
 	return errors.New("[GOWRTR-6] name of func must not be empty, but it gets empty")
 }
 
+// InterfaceNameIsEmptyError returns the error.
+func InterfaceNameIsEmptyError() error {
+	return errors.New("[GOWRTR-7] name of interface must not be empty, but it gets empty")
+}
+
 // ErrsList returns the list of errors.
 func ErrsList() []string {
 	return []string{
@@ -44,5 +49,6 @@ func ErrsList() []string {
 		`[GOWRTR-4] func parameter name must not be empty, but it gets empty`,
 		`[GOWRTR-5] the last func parameter type must not be empty, but it gets empty`,
 		`[GOWRTR-6] name of func must not be empty, but it gets empty`,
+		`[GOWRTR-7] name of interface must not be empty, but it gets empty`,
 	}
 }

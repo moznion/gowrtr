@@ -8,4 +8,5 @@ type errs struct {
 	FuncParameterNameIsEmptyErr     error `errmsg:"func parameter name must not be empty, but it gets empty"`
 	LastFuncParameterTypeIsEmptyErr error `errmsg:"the last func parameter type must not be empty, but it gets empty"`
 	FuncNameIsEmptyError            error `errmsg:"name of func must not be empty, but it gets empty"`
+	InterfaceNameIsEmptyError       error `errmsg:"name of interface must not be empty, but it gets empty"`
 }
