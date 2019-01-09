@@ -10,9 +10,11 @@
 
 /vendor/
 /Godeps/
+go.sum
 
 .idea/
 *.iml
 
 /author/bin/*
 !/author/bin/.gitkeep
+
