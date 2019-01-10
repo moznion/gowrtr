@@ -19,8 +19,7 @@ type StructGenerator struct {
 
 func NewStructGenerator(name string) *StructGenerator {
 	return &StructGenerator{
-		Name:   name,
-		Fields: make([]*StructField, 0),
+		Name: name,
 	}
 }
 
