@@ -4,7 +4,7 @@ PKGS := $(shell go list ./... | grep -v go-errgen)
 
 check: test lint vet fmt-check
 
-test:
+test: errgen
 	go test -v $(PKGS)
 
 lint:
