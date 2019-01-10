@@ -6,25 +6,30 @@ import (
 	"github.com/moznion/gowrtr/errmsg"
 )
 
-type Interface struct {
+type InterfaceGenerator struct {
 	Name           string
 	FuncSignatures []*FuncSignature
 }
 
-func NewInterface(name string, funcSignatures []*FuncSignature) *Interface {
-	return &Interface{
+func NewInterfaceGenerator(name string, funcSignatures ...*FuncSignature) *InterfaceGenerator {
+	return &InterfaceGenerator{
 		Name:           name,
 		FuncSignatures: funcSignatures,
 	}
 }
 
-func (in *Interface) GenerateCode() (string, error) {
-	if in.Name == "" {
+func (ig *InterfaceGenerator) AddFuncSignature(sig *FuncSignature) *InterfaceGenerator {
+	ig.FuncSignatures = append(ig.FuncSignatures, sig)
+	return ig
+}
+
+func (ig *InterfaceGenerator) GenerateCode() (string, error) {
+	if ig.Name == "" {
 		return "", errmsg.InterfaceNameIsEmptyError()
 	}
 
-	stmt := fmt.Sprintf("type %s interface {\n", in.Name)
-	for _, sig := range in.FuncSignatures {
+	stmt := fmt.Sprintf("type %s interface {\n", ig.Name)
+	for _, sig := range ig.FuncSignatures {
 		signatureStr, err := sig.GenerateCode()
 		if err != nil {
 			return "", err

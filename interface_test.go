@@ -18,27 +18,19 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	myFunc1()
 	myFunc2(foo string) (string, error)
 }`
-	dataset := map[string]*Interface{
-		exp1: NewInterface(
+	dataset := map[string]*InterfaceGenerator{
+		exp1: NewInterfaceGenerator("myInterface"),
+		exp2: NewInterfaceGenerator("myInterface").
+			AddFuncSignature(NewFuncSignature("myFunc", []*FuncParameter{}, []string{})),
+		exp3: NewInterfaceGenerator(
 			"myInterface",
-			[]*FuncSignature{},
-		),
-		exp2: NewInterface(
-			"myInterface",
-			[]*FuncSignature{
-				NewFuncSignature("myFunc", []*FuncParameter{}, []string{}),
-			},
-		),
-		exp3: NewInterface(
-			"myInterface",
-			[]*FuncSignature{
-				NewFuncSignature("myFunc1", []*FuncParameter{}, []string{}),
-				NewFuncSignature(
-					"myFunc2",
-					[]*FuncParameter{NewFuncParameter("foo", "string")},
-					[]string{"string", "error"},
-				),
-			},
+			NewFuncSignature("myFunc1", []*FuncParameter{}, []string{}),
+		).AddFuncSignature(
+			NewFuncSignature(
+				"myFunc2",
+				[]*FuncParameter{NewFuncParameter("foo", "string")},
+				[]string{"string", "error"},
+			),
 		),
 	}
 
@@ -50,15 +42,16 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 }
 
 func TestShouldRaiseErrorWhenInterfaceNameIsEmpty(t *testing.T) {
-	in := NewInterface("", []*FuncSignature{})
+	in := NewInterfaceGenerator("")
 	_, err := in.GenerateCode()
 	assert.EqualError(t, err, errmsg.InterfaceNameIsEmptyError().Error())
 }
 
 func TestShouldRaiseErrorWhenFuncSignatureRaisesError(t *testing.T) {
-	in := NewInterface("myInterface", []*FuncSignature{
+	in := NewInterfaceGenerator(
+		"myInterface",
 		NewFuncSignature("", []*FuncParameter{}, []string{}),
-	})
+	)
 	_, err := in.GenerateCode()
 	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
 }
