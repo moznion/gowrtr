@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
-	importComponent := NewImport("fmt", "math", "os")
+	importGenerator := NewImportGenerator("fmt", "math").AddImport("os")
 
 	expected := `import (
 	"fmt"
@@ -15,27 +15,27 @@ func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
 	"os"
 )`
 
-	gen, err := importComponent.GenerateCode()
+	gen, err := importGenerator.GenerateCode()
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
 }
 
 func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T) {
-	importComponent := NewImport("fmt")
+	importGenerator := NewImportGenerator().AddImport("fmt")
 
 	expected := `import (
 	"fmt"
 )`
 
-	gen, err := importComponent.GenerateCode()
+	gen, err := importGenerator.GenerateCode()
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
 }
 
 func TestShouldGenerateImportStatementBeEmpty(t *testing.T) {
-	importComponent := NewImport()
+	importGenerator := NewImportGenerator()
 
-	gen, err := importComponent.GenerateCode()
+	gen, err := importGenerator.GenerateCode()
 	assert.NoError(t, err)
 	assert.Equal(t, "", gen)
 }

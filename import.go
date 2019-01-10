@@ -4,23 +4,28 @@ import (
 	"fmt"
 )
 
-type Import struct {
+type ImportGenerator struct {
 	Names []string
 }
 
-func NewImport(names ...string) *Import {
-	return &Import{
+func NewImportGenerator(names ...string) *ImportGenerator {
+	return &ImportGenerator{
 		Names: names,
 	}
 }
 
-func (imp *Import) GenerateCode() (string, error) {
-	if len(imp.Names) <= 0 {
+func (ig *ImportGenerator) AddImport(imp string) *ImportGenerator {
+	ig.Names = append(ig.Names, imp)
+	return ig
+}
+
+func (ig *ImportGenerator) GenerateCode() (string, error) {
+	if len(ig.Names) <= 0 {
 		return "", nil
 	}
 
 	stmt := "import (\n"
-	for _, name := range imp.Names {
+	for _, name := range ig.Names {
 		stmt += fmt.Sprintf("\t\"%s\"\n", name)
 	}
 	stmt += ")"
