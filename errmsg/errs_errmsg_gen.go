@@ -40,6 +40,16 @@ func InterfaceNameIsEmptyError() error {
 	return errors.New("[GOWRTR-7] name of interface must not be empty, but it gets empty")
 }
 
+// FuncReceiverNameIsEmptyError returns the error.
+func FuncReceiverNameIsEmptyError() error {
+	return errors.New("[GOWRTR-8] name of func receiver must not be empty, but it gets empty")
+}
+
+// FuncReceiverTypeIsEmptyError returns the error.
+func FuncReceiverTypeIsEmptyError() error {
+	return errors.New("[GOWRTR-9] type of func receiver must not be empty, but it gets empty")
+}
+
 // ErrsList returns the list of errors.
 func ErrsList() []string {
 	return []string{
@@ -50,5 +60,7 @@ func ErrsList() []string {
 		`[GOWRTR-5] the last func parameter type must not be empty, but it gets empty`,
 		`[GOWRTR-6] name of func must not be empty, but it gets empty`,
 		`[GOWRTR-7] name of interface must not be empty, but it gets empty`,
+		`[GOWRTR-8] name of func receiver must not be empty, but it gets empty`,
+		`[GOWRTR-9] type of func receiver must not be empty, but it gets empty`,
 	}
 }
