@@ -3,30 +3,18 @@ package gowrtr
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/moznion/gowrtr/errmsg"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 	structName := "TestStruct"
-	fields := []*StructField{
-		{
-			Name: "Foo",
-			Type: "string",
-		},
-		{
-			Name: "Bar",
-			Type: "int64",
-			Tag:  `json:"bar"`,
-		},
-		{
-			Name: "buz",
-			Type: "[]byte",
-		},
-	}
 
-	structComponent := NewStruct(structName, fields)
+	structGenerator := NewStructGenerator(structName).
+		AddField("Foo", "string").
+		AddField("Bar", "int64", `json:"bar"`).
+		AddField("buz", "[]byte")
 
 	expected := "type TestStruct struct {\n" +
 		"	Foo string\n" +
@@ -34,38 +22,26 @@ func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 		"	buz []byte\n" +
 		"}"
 
-	gen, err := structComponent.GenerateCode()
+	gen, err := structGenerator.GenerateCode()
 	assert.NoError(t, err)
-	assert.Equal(t, gen, expected)
+	assert.Equal(t, expected, gen)
 }
 
 func TestShouldRaiseErrorWhenStructNameIsEmpty(t *testing.T) {
-	structComponent := NewStruct("", []*StructField{})
+	structComponent := NewStructGenerator("")
 
 	_, err := structComponent.GenerateCode()
 	assert.EqualError(t, err, errmsg.StructNameIsNilErr().Error())
 }
 
 func TestShouldRaiseErrorWhenFieldNameIsEmpty(t *testing.T) {
-	structComponent := NewStruct("TestStruct", []*StructField{
-		{
-			Name: "",
-			Type: "string",
-		},
-	})
-
+	structComponent := NewStructGenerator("TestStruct").AddField("", "string")
 	_, err := structComponent.GenerateCode()
 	assert.EqualError(t, err, errmsg.StructFieldNameIsEmptyErr().Error())
 }
 
 func TestShouldRaiseErrorWhenFieldTypeIsEmpty(t *testing.T) {
-	structComponent := NewStruct("TestStruct", []*StructField{
-		{
-			Name: "Foo",
-			Type: "",
-		},
-	})
-
+	structComponent := NewStructGenerator("TestStruct").AddField("Foo", "")
 	_, err := structComponent.GenerateCode()
 	assert.EqualError(t, err, errmsg.StructFieldTypeIsEmptyErr().Error())
 }

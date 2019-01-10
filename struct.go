@@ -6,32 +6,46 @@ import (
 	"github.com/moznion/gowrtr/errmsg"
 )
 
-// TODO extract
 type StructField struct {
 	Name string
 	Type string
 	Tag  string
 }
 
-type Struct struct {
+type StructGenerator struct {
 	Name   string
 	Fields []*StructField
 }
 
-func NewStruct(name string, fields []*StructField) *Struct {
-	return &Struct{
+func NewStructGenerator(name string) *StructGenerator {
+	return &StructGenerator{
 		Name:   name,
-		Fields: fields,
+		Fields: make([]*StructField, 0),
 	}
 }
 
-func (s *Struct) GenerateCode() (string, error) {
-	if s.Name == "" {
+func (sg *StructGenerator) AddField(name string, typ string, tag ...string) *StructGenerator {
+	l := len(tag)
+	t := ""
+	if l > 0 {
+		t = tag[0]
+	}
+
+	sg.Fields = append(sg.Fields, &StructField{
+		Name: name,
+		Type: typ,
+		Tag:  t,
+	})
+	return sg
+}
+
+func (sg *StructGenerator) GenerateCode() (string, error) {
+	if sg.Name == "" {
 		return "", errmsg.StructNameIsNilErr()
 	}
-	stmt := fmt.Sprintf("type %s struct {\n", s.Name)
+	stmt := fmt.Sprintf("type %s struct {\n", sg.Name)
 
-	for _, field := range s.Fields {
+	for _, field := range sg.Fields {
 		if field.Name == "" {
 			return "", errmsg.StructFieldNameIsEmptyErr()
 		}
