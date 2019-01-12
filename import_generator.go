@@ -19,7 +19,7 @@ func (ig *ImportGenerator) AddImport(imp string) *ImportGenerator {
 	return ig
 }
 
-func (ig *ImportGenerator) GenerateCode() (string, error) {
+func (ig *ImportGenerator) GenerateCode(indentLevel int) (string, error) {
 	if len(ig.Names) <= 0 {
 		return "", nil
 	}
