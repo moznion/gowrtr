@@ -11,7 +11,7 @@ type FuncParameter struct {
 	Type string
 }
 
-type FuncSignature struct {
+type FuncSignatureGenerator struct {
 	FuncName       string
 	FuncParameters []*FuncParameter
 	ReturnTypes    []string
@@ -24,15 +24,25 @@ func NewFuncParameter(name string, typ string) *FuncParameter {
 	}
 }
 
-func NewFuncSignature(funcName string, funcParameters []*FuncParameter, returnType []string) *FuncSignature {
-	return &FuncSignature{
+func NewFuncSignatureGenerator(funcName string, funcParameters []*FuncParameter, returnTypes []string) *FuncSignatureGenerator {
+	return &FuncSignatureGenerator{
 		FuncName:       funcName,
 		FuncParameters: funcParameters,
-		ReturnTypes:    returnType,
+		ReturnTypes:    returnTypes,
 	}
 }
 
-func (f *FuncSignature) GenerateCode() (string, error) {
+func (f *FuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParameter) *FuncSignatureGenerator {
+	f.FuncParameters = append(f.FuncParameters, funcParameters...)
+	return f
+}
+
+func (f *FuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *FuncSignatureGenerator {
+	f.ReturnTypes = append(f.ReturnTypes, returnTypes...)
+	return f
+}
+
+func (f *FuncSignatureGenerator) GenerateCode(indentLevel int) (string, error) {
 	if f.FuncName == "" {
 		return "", errmsg.FuncNameIsEmptyError()
 	}
