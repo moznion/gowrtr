@@ -24,16 +24,14 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	dataset := map[string]*InterfaceGenerator{
 		exp1: NewInterfaceGenerator("myInterface"),
 		exp2: NewInterfaceGenerator("myInterface").
-			AddFuncSignature(NewFuncSignatureGenerator("myFunc", []*FuncParameter{}, []string{})),
+			AddFuncSignature(NewFuncSignatureGenerator("myFunc")),
 		exp3: NewInterfaceGenerator(
 			"myInterface",
-			NewFuncSignatureGenerator("myFunc1", []*FuncParameter{}, []string{}),
+			NewFuncSignatureGenerator("myFunc1"),
 		).AddFuncSignature(
-			NewFuncSignatureGenerator(
-				"myFunc2",
-				[]*FuncParameter{NewFuncParameter("foo", "string")},
-				[]string{"string", "error"},
-			),
+			NewFuncSignatureGenerator("myFunc2").
+				AddFuncParameters(NewFuncParameter("foo", "string")).
+				AddReturnTypes("string", "error"),
 		),
 	}
 
@@ -60,16 +58,14 @@ func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 	dataset := map[string]*InterfaceGenerator{
 		exp1: NewInterfaceGenerator("myInterface"),
 		exp2: NewInterfaceGenerator("myInterface").
-			AddFuncSignature(NewFuncSignatureGenerator("myFunc", []*FuncParameter{}, []string{})),
+			AddFuncSignature(NewFuncSignatureGenerator("myFunc")),
 		exp3: NewInterfaceGenerator(
 			"myInterface",
-			NewFuncSignatureGenerator("myFunc1", []*FuncParameter{}, []string{}),
+			NewFuncSignatureGenerator("myFunc1"),
 		).AddFuncSignature(
-			NewFuncSignatureGenerator(
-				"myFunc2",
-				[]*FuncParameter{NewFuncParameter("foo", "string")},
-				[]string{"string", "error"},
-			),
+			NewFuncSignatureGenerator("myFunc2").
+				AddFuncParameters(NewFuncParameter("foo", "string")).
+				AddReturnTypes("string", "error"),
 		),
 	}
 
@@ -89,7 +85,7 @@ func TestShouldRaiseErrorWhenInterfaceNameIsEmpty(t *testing.T) {
 func TestShouldRaiseErrorWhenFuncSignatureRaisesError(t *testing.T) {
 	in := NewInterfaceGenerator(
 		"myInterface",
-		NewFuncSignatureGenerator("", []*FuncParameter{}, []string{}),
+		NewFuncSignatureGenerator(""),
 	)
 	_, err := in.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
