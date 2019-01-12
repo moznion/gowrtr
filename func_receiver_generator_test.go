@@ -9,27 +9,27 @@ import (
 )
 
 func TestShouldGeneratingFuncReceiverCodeBeSuccessful(t *testing.T) {
-	funcReceiver := NewFuncReceiver("f", "*Foo")
-	gen, err := funcReceiver.GenerateCode()
+	funcReceiver := NewFuncReceiverGenerator("f", "*Foo")
+	gen, err := funcReceiver.GenerateCode(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "(f *Foo)", gen)
 }
 
 func TestShouldGeneratingFuncReceiverCodeBeSuccessfulWithEmpty(t *testing.T) {
-	funcReceiver := NewFuncReceiver("", "")
-	gen, err := funcReceiver.GenerateCode()
+	funcReceiver := NewFuncReceiverGenerator("", "")
+	gen, err := funcReceiver.GenerateCode(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "", gen)
 }
 
 func TestShouldGeneratingFuncReceiverRaisesErrorWhenFuncReceiverNameIsEmpty(t *testing.T) {
-	funcReceiver := NewFuncReceiver("", "*Foo")
-	_, err := funcReceiver.GenerateCode()
+	funcReceiver := NewFuncReceiverGenerator("", "*Foo")
+	_, err := funcReceiver.GenerateCode(0)
 	assert.EqualError(t, err, errmsg.FuncReceiverNameIsEmptyError().Error())
 }
 
 func TestShouldGeneratingFuncReceiverRaisesErrorWhenFuncReceiverTypeIsEmpty(t *testing.T) {
-	funcReceiver := NewFuncReceiver("f", "")
-	_, err := funcReceiver.GenerateCode()
+	funcReceiver := NewFuncReceiverGenerator("f", "")
+	_, err := funcReceiver.GenerateCode(0)
 	assert.EqualError(t, err, errmsg.FuncReceiverTypeIsEmptyError().Error())
 }

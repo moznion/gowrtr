@@ -6,19 +6,19 @@ import (
 	"github.com/moznion/gowrtr/errmsg"
 )
 
-type FuncReceiver struct {
+type FuncReceiverGenerator struct {
 	Name string
 	Type string
 }
 
-func NewFuncReceiver(name string, typ string) *FuncReceiver {
-	return &FuncReceiver{
+func NewFuncReceiverGenerator(name string, typ string) *FuncReceiverGenerator {
+	return &FuncReceiverGenerator{
 		Name: name,
 		Type: typ,
 	}
 }
 
-func (f *FuncReceiver) GenerateCode() (string, error) {
+func (f *FuncReceiverGenerator) GenerateCode(indentLevel int) (string, error) {
 	name := f.Name
 	typ := f.Type
 
