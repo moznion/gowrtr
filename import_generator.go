@@ -29,7 +29,7 @@ func (ig *ImportGenerator) Generate(indentLevel int) (string, error) {
 	for _, name := range ig.Names {
 		stmt += fmt.Sprintf("\t\"%s\"\n", name)
 	}
-	stmt += ")"
+	stmt += ")\n"
 
 	return stmt, nil
 }

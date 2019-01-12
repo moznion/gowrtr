@@ -13,7 +13,8 @@ func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
 	"fmt"
 	"math"
 	"os"
-)`
+)
+`
 
 	gen, err := importGenerator.Generate(0)
 	assert.NoError(t, err)
@@ -25,7 +26,8 @@ func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T
 
 	expected := `import (
 	"fmt"
-)`
+)
+`
 
 	gen, err := importGenerator.Generate(0)
 	assert.NoError(t, err)
