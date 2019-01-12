@@ -7,6 +7,10 @@ check: test lint vet fmt-check
 test: errgen
 	go test -v -cover $(PKGS)
 
+test-coverage: errgen
+	go test -v -cover -coverprofile cover.out $(PKGS)
+	go tool cover -html=cover.out -o cover.html
+
 lint:
 	golint $(PKGS)
 
