@@ -12,7 +12,7 @@ func NewCommentGenerator(comment string) *CommentGenerator {
 	}
 }
 
-func (c *CommentGenerator) GenerateCode(indentLevel int) (string, error) {
+func (c *CommentGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 	return fmt.Sprintf("%s//%s\n", indent, c.Comment), nil
 }

@@ -18,7 +18,7 @@ func NewFuncReceiverGenerator(name string, typ string) *FuncReceiverGenerator {
 	}
 }
 
-func (f *FuncReceiverGenerator) GenerateCode(indentLevel int) (string, error) {
+func (f *FuncReceiverGenerator) Generate(indentLevel int) (string, error) {
 	name := f.Name
 	typ := f.Type
 

@@ -38,7 +38,7 @@ func (sg *StructGenerator) AddField(name string, typ string, tag ...string) *Str
 	return sg
 }
 
-func (sg *StructGenerator) GenerateCode(indentLevel int) (string, error) {
+func (sg *StructGenerator) Generate(indentLevel int) (string, error) {
 	if sg.Name == "" {
 		return "", errmsg.StructNameIsNilErr()
 	}

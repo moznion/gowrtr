@@ -7,6 +7,6 @@ func NewNewlineGenerator() *NewlineGenerator {
 	return &NewlineGenerator{}
 }
 
-func (n *NewlineGenerator) GenerateCode(indentLevel int) (string, error) {
+func (n *NewlineGenerator) Generate(indentLevel int) (string, error) {
 	return "\n", nil
 }

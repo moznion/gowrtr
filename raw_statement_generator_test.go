@@ -9,11 +9,11 @@ import (
 func TestShouldGenerateRawStatementSuccessful(t *testing.T) {
 	generator := NewRawStatementGenerator(`i := 0`)
 
-	gen, err := generator.GenerateCode(0)
+	gen, err := generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "i := 0\n", gen)
 
-	gen, err = generator.GenerateCode(2)
+	gen, err = generator.Generate(2)
 	assert.NoError(t, err)
 	assert.Equal(t, "\t\ti := 0\n", gen)
 }

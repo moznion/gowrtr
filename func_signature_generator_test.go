@@ -57,7 +57,7 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 	}
 
 	for expected, signature := range dataset {
-		gen, err := signature.GenerateCode(0)
+		gen, err := signature.Generate(0)
 		assert.NoError(t, err)
 		assert.Equal(t, expected, gen)
 	}
@@ -73,7 +73,7 @@ func TestShouldGeneratingFuncSignatureWithExpandMethod(t *testing.T) {
 		NewFuncParameter("bar", "int64"),
 	).AddReturnTypes("string", "error")
 
-	gen, err := generator.GenerateCode(0)
+	gen, err := generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "myFunc(foo string, bar int64) (string, error)", gen)
 }
@@ -81,7 +81,7 @@ func TestShouldGeneratingFuncSignatureWithExpandMethod(t *testing.T) {
 func TestShouldRaiseErrorWhenFuncNameIsEmpty(t *testing.T) {
 	sig := NewFuncSignatureGenerator("", []*FuncParameter{}, []string{})
 
-	_, err := sig.GenerateCode(0)
+	_, err := sig.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
 }
 
@@ -92,7 +92,7 @@ func TestShouldRaiseErrorWhenFuncParameterNameIsEmpty(t *testing.T) {
 		NewFuncParameter("buz", "error"),
 	}, []string{})
 
-	_, err := sig.GenerateCode(0)
+	_, err := sig.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncParameterNameIsEmptyErr().Error())
 }
 
@@ -103,6 +103,6 @@ func TestShouldRaiseErrorWhenLastFuncParameterTypeIsEmpty(t *testing.T) {
 		NewFuncParameter("buz", ""),
 	}, []string{})
 
-	_, err := sig.GenerateCode(0)
+	_, err := sig.Generate(0)
 	assert.EqualError(t, err, errmsg.LastFuncParameterTypeIsEmptyErr().Error())
 }

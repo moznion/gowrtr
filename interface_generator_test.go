@@ -24,12 +24,12 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	dataset := map[string]*InterfaceGenerator{
 		exp1: NewInterfaceGenerator("myInterface"),
 		exp2: NewInterfaceGenerator("myInterface").
-			AddFuncSignature(NewFuncSignature("myFunc", []*FuncParameter{}, []string{})),
+			AddFuncSignature(NewFuncSignatureGenerator("myFunc", []*FuncParameter{}, []string{})),
 		exp3: NewInterfaceGenerator(
 			"myInterface",
-			NewFuncSignature("myFunc1", []*FuncParameter{}, []string{}),
+			NewFuncSignatureGenerator("myFunc1", []*FuncParameter{}, []string{}),
 		).AddFuncSignature(
-			NewFuncSignature(
+			NewFuncSignatureGenerator(
 				"myFunc2",
 				[]*FuncParameter{NewFuncParameter("foo", "string")},
 				[]string{"string", "error"},
@@ -38,7 +38,7 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	}
 
 	for expected, in := range dataset {
-		got, err := in.GenerateCode(0)
+		got, err := in.Generate(0)
 		assert.NoError(t, err)
 		assert.Equal(t, expected, got)
 	}
@@ -60,12 +60,12 @@ func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 	dataset := map[string]*InterfaceGenerator{
 		exp1: NewInterfaceGenerator("myInterface"),
 		exp2: NewInterfaceGenerator("myInterface").
-			AddFuncSignature(NewFuncSignature("myFunc", []*FuncParameter{}, []string{})),
+			AddFuncSignature(NewFuncSignatureGenerator("myFunc", []*FuncParameter{}, []string{})),
 		exp3: NewInterfaceGenerator(
 			"myInterface",
-			NewFuncSignature("myFunc1", []*FuncParameter{}, []string{}),
+			NewFuncSignatureGenerator("myFunc1", []*FuncParameter{}, []string{}),
 		).AddFuncSignature(
-			NewFuncSignature(
+			NewFuncSignatureGenerator(
 				"myFunc2",
 				[]*FuncParameter{NewFuncParameter("foo", "string")},
 				[]string{"string", "error"},
@@ -74,7 +74,7 @@ func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 	}
 
 	for expected, in := range dataset {
-		got, err := in.GenerateCode(2)
+		got, err := in.Generate(2)
 		assert.NoError(t, err)
 		assert.Equal(t, expected, got)
 	}
@@ -82,15 +82,15 @@ func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 
 func TestShouldRaiseErrorWhenInterfaceNameIsEmpty(t *testing.T) {
 	in := NewInterfaceGenerator("")
-	_, err := in.GenerateCode(0)
+	_, err := in.Generate(0)
 	assert.EqualError(t, err, errmsg.InterfaceNameIsEmptyError().Error())
 }
 
 func TestShouldRaiseErrorWhenFuncSignatureRaisesError(t *testing.T) {
 	in := NewInterfaceGenerator(
 		"myInterface",
-		NewFuncSignature("", []*FuncParameter{}, []string{}),
+		NewFuncSignatureGenerator("", []*FuncParameter{}, []string{}),
 	)
-	_, err := in.GenerateCode(0)
+	_, err := in.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
 }

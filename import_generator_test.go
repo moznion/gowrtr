@@ -15,7 +15,7 @@ func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
 	"os"
 )`
 
-	gen, err := importGenerator.GenerateCode(0)
+	gen, err := importGenerator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
 }
@@ -27,7 +27,7 @@ func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T
 	"fmt"
 )`
 
-	gen, err := importGenerator.GenerateCode(0)
+	gen, err := importGenerator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
 }
@@ -35,7 +35,7 @@ func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T
 func TestShouldGenerateImportStatementBeEmpty(t *testing.T) {
 	importGenerator := NewImportGenerator()
 
-	gen, err := importGenerator.GenerateCode(0)
+	gen, err := importGenerator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "", gen)
 }

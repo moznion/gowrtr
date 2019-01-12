@@ -8,7 +8,7 @@ import (
 
 func TestShouldGenerateNewlineSuccessful(t *testing.T) {
 	generator := NewNewlineGenerator()
-	gen, err := generator.GenerateCode(0)
+	gen, err := generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "\n", gen)
 }

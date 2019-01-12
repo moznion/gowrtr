@@ -17,7 +17,7 @@ func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 		AddField("buz", "[]byte")
 
 	{
-		gen, err := structGenerator.GenerateCode(0)
+		gen, err := structGenerator.Generate(0)
 		expected := "type TestStruct struct {\n" +
 			"	Foo string\n" +
 			"	Bar int64 `json:\"bar\"`\n" +
@@ -28,7 +28,7 @@ func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 	}
 
 	{
-		gen, err := structGenerator.GenerateCode(2)
+		gen, err := structGenerator.Generate(2)
 		expected := "\t\ttype TestStruct struct {\n" +
 			"\t\t\tFoo string\n" +
 			"\t\t\tBar int64 `json:\"bar\"`\n" +
@@ -40,20 +40,20 @@ func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 }
 
 func TestShouldRaiseErrorWhenStructNameIsEmpty(t *testing.T) {
-	structComponent := NewStructGenerator("")
+	structGenerator := NewStructGenerator("")
 
-	_, err := structComponent.GenerateCode(0)
+	_, err := structGenerator.Generate(0)
 	assert.EqualError(t, err, errmsg.StructNameIsNilErr().Error())
 }
 
 func TestShouldRaiseErrorWhenFieldNameIsEmpty(t *testing.T) {
-	structComponent := NewStructGenerator("TestStruct").AddField("", "string")
-	_, err := structComponent.GenerateCode(0)
+	structGenerator := NewStructGenerator("TestStruct").AddField("", "string")
+	_, err := structGenerator.Generate(0)
 	assert.EqualError(t, err, errmsg.StructFieldNameIsEmptyErr().Error())
 }
 
 func TestShouldRaiseErrorWhenFieldTypeIsEmpty(t *testing.T) {
-	structComponent := NewStructGenerator("TestStruct").AddField("Foo", "")
-	_, err := structComponent.GenerateCode(0)
+	structGenerator := NewStructGenerator("TestStruct").AddField("Foo", "")
+	_, err := structGenerator.Generate(0)
 	assert.EqualError(t, err, errmsg.StructFieldTypeIsEmptyErr().Error())
 }

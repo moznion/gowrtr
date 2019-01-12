@@ -10,7 +10,7 @@ func NewRawStatementGenerator(stmt string) *RawStatementGenerator {
 	}
 }
 
-func (r *RawStatementGenerator) GenerateCode(indentLevel int) (string, error) {
+func (r *RawStatementGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 	return indent + r.Statement + "\n", nil
 }

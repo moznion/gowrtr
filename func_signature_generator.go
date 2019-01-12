@@ -42,7 +42,7 @@ func (f *FuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *FuncSign
 	return f
 }
 
-func (f *FuncSignatureGenerator) GenerateCode(indentLevel int) (string, error) {
+func (f *FuncSignatureGenerator) Generate(indentLevel int) (string, error) {
 	if f.FuncName == "" {
 		return "", errmsg.FuncNameIsEmptyError()
 	}
