@@ -9,9 +9,9 @@ import (
 
 func TestShouldPackageStringifyBeSucceeded(t *testing.T) {
 	packageName := "foobar"
-	packageComponent := NewPackage(packageName)
+	packageComponent := NewPackageGenerator(packageName)
 
-	gen, err := packageComponent.GenerateCode()
+	gen, err := packageComponent.Generate(0)
 	assert.NoError(t, err)
-	assert.Equal(t, fmt.Sprintf("package %s", packageName), gen)
+	assert.Equal(t, fmt.Sprintf("package %s\n", packageName), gen)
 }
