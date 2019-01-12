@@ -15,8 +15,9 @@ func NewImportGenerator(names ...string) *ImportGenerator {
 }
 
 func (ig *ImportGenerator) AddImport(imp string) *ImportGenerator {
-	ig.Names = append(ig.Names, imp)
-	return ig
+	return &ImportGenerator{
+		Names: append(ig.Names, imp),
+	}
 }
 
 func (ig *ImportGenerator) Generate(indentLevel int) (string, error) {

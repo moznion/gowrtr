@@ -30,12 +30,14 @@ func (sg *StructGenerator) AddField(name string, typ string, tag ...string) *Str
 		t = tag[0]
 	}
 
-	sg.Fields = append(sg.Fields, &StructField{
-		Name: name,
-		Type: typ,
-		Tag:  t,
-	})
-	return sg
+	return &StructGenerator{
+		Name: sg.Name,
+		Fields: append(sg.Fields, &StructField{
+			Name: name,
+			Type: typ,
+			Tag:  t,
+		}),
+	}
 }
 
 func (sg *StructGenerator) Generate(indentLevel int) (string, error) {

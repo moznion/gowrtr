@@ -14,9 +14,11 @@ func NewForGenerator(condition string, generators ...CodeGenerator) *ForGenerato
 	}
 }
 
-func (fg *ForGenerator) AddStatements(c ...CodeGenerator) *ForGenerator {
-	fg.Generators = append(fg.Generators, c...)
-	return fg
+func (fg *ForGenerator) AddStatements(generators ...CodeGenerator) *ForGenerator {
+	return &ForGenerator{
+		Condition:  fg.Condition,
+		Generators: append(fg.Generators, generators...),
+	}
 }
 
 func (fg *ForGenerator) Generate(indentLevel int) (string, error) {

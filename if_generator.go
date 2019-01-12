@@ -5,26 +5,28 @@ import (
 )
 
 type IfGenerator struct {
-	Cond       string
+	Condition  string
 	Generators []CodeGenerator
 }
 
-func NewIfGenerator(cond string, generators ...CodeGenerator) *IfGenerator {
+func NewIfGenerator(condition string, generators ...CodeGenerator) *IfGenerator {
 	return &IfGenerator{
-		Cond:       cond,
+		Condition:  condition,
 		Generators: generators,
 	}
 }
 
 func (ig *IfGenerator) AddStatements(generators ...CodeGenerator) *IfGenerator {
-	ig.Generators = append(ig.Generators, generators...)
-	return ig
+	return &IfGenerator{
+		Condition:  ig.Condition,
+		Generators: append(ig.Generators, generators...),
+	}
 }
 
 func (ig *IfGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
-	stmt := fmt.Sprintf("%sif %s {\n", indent, ig.Cond)
+	stmt := fmt.Sprintf("%sif %s {\n", indent, ig.Condition)
 
 	nextIndentLevel := indentLevel + 1
 	for _, c := range ig.Generators {

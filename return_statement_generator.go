@@ -13,8 +13,9 @@ func NewReturnStatementGenerator(returnItems ...string) *ReturnStatementGenerato
 }
 
 func (r *ReturnStatementGenerator) AddReturnItems(returnItems ...string) *ReturnStatementGenerator {
-	r.ReturnItems = append(r.ReturnItems, returnItems...)
-	return r
+	return &ReturnStatementGenerator{
+		ReturnItems: append(r.ReturnItems, returnItems...),
+	}
 }
 
 func (r *ReturnStatementGenerator) Generate(indentLevel int) (string, error) {

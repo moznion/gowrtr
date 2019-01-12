@@ -31,13 +31,19 @@ func NewFuncSignatureGenerator(funcName string) *FuncSignatureGenerator {
 }
 
 func (f *FuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParameter) *FuncSignatureGenerator {
-	f.FuncParameters = append(f.FuncParameters, funcParameters...)
-	return f
+	return &FuncSignatureGenerator{
+		FuncName:       f.FuncName,
+		FuncParameters: append(f.FuncParameters, funcParameters...),
+		ReturnTypes:    f.ReturnTypes,
+	}
 }
 
 func (f *FuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *FuncSignatureGenerator {
-	f.ReturnTypes = append(f.ReturnTypes, returnTypes...)
-	return f
+	return &FuncSignatureGenerator{
+		FuncName:       f.FuncName,
+		FuncParameters: f.FuncParameters,
+		ReturnTypes:    append(f.ReturnTypes, returnTypes...),
+	}
 }
 
 func (f *FuncSignatureGenerator) Generate(indentLevel int) (string, error) {

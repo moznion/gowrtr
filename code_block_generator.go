@@ -11,8 +11,9 @@ func NewCodeBlockGenerator(generators ...CodeGenerator) *CodeBlockGenerator {
 }
 
 func (c *CodeBlockGenerator) AddStatements(generators ...CodeGenerator) *CodeBlockGenerator {
-	c.Generators = append(c.Generators, generators...)
-	return c
+	return &CodeBlockGenerator{
+		Generators: append(c.Generators, generators...),
+	}
 }
 
 func (c *CodeBlockGenerator) Generate(indentLevel int) (string, error) {

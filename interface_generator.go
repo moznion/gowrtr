@@ -19,8 +19,10 @@ func NewInterfaceGenerator(name string, funcSignatures ...*FuncSignatureGenerato
 }
 
 func (ig *InterfaceGenerator) AddFuncSignature(sig *FuncSignatureGenerator) *InterfaceGenerator {
-	ig.FuncSignatures = append(ig.FuncSignatures, sig)
-	return ig
+	return &InterfaceGenerator{
+		Name:           ig.Name,
+		FuncSignatures: append(ig.FuncSignatures, sig),
+	}
 }
 
 func (ig *InterfaceGenerator) Generate(indentLevel int) (string, error) {
