@@ -38,11 +38,13 @@ func (sg *StructGenerator) AddField(name string, typ string, tag ...string) *Str
 	return sg
 }
 
-func (sg *StructGenerator) GenerateCode() (string, error) {
+func (sg *StructGenerator) GenerateCode(indentLevel int) (string, error) {
 	if sg.Name == "" {
 		return "", errmsg.StructNameIsNilErr()
 	}
-	stmt := fmt.Sprintf("type %s struct {\n", sg.Name)
+
+	indent := buildIndent(indentLevel)
+	stmt := fmt.Sprintf("%stype %s struct {\n", indent, sg.Name)
 
 	for _, field := range sg.Fields {
 		if field.Name == "" {
@@ -52,13 +54,13 @@ func (sg *StructGenerator) GenerateCode() (string, error) {
 			return "", errmsg.StructFieldTypeIsEmptyErr()
 		}
 
-		stmt += fmt.Sprintf("\t%s %s", field.Name, field.Type)
+		stmt += fmt.Sprintf("%s\t%s %s", indent, field.Name, field.Type)
 		if tag := field.Tag; tag != "" {
 			stmt += fmt.Sprintf(" `%s`", tag)
 		}
 		stmt += "\n"
 	}
-	stmt += "}"
+	stmt += fmt.Sprintf("%s}\n", indent)
 
 	return stmt, nil
 }
