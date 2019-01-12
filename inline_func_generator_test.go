@@ -3,7 +3,7 @@ package gowrtr
 import (
 	"testing"
 
-	"github.com/moznion/gowrtr/errmsg"
+	"github.com/moznion/gowrtr/internal/errmsg"
 
 	"github.com/stretchr/testify/assert"
 )

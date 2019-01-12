@@ -3,7 +3,7 @@ package gowrtr
 import (
 	"fmt"
 
-	"github.com/moznion/gowrtr/errmsg"
+	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
 type InterfaceGenerator struct {

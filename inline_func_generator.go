@@ -1,6 +1,6 @@
 package gowrtr
 
-import "github.com/moznion/gowrtr/errmsg"
+import "github.com/moznion/gowrtr/internal/errmsg"
 
 type InlineFuncGenerator struct {
 	GoFunc              bool

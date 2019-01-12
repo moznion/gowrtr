@@ -1,7 +1,7 @@
 package gowrtr
 
 import (
-	"github.com/moznion/gowrtr/errmsg"
+	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
 type FuncGenerator struct {

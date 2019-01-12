@@ -3,7 +3,7 @@ package gowrtr
 import (
 	"strings"
 
-	"github.com/moznion/gowrtr/errmsg"
+	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
 type FuncParameter struct {
