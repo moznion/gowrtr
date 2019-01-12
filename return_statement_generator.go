@@ -22,10 +22,10 @@ func (r *ReturnStatementGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
 	stmt := indent + "return"
-
 	if ret := strings.Join(r.ReturnItems, ", "); ret != "" {
 		stmt += " " + ret
 	}
+	stmt += "\n"
 
 	return stmt, nil
 }
