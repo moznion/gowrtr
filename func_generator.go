@@ -7,22 +7,22 @@ import (
 type FuncGenerator struct {
 	FuncReceiver  *FuncReceiverGenerator
 	FuncSignature *FuncSignatureGenerator
-	Generators    []CodeGenerator
+	Statements    []CodeGenerator
 }
 
-func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureGenerator, generators ...CodeGenerator) *FuncGenerator {
+func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureGenerator, statements ...CodeGenerator) *FuncGenerator {
 	return &FuncGenerator{
 		FuncReceiver:  receiver,
 		FuncSignature: signature,
-		Generators:    generators,
+		Statements:    statements,
 	}
 }
 
-func (fg *FuncGenerator) AddStatements(generators ...CodeGenerator) *FuncGenerator {
+func (fg *FuncGenerator) AddStatements(statements ...CodeGenerator) *FuncGenerator {
 	return &FuncGenerator{
 		FuncReceiver:  fg.FuncReceiver,
 		FuncSignature: fg.FuncSignature,
-		Generators:    append(fg.Generators, generators...),
+		Statements:    append(fg.Statements, statements...),
 	}
 }
 
@@ -53,7 +53,7 @@ func (fg *FuncGenerator) Generate(indentLevel int) (string, error) {
 	stmt += sig + " {\n"
 
 	nextIndentLevel := indentLevel + 1
-	for _, c := range fg.Generators {
+	for _, c := range fg.Statements {
 		gen, err := c.Generate(nextIndentLevel)
 		if err != nil {
 			return "", err

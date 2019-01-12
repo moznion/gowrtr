@@ -1,18 +1,18 @@
 package gowrtr
 
 type CodeBlockGenerator struct {
-	Generators []CodeGenerator
+	Statements []CodeGenerator
 }
 
-func NewCodeBlockGenerator(generators ...CodeGenerator) *CodeBlockGenerator {
+func NewCodeBlockGenerator(statements ...CodeGenerator) *CodeBlockGenerator {
 	return &CodeBlockGenerator{
-		Generators: generators,
+		Statements: statements,
 	}
 }
 
-func (c *CodeBlockGenerator) AddStatements(generators ...CodeGenerator) *CodeBlockGenerator {
+func (c *CodeBlockGenerator) AddStatements(statements ...CodeGenerator) *CodeBlockGenerator {
 	return &CodeBlockGenerator{
-		Generators: append(c.Generators, generators...),
+		Statements: append(c.Statements, statements...),
 	}
 }
 
@@ -22,7 +22,7 @@ func (c *CodeBlockGenerator) Generate(indentLevel int) (string, error) {
 	stmt := indent + "{\n"
 
 	nextIndentLevel := indentLevel + 1
-	for _, generator := range c.Generators {
+	for _, generator := range c.Statements {
 		gen, err := generator.Generate(nextIndentLevel)
 		if err != nil {
 			return "", err

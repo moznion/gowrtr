@@ -4,20 +4,20 @@ import "fmt"
 
 type ForGenerator struct {
 	Condition  string
-	Generators []CodeGenerator
+	Statements []CodeGenerator
 }
 
-func NewForGenerator(condition string, generators ...CodeGenerator) *ForGenerator {
+func NewForGenerator(condition string, statements ...CodeGenerator) *ForGenerator {
 	return &ForGenerator{
 		Condition:  condition,
-		Generators: generators,
+		Statements: statements,
 	}
 }
 
-func (fg *ForGenerator) AddStatements(generators ...CodeGenerator) *ForGenerator {
+func (fg *ForGenerator) AddStatements(statements ...CodeGenerator) *ForGenerator {
 	return &ForGenerator{
 		Condition:  fg.Condition,
-		Generators: append(fg.Generators, generators...),
+		Statements: append(fg.Statements, statements...),
 	}
 }
 
@@ -32,7 +32,7 @@ func (fg *ForGenerator) Generate(indentLevel int) (string, error) {
 	stmt += "{\n"
 
 	nextIndentLevel := indentLevel + 1
-	for _, c := range fg.Generators {
+	for _, c := range fg.Statements {
 		gen, err := c.Generate(nextIndentLevel)
 		if err != nil {
 			return "", err

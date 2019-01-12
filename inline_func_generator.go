@@ -5,23 +5,23 @@ import "github.com/moznion/gowrtr/errmsg"
 type InlineFuncGenerator struct {
 	GoFunc              bool
 	InlineFuncSignature *InlineFuncSignatureGenerator
-	Generators          []CodeGenerator
+	Statements          []CodeGenerator
 	FuncInvocation      *FuncInvocationGenerator
 }
 
-func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator, generators ...CodeGenerator) *InlineFuncGenerator {
+func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator, statements ...CodeGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              goFunc,
 		InlineFuncSignature: signature,
-		Generators:          generators,
+		Statements:          statements,
 	}
 }
 
-func (ifg *InlineFuncGenerator) AddStatements(generators ...CodeGenerator) *InlineFuncGenerator {
+func (ifg *InlineFuncGenerator) AddStatements(statements ...CodeGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              ifg.GoFunc,
 		InlineFuncSignature: ifg.InlineFuncSignature,
-		Generators:          append(ifg.Generators, generators...),
+		Statements:          append(ifg.Statements, statements...),
 		FuncInvocation:      ifg.FuncInvocation,
 	}
 }
@@ -30,7 +30,7 @@ func (ifg *InlineFuncGenerator) AddFuncInvocation(funcInvocation *FuncInvocation
 	return &InlineFuncGenerator{
 		GoFunc:              ifg.GoFunc,
 		InlineFuncSignature: ifg.InlineFuncSignature,
-		Generators:          ifg.Generators,
+		Statements:          ifg.Statements,
 		FuncInvocation:      funcInvocation,
 	}
 }
@@ -55,7 +55,7 @@ func (ifg *InlineFuncGenerator) Generate(indentLevel int) (string, error) {
 	stmt += sig + " {\n"
 
 	nextIndentLevel := indentLevel + 1
-	for _, generator := range ifg.Generators {
+	for _, generator := range ifg.Statements {
 		gen, err := generator.Generate(nextIndentLevel)
 		if err != nil {
 			return "", err

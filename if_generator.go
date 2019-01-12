@@ -6,20 +6,20 @@ import (
 
 type IfGenerator struct {
 	Condition  string
-	Generators []CodeGenerator
+	Statements []CodeGenerator
 }
 
-func NewIfGenerator(condition string, generators ...CodeGenerator) *IfGenerator {
+func NewIfGenerator(condition string, statements ...CodeGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:  condition,
-		Generators: generators,
+		Statements: statements,
 	}
 }
 
-func (ig *IfGenerator) AddStatements(generators ...CodeGenerator) *IfGenerator {
+func (ig *IfGenerator) AddStatements(statements ...CodeGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:  ig.Condition,
-		Generators: append(ig.Generators, generators...),
+		Statements: append(ig.Statements, statements...),
 	}
 }
 
@@ -29,7 +29,7 @@ func (ig *IfGenerator) Generate(indentLevel int) (string, error) {
 	stmt := fmt.Sprintf("%sif %s {\n", indent, ig.Condition)
 
 	nextIndentLevel := indentLevel + 1
-	for _, c := range ig.Generators {
+	for _, c := range ig.Statements {
 		gen, err := c.Generate(nextIndentLevel)
 		if err != nil {
 			return "", err
