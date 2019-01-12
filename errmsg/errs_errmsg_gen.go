@@ -50,6 +50,16 @@ func FuncReceiverTypeIsEmptyError() error {
 	return errors.New("[GOWRTR-9] type of func receiver must not be empty, but it gets empty")
 }
 
+// FuncSignatureIsNilError returns the error.
+func FuncSignatureIsNilError() error {
+	return errors.New("[GOWRTR-10] func signature must not be nil, bit it gets nil")
+}
+
+// InlineFuncSignatureIsNilError returns the error.
+func InlineFuncSignatureIsNilError() error {
+	return errors.New("[GOWRTR-11] inline func signature must not be nil, bit it gets nil")
+}
+
 // ErrsList returns the list of errors.
 func ErrsList() []string {
 	return []string{
@@ -62,5 +72,7 @@ func ErrsList() []string {
 		`[GOWRTR-7] name of interface must not be empty, but it gets empty`,
 		`[GOWRTR-8] name of func receiver must not be empty, but it gets empty`,
 		`[GOWRTR-9] type of func receiver must not be empty, but it gets empty`,
+		`[GOWRTR-10] func signature must not be nil, bit it gets nil`,
+		`[GOWRTR-11] inline func signature must not be nil, bit it gets nil`,
 	}
 }
