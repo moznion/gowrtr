@@ -9,7 +9,7 @@ import (
 func TestShouldGenerateIfCode(t *testing.T) {
 	generator := NewIfGenerator("i > 0",
 		NewCommentGenerator(" do something"),
-		NewRawStatementGenerator(`fmt.Printf("%d", i)`),
+		NewRawStatementGenerator(`fmt.Printf("%d", i)`, true),
 	)
 
 	{
@@ -41,7 +41,7 @@ func TestShouldGEnerateIfCodeWithExpandingMethod(t *testing.T) {
 			NewCommentGenerator(" XXX: test test"),
 			NewCommentGenerator(" do something"),
 		).
-		AddStatements(NewRawStatementGenerator(`fmt.Printf("%d", i)`))
+		AddStatements(NewRawStatementGenerator(`fmt.Printf("%d", i)`, true))
 
 	expected := `if i > 0 {
 	// XXX: test test

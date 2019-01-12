@@ -29,7 +29,7 @@ func TestShouldGenerateInlineFunc(t *testing.T) {
 `
 		generator = generator.AddStatements(
 			NewCommentGenerator(" do something"),
-			NewRawStatementGenerator(`fmt.Printf("%d", i)`),
+			NewRawStatementGenerator(`fmt.Printf("%d", i)`, true),
 		)
 		gen, err := generator.Generate(0)
 		assert.NoError(t, err)
@@ -47,7 +47,7 @@ func TestShouldGenerateInlineFuncWithSignature(t *testing.T) {
 			).
 			AddReturnTypes("string", "error"),
 		NewCommentGenerator(" do something"),
-		NewRawStatementGenerator(`fmt.Printf("%d", i)`),
+		NewRawStatementGenerator(`fmt.Printf("%d", i)`, true),
 	)
 
 	expected := `func(foo string, bar int64) (string, error) {
@@ -70,7 +70,7 @@ func TestShouldGenerateInlineGoFuncWithInvocation(t *testing.T) {
 			).
 			AddReturnTypes("string", "error"),
 		NewCommentGenerator(" do something"),
-		NewRawStatementGenerator(`fmt.Printf("%d", i)`),
+		NewRawStatementGenerator(`fmt.Printf("%d", i)`, true),
 	).AddFuncInvocation(NewFuncInvocationGenerator("foo", "bar"))
 
 	expected := `go func(foo string, bar int64) (string, error) {

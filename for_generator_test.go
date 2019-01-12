@@ -10,7 +10,7 @@ func TestShouldGenerateForCode(t *testing.T) {
 	generator := NewForGenerator(
 		"i := 0; i < foo; i++",
 		NewCommentGenerator(" do something"),
-		NewRawStatementGenerator(`fmt.Printf("%d", i)`),
+		NewRawStatementGenerator(`fmt.Printf("%d", i)`, true),
 	)
 
 	{
@@ -42,7 +42,7 @@ func TestShouldGenerateForCodeWithExpandingMethod(t *testing.T) {
 			NewCommentGenerator(" XXX: test test"),
 			NewCommentGenerator(" do something"),
 		).
-		AddStatements(NewRawStatementGenerator(`fmt.Printf("%d", i)`))
+		AddStatements(NewRawStatementGenerator(`fmt.Printf("%d", i)`, true))
 
 	expected := `for i := 0; i < foo; i++ {
 	// XXX: test test
