@@ -1,8 +1,9 @@
 package gowrtr
 
 import (
-	"github.com/moznion/gowrtr/errmsg"
 	"testing"
+
+	"github.com/moznion/gowrtr/errmsg"
 
 	"github.com/stretchr/testify/assert"
 )
