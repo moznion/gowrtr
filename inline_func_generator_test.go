@@ -3,6 +3,8 @@ package gowrtr
 import (
 	"testing"
 
+	"github.com/moznion/gowrtr/errmsg"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -81,4 +83,44 @@ func TestShouldGenerateInlineGoFuncWithInvocation(t *testing.T) {
 	gen, err := generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
+}
+
+func TestShouldGenerateInlineFuncRaisesErrorWhenInlineFuncSignatureIsNil(t *testing.T) {
+	generator := NewInlineFuncGenerator(
+		false,
+		nil,
+	)
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.InlineFuncSignatureIsNilError().Error())
+}
+
+func TestShouldGenerateInlineFuncRaisesErrorWhenInlineFuncSignatureGeneratorRaisesError(t *testing.T) {
+	generator := NewInlineFuncGenerator(
+		false,
+		NewInlineFuncSignatureGenerator().AddFuncParameters(
+			NewFuncParameter("", "string"),
+		),
+	)
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncParameterNameIsEmptyErr().Error())
+}
+
+func TestShouldGenerateInlineFuncRaisesErrorWhenStatementRaisesError(t *testing.T) {
+	generator := NewInlineFuncGenerator(
+		false,
+		NewInlineFuncSignatureGenerator(),
+		NewFuncGenerator(nil, NewFuncSignatureGenerator("")),
+	)
+
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+}
+
+func TestShouldGenerateInlineFuncRaisesErrorWhenFuncInvocationGeneratorRaisesError(t *testing.T) {
+	generator := NewInlineFuncGenerator(
+		false,
+		NewInlineFuncSignatureGenerator(),
+	).AddFuncInvocation(NewFuncInvocationGenerator(""))
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncInvocationParameterIsEmptyError().Error())
 }

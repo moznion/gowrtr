@@ -3,8 +3,7 @@ package gowrtr
 import "fmt"
 
 type PackageGenerator struct {
-	Name       string
-	generators []CodeGeneratable
+	Name string
 }
 
 func NewPackageGenerator(packageName string) *PackageGenerator {
@@ -13,11 +12,7 @@ func NewPackageGenerator(packageName string) *PackageGenerator {
 	}
 }
 
-func (pg *PackageGenerator) AddStatement(c CodeGeneratable) *PackageGenerator {
-	pg.generators = append(pg.generators, c)
-	return pg
-}
-
 func (pg *PackageGenerator) Generate(indentLevel int) (string, error) {
-	return fmt.Sprintf("package %s\n", pg.Name), nil
+	indent := buildIndent(indentLevel)
+	return fmt.Sprintf("%spackage %s\n", indent, pg.Name), nil
 }

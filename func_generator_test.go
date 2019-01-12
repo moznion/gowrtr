@@ -3,6 +3,8 @@ package gowrtr
 import (
 	"testing"
 
+	"github.com/moznion/gowrtr/errmsg"
+
 	"github.com/stretchr/testify/assert"
 )
 
@@ -44,4 +46,58 @@ func TestShouldGenerateFuncCode(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, gen)
 	}
+}
+
+func TestShouldGenerateFuncCodeGiveUpWhenFuncNameIsEmpty(t *testing.T) {
+	generator := NewFuncGenerator(
+		nil,
+		NewFuncSignatureGenerator("").
+			AddFuncParameters(
+				NewFuncParameter("foo", ""),
+				NewFuncParameter("bar", "string"),
+			),
+	)
+
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+}
+
+func TestShouldGenerateFuncCodeGiveUpWhenFuncSignatureIsNil(t *testing.T) {
+	generator := NewFuncGenerator(
+		nil,
+		nil,
+	)
+
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncSignatureIsNilError().Error())
+}
+
+func TestShouldGenerateFuncCodeGiveUpWhenFuncReceiverRaisesError(t *testing.T) {
+	generator := NewFuncGenerator(
+		NewFuncReceiverGenerator("", "*Foo"),
+		NewFuncSignatureGenerator("myFunc").
+			AddFuncParameters(
+				NewFuncParameter("foo", ""),
+				NewFuncParameter("bar", "string"),
+			),
+	)
+
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncReceiverNameIsEmptyError().Error())
+}
+
+func TestShouldGenerateFuncCodeGiveUpWhenStatementGeneratorRaisesError(t *testing.T) {
+	generator := NewFuncGenerator(
+		nil,
+		NewFuncSignatureGenerator("myFunc").
+			AddFuncParameters(
+				NewFuncParameter("foo", ""),
+				NewFuncParameter("bar", "string"),
+			).
+			AddReturnTypes("string", "error"),
+		NewFuncGenerator(nil, NewFuncSignatureGenerator("")),
+	)
+
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
 }

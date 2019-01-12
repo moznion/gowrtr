@@ -3,6 +3,7 @@ package gowrtr
 import (
 	"testing"
 
+	"github.com/moznion/gowrtr/errmsg"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -53,4 +54,13 @@ func TestShouldGenerateForCodeWithExpandingMethod(t *testing.T) {
 	gen, err := generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
+}
+
+func TestShouldGenerateForCodeGiveUpWhenStatementGeneratorRaisesError(t *testing.T) {
+	generator := NewForGenerator(
+		"i := 0; i < foo; i++",
+		NewFuncGenerator(nil, NewFuncSignatureGenerator("")),
+	)
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
 }

@@ -25,11 +25,12 @@ func (ig *ImportGenerator) Generate(indentLevel int) (string, error) {
 		return "", nil
 	}
 
-	stmt := "import (\n"
+	indent := buildIndent(indentLevel)
+	stmt := indent + "import (\n"
 	for _, name := range ig.Names {
-		stmt += fmt.Sprintf("\t\"%s\"\n", name)
+		stmt += fmt.Sprintf("%s\t\"%s\"\n", indent, name)
 	}
-	stmt += ")\n"
+	stmt += indent + ")\n"
 
 	return stmt, nil
 }

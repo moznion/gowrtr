@@ -1,6 +1,10 @@
 package gowrtr
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/moznion/gowrtr/errmsg"
+)
 
 type FuncInvocationGenerator struct {
 	Parameters []string
@@ -17,5 +21,11 @@ func (fig *FuncInvocationGenerator) AddParameters(parameters ...string) *FuncInv
 }
 
 func (fig *FuncInvocationGenerator) Generate(indentLevel int) (string, error) {
+	for _, param := range fig.Parameters {
+		if param == "" {
+			return "", errmsg.FuncInvocationParameterIsEmptyError()
+		}
+	}
+
 	return "(" + strings.Join(fig.Parameters, ", ") + ")", nil
 }

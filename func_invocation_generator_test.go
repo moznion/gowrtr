@@ -1,6 +1,7 @@
 package gowrtr
 
 import (
+	"github.com/moznion/gowrtr/errmsg"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -22,4 +23,10 @@ func TestShouldGenerateFuncInvocationCode(t *testing.T) {
 	gen, err = generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "(foo, bar)", gen)
+}
+
+func TestShouldGenerateFuncInvocationRaisesErrorWhenParameterIsEmpty(t *testing.T) {
+	generator := NewFuncInvocationGenerator("foo", "", "bar")
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncInvocationParameterIsEmptyError().Error())
 }

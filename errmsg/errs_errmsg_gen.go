@@ -60,6 +60,11 @@ func InlineFuncSignatureIsNilError() error {
 	return errors.New("[GOWRTR-11] inline func signature must not be nil, bit it gets nil")
 }
 
+// FuncInvocationParameterIsEmptyError returns the error.
+func FuncInvocationParameterIsEmptyError() error {
+	return errors.New("[GOWRTR-12] a parameter of function invocation must not be nil, but it gets nil")
+}
+
 // ErrsList returns the list of errors.
 func ErrsList() []string {
 	return []string{
@@ -74,5 +79,6 @@ func ErrsList() []string {
 		`[GOWRTR-9] type of func receiver must not be empty, but it gets empty`,
 		`[GOWRTR-10] func signature must not be nil, bit it gets nil`,
 		`[GOWRTR-11] inline func signature must not be nil, bit it gets nil`,
+		`[GOWRTR-12] a parameter of function invocation must not be nil, but it gets nil`,
 	}
 }
