@@ -24,11 +24,9 @@ func NewFuncParameter(name string, typ string) *FuncParameter {
 	}
 }
 
-func NewFuncSignatureGenerator(funcName string, funcParameters []*FuncParameter, returnTypes []string) *FuncSignatureGenerator {
+func NewFuncSignatureGenerator(funcName string) *FuncSignatureGenerator {
 	return &FuncSignatureGenerator{
-		FuncName:       funcName,
-		FuncParameters: funcParameters,
-		ReturnTypes:    returnTypes,
+		FuncName: funcName,
 	}
 }
 
