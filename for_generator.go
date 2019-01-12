@@ -4,17 +4,17 @@ import "fmt"
 
 type ForGenerator struct {
 	Condition  string
-	Statements []CodeGenerator
+	Statements []CodeGeneratable
 }
 
-func NewForGenerator(condition string, statements ...CodeGenerator) *ForGenerator {
+func NewForGenerator(condition string, statements ...CodeGeneratable) *ForGenerator {
 	return &ForGenerator{
 		Condition:  condition,
 		Statements: statements,
 	}
 }
 
-func (fg *ForGenerator) AddStatements(statements ...CodeGenerator) *ForGenerator {
+func (fg *ForGenerator) AddStatements(statements ...CodeGeneratable) *ForGenerator {
 	return &ForGenerator{
 		Condition:  fg.Condition,
 		Statements: append(fg.Statements, statements...),

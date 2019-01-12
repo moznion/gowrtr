@@ -1,16 +1,16 @@
 package gowrtr
 
 type CodeBlockGenerator struct {
-	Statements []CodeGenerator
+	Statements []CodeGeneratable
 }
 
-func NewCodeBlockGenerator(statements ...CodeGenerator) *CodeBlockGenerator {
+func NewCodeBlockGenerator(statements ...CodeGeneratable) *CodeBlockGenerator {
 	return &CodeBlockGenerator{
 		Statements: statements,
 	}
 }
 
-func (c *CodeBlockGenerator) AddStatements(statements ...CodeGenerator) *CodeBlockGenerator {
+func (c *CodeBlockGenerator) AddStatements(statements ...CodeGeneratable) *CodeBlockGenerator {
 	return &CodeBlockGenerator{
 		Statements: append(c.Statements, statements...),
 	}

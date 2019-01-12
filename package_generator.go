@@ -4,7 +4,7 @@ import "fmt"
 
 type PackageGenerator struct {
 	Name       string
-	generators []CodeGenerator
+	generators []CodeGeneratable
 }
 
 func NewPackageGenerator(packageName string) *PackageGenerator {
@@ -13,7 +13,7 @@ func NewPackageGenerator(packageName string) *PackageGenerator {
 	}
 }
 
-func (pg *PackageGenerator) AddStatement(c CodeGenerator) *PackageGenerator {
+func (pg *PackageGenerator) AddStatement(c CodeGeneratable) *PackageGenerator {
 	pg.generators = append(pg.generators, c)
 	return pg
 }
