@@ -1,6 +1,7 @@
 package gowrtr
 
 import (
+	"regexp"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -47,7 +48,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		).
 		AddReturnTypes("string", "error")
 
-	generator := NewCodeGenerator(
+	generator := NewRootGenerator(
 		NewCommentGenerator(" THIS CODE WAS AUTO GENERATED"),
 		NewNewlineGenerator(),
 		NewPackageGenerator("mypkg"),
@@ -91,7 +92,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		),
 	)
 
-	generated, err := generator.Generate(0)
+	generated, err := generator.EnableSyntaxChecking().Generate(0)
 
 	assert.NoError(t, err)
 	assert.Equal(t, expected, generated)
@@ -136,7 +137,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 		).
 		AddReturnTypes("string", "error")
 
-	generator := NewCodeGenerator(
+	generator := NewRootGenerator(
 		NewCommentGenerator(" THIS CODE WAS AUTO GENERATED"),
 		NewNewlineGenerator(),
 		NewPackageGenerator("mypkg"),
@@ -225,7 +226,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		).
 		AddReturnTypes("string", "error")
 
-	generator := NewCodeGenerator(
+	generator := NewRootGenerator(
 		NewCommentGenerator(" THIS CODE WAS AUTO GENERATED"),
 		NewNewlineGenerator(),
 		NewPackageGenerator("mypkg"),
@@ -311,7 +312,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		).
 		AddReturnTypes("string", "error")
 
-	generator := NewCodeGenerator(
+	generator := NewRootGenerator(
 		NewCommentGenerator(" THIS CODE WAS AUTO GENERATED"),
 		NewNewlineGenerator(),
 		NewPackageGenerator("mypkg"),
@@ -358,7 +359,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 }
 
 func TestShouldGenerateCodeRaisesError(t *testing.T) {
-	generator := NewCodeGenerator(
+	generator := NewRootGenerator(
 		NewCommentGenerator(" THIS CODE WAS AUTO GENERATED"),
 		NewNewlineGenerator(),
 		NewPackageGenerator("mypkg"),
@@ -371,4 +372,33 @@ func TestShouldGenerateCodeRaisesError(t *testing.T) {
 
 	_, err := generator.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncSignatureIsNilError().Error())
+}
+
+func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
+	{
+		generator := NewRootGenerator(
+			NewRawStatementGenerator("\timport something", true),
+		).EnableSyntaxChecking()
+
+		_, err := generator.Generate(0)
+		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="gofmt -e".+`), err.Error())
+	}
+
+	{
+		generator := NewRootGenerator(
+			NewRawStatementGenerator("\timport something", true),
+		).EnableGofmt()
+
+		_, err := generator.Generate(0)
+		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="gofmt".+`), err.Error())
+	}
+
+	{
+		generator := NewRootGenerator(
+			NewRawStatementGenerator("\timport something", true),
+		).EnableGoimports()
+
+		_, err := generator.Generate(0)
+		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="goimports".+`), err.Error())
+	}
 }
