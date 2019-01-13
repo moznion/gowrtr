@@ -1,0 +1,14 @@
+language: go
+
+go:
+  - 1.11
+  - master
+
+script: make check
+
+install:
+  - go get -u golang.org/x/lint/golint
+  - make bootstrap
+
+sudo: false
+
