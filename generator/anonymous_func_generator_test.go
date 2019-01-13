@@ -8,10 +8,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestShouldGenerateInlineFunc(t *testing.T) {
-	generator := NewInlineFuncGenerator(
+func TestShouldGenerateAnonymousFunc(t *testing.T) {
+	generator := NewAnonymousFuncGenerator(
 		false,
-		NewInlineFuncSignatureGenerator(),
+		NewAnonymousFuncSignatureGenerator(),
 	)
 
 	{
@@ -39,10 +39,10 @@ func TestShouldGenerateInlineFunc(t *testing.T) {
 	}
 }
 
-func TestShouldGenerateInlineFuncWithSignature(t *testing.T) {
-	generator := NewInlineFuncGenerator(
+func TestShouldGenerateAnonymousFuncWithSignature(t *testing.T) {
+	generator := NewAnonymousFuncGenerator(
 		false,
-		NewInlineFuncSignatureGenerator().
+		NewAnonymousFuncSignatureGenerator().
 			AddFuncParameters(
 				NewFuncParameter("foo", "string"),
 				NewFuncParameter("bar", "int64"),
@@ -62,10 +62,10 @@ func TestShouldGenerateInlineFuncWithSignature(t *testing.T) {
 	assert.Equal(t, expected, gen)
 }
 
-func TestShouldGenerateInlineGoFuncWithInvocation(t *testing.T) {
-	generator := NewInlineFuncGenerator(
+func TestShouldGenerateAnonymousGoFuncWithInvocation(t *testing.T) {
+	generator := NewAnonymousFuncGenerator(
 		true,
-		NewInlineFuncSignatureGenerator().
+		NewAnonymousFuncSignatureGenerator().
 			AddFuncParameters(
 				NewFuncParameter("foo", "string"),
 				NewFuncParameter("bar", "int64"),
@@ -85,19 +85,19 @@ func TestShouldGenerateInlineGoFuncWithInvocation(t *testing.T) {
 	assert.Equal(t, expected, gen)
 }
 
-func TestShouldGenerateInlineFuncRaisesErrorWhenInlineFuncSignatureIsNil(t *testing.T) {
-	generator := NewInlineFuncGenerator(
+func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureIsNil(t *testing.T) {
+	generator := NewAnonymousFuncGenerator(
 		false,
 		nil,
 	)
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.InlineFuncSignatureIsNilError().Error())
+	assert.EqualError(t, err, errmsg.AnonymousFuncSignatureIsNilError().Error())
 }
 
-func TestShouldGenerateInlineFuncRaisesErrorWhenInlineFuncSignatureGeneratorRaisesError(t *testing.T) {
-	generator := NewInlineFuncGenerator(
+func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureGeneratorRaisesError(t *testing.T) {
+	generator := NewAnonymousFuncGenerator(
 		false,
-		NewInlineFuncSignatureGenerator().AddFuncParameters(
+		NewAnonymousFuncSignatureGenerator().AddFuncParameters(
 			NewFuncParameter("", "string"),
 		),
 	)
@@ -105,10 +105,10 @@ func TestShouldGenerateInlineFuncRaisesErrorWhenInlineFuncSignatureGeneratorRais
 	assert.EqualError(t, err, errmsg.FuncParameterNameIsEmptyErr().Error())
 }
 
-func TestShouldGenerateInlineFuncRaisesErrorWhenStatementRaisesError(t *testing.T) {
-	generator := NewInlineFuncGenerator(
+func TestShouldGenerateAnonymousFuncRaisesErrorWhenStatementRaisesError(t *testing.T) {
+	generator := NewAnonymousFuncGenerator(
 		false,
-		NewInlineFuncSignatureGenerator(),
+		NewAnonymousFuncSignatureGenerator(),
 		NewFuncGenerator(nil, NewFuncSignatureGenerator("")),
 	)
 
@@ -116,10 +116,10 @@ func TestShouldGenerateInlineFuncRaisesErrorWhenStatementRaisesError(t *testing.
 	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
 }
 
-func TestShouldGenerateInlineFuncRaisesErrorWhenFuncInvocationGeneratorRaisesError(t *testing.T) {
-	generator := NewInlineFuncGenerator(
+func TestShouldGenerateAnonymousFuncRaisesErrorWhenFuncInvocationGeneratorRaisesError(t *testing.T) {
+	generator := NewAnonymousFuncGenerator(
 		false,
-		NewInlineFuncSignatureGenerator(),
+		NewAnonymousFuncSignatureGenerator(),
 	).SetFuncInvocation(NewFuncInvocationGenerator(""))
 	_, err := generator.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncInvocationParameterIsEmptyError().Error())

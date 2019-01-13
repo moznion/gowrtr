@@ -5,8 +5,8 @@ import (
 	"log"
 )
 
-func ExampleInlineFuncSignatureGenerator_Generate() {
-	generator := NewInlineFuncSignatureGenerator().
+func ExampleAnonymousFuncSignatureGenerator_Generate() {
+	generator := NewAnonymousFuncSignatureGenerator().
 		AddFuncParameters(
 			NewFuncParameter("foo", "string"),
 			NewFuncParameter("bar", "int64"),

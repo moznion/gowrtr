@@ -5,10 +5,10 @@ import (
 	"log"
 )
 
-func ExampleInlineFuncGenerator_Generate() {
-	generator := NewInlineFuncGenerator(
+func ExampleAnonymousFuncGenerator_Generate() {
+	generator := NewAnonymousFuncGenerator(
 		true,
-		NewInlineFuncSignatureGenerator().
+		NewAnonymousFuncSignatureGenerator().
 			AddFuncParameters(
 				NewFuncParameter("foo", "string"),
 				NewFuncParameter("bar", "int64"),

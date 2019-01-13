@@ -34,9 +34,9 @@ func ExampleRootGenerator_Generate() {
 		).AddStatements(
 			NewCodeBlockGenerator(
 				NewRawStatementGenerator("str := ", false),
-				NewInlineFuncGenerator(
+				NewAnonymousFuncGenerator(
 					false,
-					NewInlineFuncSignatureGenerator().
+					NewAnonymousFuncSignatureGenerator().
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatementGenerator("bar"),

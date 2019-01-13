@@ -56,9 +56,9 @@ func FuncSignatureIsNilError() error {
 	return errors.New(`[GOWRTR-10] func signature must not be nil, bit it gets nil`)
 }
 
-// InlineFuncSignatureIsNilError returns the error.
-func InlineFuncSignatureIsNilError() error {
-	return errors.New(`[GOWRTR-11] inline func signature must not be nil, bit it gets nil`)
+// AnonymousFuncSignatureIsNilError returns the error.
+func AnonymousFuncSignatureIsNilError() error {
+	return errors.New(`[GOWRTR-11] anonymous func signature must not be nil, bit it gets nil`)
 }
 
 // FuncInvocationParameterIsEmptyError returns the error.
@@ -89,7 +89,7 @@ func ErrsList() []string {
 		`[GOWRTR-8] name of func receiver must not be empty, but it gets empty`,
 		`[GOWRTR-9] type of func receiver must not be empty, but it gets empty`,
 		`[GOWRTR-10] func signature must not be nil, bit it gets nil`,
-		`[GOWRTR-11] inline func signature must not be nil, bit it gets nil`,
+		`[GOWRTR-11] anonymous func signature must not be nil, bit it gets nil`,
 		`[GOWRTR-12] a parameter of function invocation must not be nil, but it gets nil`,
 		`[GOWRTR-13] code formatter raises error: command="%s", err="%s", msg="%s"`,
 		`[GOWRTR-14] condition of case must not be empty, but it gets empty`,
