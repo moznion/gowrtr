@@ -56,6 +56,8 @@ func main() {
 }
 ```
 
+And [GoDoc](https://godoc.org/github.com/moznion/gowrtr) shows you a greater number of examples.
+
 Documents
 --
 
