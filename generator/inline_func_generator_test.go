@@ -73,7 +73,7 @@ func TestShouldGenerateInlineGoFuncWithInvocation(t *testing.T) {
 			AddReturnTypes("string", "error"),
 		NewCommentGenerator(" do something"),
 		NewRawStatementGenerator(`fmt.Printf("%d", i)`, true),
-	).AddFuncInvocation(NewFuncInvocationGenerator("foo", "bar"))
+	).SetFuncInvocation(NewFuncInvocationGenerator("foo", "bar"))
 
 	expected := `go func(foo string, bar int64) (string, error) {
 	// do something
@@ -120,7 +120,7 @@ func TestShouldGenerateInlineFuncRaisesErrorWhenFuncInvocationGeneratorRaisesErr
 	generator := NewInlineFuncGenerator(
 		false,
 		NewInlineFuncSignatureGenerator(),
-	).AddFuncInvocation(NewFuncInvocationGenerator(""))
+	).SetFuncInvocation(NewFuncInvocationGenerator(""))
 	_, err := generator.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncInvocationParameterIsEmptyError().Error())
 }

@@ -2,6 +2,7 @@ package generator
 
 import "github.com/moznion/gowrtr/internal/errmsg"
 
+// InlineFuncGenerator represents a code generator for inline func.
 type InlineFuncGenerator struct {
 	GoFunc              bool
 	InlineFuncSignature *InlineFuncSignatureGenerator
@@ -9,6 +10,8 @@ type InlineFuncGenerator struct {
 	FuncInvocation      *FuncInvocationGenerator
 }
 
+// NewInlineFuncGenerator returns a new `InlineFuncGenerator`.
+// If `goFunc` is true, the inline function will be `go func`.
 func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator, statements ...StatementGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              goFunc,
@@ -17,6 +20,7 @@ func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator
 	}
 }
 
+// AddStatements adds statements for the function to InlineFuncGenerator.
 func (ifg *InlineFuncGenerator) AddStatements(statements ...StatementGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              ifg.GoFunc,
@@ -26,7 +30,8 @@ func (ifg *InlineFuncGenerator) AddStatements(statements ...StatementGenerator) 
 	}
 }
 
-func (ifg *InlineFuncGenerator) AddFuncInvocation(funcInvocation *FuncInvocationGenerator) *InlineFuncGenerator {
+// SetFuncInvocation sets an invocation of the inline func to InlineFuncGenerator.
+func (ifg *InlineFuncGenerator) SetFuncInvocation(funcInvocation *FuncInvocationGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              ifg.GoFunc,
 		InlineFuncSignature: ifg.InlineFuncSignature,
@@ -35,6 +40,7 @@ func (ifg *InlineFuncGenerator) AddFuncInvocation(funcInvocation *FuncInvocation
 	}
 }
 
+// Generate generates an inline func as golang's code.
 func (ifg *InlineFuncGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
