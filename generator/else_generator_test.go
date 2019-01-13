@@ -10,7 +10,9 @@ import (
 
 func TestShouldGenerateElseCode(t *testing.T) {
 	generator := NewElseGenerator(
+		NewCommentGenerator(" XXX test test"),
 		NewCommentGenerator(" do something"),
+	).AddStatements(
 		NewRawStatementGenerator(`fmt.Printf("%d", i)`, true),
 	)
 
@@ -18,6 +20,7 @@ func TestShouldGenerateElseCode(t *testing.T) {
 		gen, err := generator.Generate(0)
 		assert.NoError(t, err)
 		expected := ` else {
+	// XXX test test
 	// do something
 	fmt.Printf("%d", i)
 }`
@@ -28,6 +31,7 @@ func TestShouldGenerateElseCode(t *testing.T) {
 		gen, err := generator.Generate(2)
 		assert.NoError(t, err)
 		expected := ` else {
+			// XXX test test
 			// do something
 			fmt.Printf("%d", i)
 		}`

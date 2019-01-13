@@ -47,8 +47,7 @@ func TestShouldGenerateElseIfWithExpandingMethod(t *testing.T) {
 	// XXX: test test
 	// do something
 	fmt.Printf("%d", i)
-}
-`
+}`
 	gen, err := generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
