@@ -6,15 +6,18 @@ import (
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
+// InlineFuncSignatureGenerator represents a code generator for signature of inline func.
 type InlineFuncSignatureGenerator struct {
 	FuncParameters []*FuncParameter
 	ReturnTypes    []string
 }
 
+// NewInlineFuncSignatureGenerator returns a new `InlineFuncSignatureGenerator`.
 func NewInlineFuncSignatureGenerator() *InlineFuncSignatureGenerator {
 	return &InlineFuncSignatureGenerator{}
 }
 
+// AddFuncParameters adds parameters of function to `InlineFuncSignatureGenerator`.
 func (f *InlineFuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParameter) *InlineFuncSignatureGenerator {
 	return &InlineFuncSignatureGenerator{
 		FuncParameters: append(f.FuncParameters, funcParameters...),
@@ -22,6 +25,7 @@ func (f *InlineFuncSignatureGenerator) AddFuncParameters(funcParameters ...*Func
 	}
 }
 
+// AddReturnTypes adds return types of the function to `InlineFuncSignatureGenerator`.
 func (f *InlineFuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *InlineFuncSignatureGenerator {
 	return &InlineFuncSignatureGenerator{
 		FuncParameters: f.FuncParameters,
@@ -29,6 +33,7 @@ func (f *InlineFuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *In
 	}
 }
 
+// Generate generates a signature of the inline func as golang's code.
 func (f *InlineFuncSignatureGenerator) Generate(indentLevel int) (string, error) {
 	stmt := "("
 
