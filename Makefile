@@ -12,7 +12,7 @@ test-coverage: errgen
 	go tool cover -html=cover.out -o cover.html
 
 lint:
-	golint $(PKGS)
+	golint -set_exit_status $(PKGS)
 
 vet:
 	go vet $(PKGS)
