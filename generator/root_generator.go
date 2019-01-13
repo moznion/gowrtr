@@ -9,6 +9,7 @@ import (
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
+// RootGenerator is a code generator for the entry point.
 type RootGenerator struct {
 	Statements     []StatementGenerator
 	Gofmt          bool
@@ -17,12 +18,15 @@ type RootGenerator struct {
 	SyntaxChecking bool
 }
 
+// NewRootGenerator generates a new `RootGenerator`.
 func NewRootGenerator(statements ...StatementGenerator) *RootGenerator {
 	return &RootGenerator{
 		Statements: statements,
 	}
 }
 
+// AddStatements adds statements to RootGenerator.
+// This method returns a *new* `RootGenerator`; it means this method acts as immutable.
 func (g *RootGenerator) AddStatements(statements ...StatementGenerator) *RootGenerator {
 	return &RootGenerator{
 		Statements:     append(g.Statements, statements...),
@@ -33,6 +37,8 @@ func (g *RootGenerator) AddStatements(statements ...StatementGenerator) *RootGen
 	}
 }
 
+// EnableGofmt enables `gofmt`. If `gofmt` is enabled, it applies `gofmt` on code generation phase.
+// This method returns a *new* `RootGenerator`; it means this method acts as immutable.
 func (g *RootGenerator) EnableGofmt(gofmtOptions ...string) *RootGenerator {
 	return &RootGenerator{
 		Statements:     g.Statements,
@@ -43,6 +49,8 @@ func (g *RootGenerator) EnableGofmt(gofmtOptions ...string) *RootGenerator {
 	}
 }
 
+// EnableGoimports enables `goimports`. If `goimports` is enabled, it applies `goimports` on code generation phase.
+// This method returns a *new* `RootGenerator`; it means this method acts as immutable.
 func (g *RootGenerator) EnableGoimports() *RootGenerator {
 	return &RootGenerator{
 		Statements:     g.Statements,
@@ -53,6 +61,8 @@ func (g *RootGenerator) EnableGoimports() *RootGenerator {
 	}
 }
 
+// EnableSyntaxChecking enables syntax checking. If this option is enabled, it checks the syntax of the code on code generation phase.
+// This method returns a *new* `RootGenerator`; it means this method acts as immutable.
 func (g *RootGenerator) EnableSyntaxChecking() *RootGenerator {
 	return &RootGenerator{
 		Statements:     g.Statements,
@@ -63,6 +73,7 @@ func (g *RootGenerator) EnableSyntaxChecking() *RootGenerator {
 	}
 }
 
+// Generate generates golang's code according to registered statements.
 func (g *RootGenerator) Generate(indentLevel int) (string, error) {
 	generatedCode := ""
 
