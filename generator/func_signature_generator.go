@@ -6,17 +6,20 @@ import (
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
+// FuncParameter represents a parameter of the func.
 type FuncParameter struct {
 	Name string
 	Type string
 }
 
+// FuncSignatureGenerator represents a code generator for the signature of the func.
 type FuncSignatureGenerator struct {
 	FuncName       string
 	FuncParameters []*FuncParameter
 	ReturnTypes    []string
 }
 
+// NewFuncParameter returns a new `FuncSignatureGenerator`.
 func NewFuncParameter(name string, typ string) *FuncParameter {
 	return &FuncParameter{
 		Name: name,
@@ -24,12 +27,14 @@ func NewFuncParameter(name string, typ string) *FuncParameter {
 	}
 }
 
+// NewFuncSignatureGenerator returns a new `FuncSignatureGenerator`.
 func NewFuncSignatureGenerator(funcName string) *FuncSignatureGenerator {
 	return &FuncSignatureGenerator{
 		FuncName: funcName,
 	}
 }
 
+// AddFuncParameters adds parameters of the func to `FuncSignatureGenerator`.
 func (f *FuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParameter) *FuncSignatureGenerator {
 	return &FuncSignatureGenerator{
 		FuncName:       f.FuncName,
@@ -38,6 +43,7 @@ func (f *FuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParame
 	}
 }
 
+// AddReturnTypes adds return types of the func to `FuncSignatureGenerator`.
 func (f *FuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *FuncSignatureGenerator {
 	return &FuncSignatureGenerator{
 		FuncName:       f.FuncName,
@@ -46,6 +52,7 @@ func (f *FuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *FuncSign
 	}
 }
 
+// Generate generates a signature of the func as golang's code.
 func (f *FuncSignatureGenerator) Generate(indentLevel int) (string, error) {
 	if f.FuncName == "" {
 		return "", errmsg.FuncNameIsEmptyError()
