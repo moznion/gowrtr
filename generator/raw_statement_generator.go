@@ -6,7 +6,7 @@ type RawStatementGenerator struct {
 }
 
 func NewRawStatementGenerator(stmt string, withNewline ...bool) *RawStatementGenerator {
-	nl := false
+	nl := true
 	if len(withNewline) > 0 {
 		nl = withNewline[0]
 	}
