@@ -15,6 +15,7 @@ func NewDefaultCaseGenerator(statements ...StatementGenerator) *DefaultCaseGener
 }
 
 // AddStatements adds statements for `default` block to `DefaultCaseGenerator`.
+// This method returns a *new* `DefaultCaseGenerator`; it means this method acts as immutable.
 func (d *DefaultCaseGenerator) AddStatements(statements ...StatementGenerator) *DefaultCaseGenerator {
 	return &DefaultCaseGenerator{
 		Statements: append(d.Statements, statements...),

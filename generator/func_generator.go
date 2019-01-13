@@ -21,6 +21,7 @@ func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureG
 }
 
 // AddStatements adds statements for the func to `FuncGenerator`.
+// This method returns a *new* `FuncGenerator`; it means this method acts as immutable.
 func (fg *FuncGenerator) AddStatements(statements ...StatementGenerator) *FuncGenerator {
 	return &FuncGenerator{
 		FuncReceiver:  fg.FuncReceiver,

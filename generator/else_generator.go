@@ -15,6 +15,7 @@ func NewElseGenerator(statements ...StatementGenerator) *ElseGenerator {
 }
 
 // AddStatements adds statements for `else` block to `ElseGenerator`.
+// This method returns a *new* `ElseGenerator`; it means this method acts as immutable.
 func (ig *ElseGenerator) AddStatements(statements ...StatementGenerator) *ElseGenerator {
 	return &ElseGenerator{
 		Statements: append(ig.Statements, statements...),

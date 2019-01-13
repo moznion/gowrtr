@@ -66,7 +66,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewImportGenerator("fmt"),
 		NewNewlineGenerator(),
 		NewInterfaceGenerator("MyInterface").
-			AddFuncSignature(myFuncSignature),
+			AddFuncSignatures(myFuncSignature),
 		NewNewlineGenerator(),
 		NewStructGenerator("MyStruct").
 			AddField("Foo", "string").
@@ -89,7 +89,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatementGenerator("bar"),
-				).AddFuncInvocation(NewFuncInvocationGenerator("foo")),
+				).SetFuncInvocation(NewFuncInvocationGenerator("foo")),
 				NewNewlineGenerator(),
 				NewIfGenerator(`str == ""`).
 					AddStatements(
@@ -181,7 +181,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 		NewImportGenerator("fmt"),
 		NewNewlineGenerator(),
 		NewInterfaceGenerator("MyInterface").
-			AddFuncSignature(myFuncSignature),
+			AddFuncSignatures(myFuncSignature),
 		NewNewlineGenerator(),
 		NewStructGenerator("MyStruct").
 			AddField("Foo", "string").
@@ -204,7 +204,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatementGenerator("bar"),
-				).AddFuncInvocation(NewFuncInvocationGenerator("foo")),
+				).SetFuncInvocation(NewFuncInvocationGenerator("foo")),
 				NewNewlineGenerator(),
 				NewIfGenerator(`str == ""`).
 					AddStatements(
@@ -296,7 +296,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewImportGenerator("fmt"),
 		NewNewlineGenerator(),
 		NewInterfaceGenerator("MyInterface").
-			AddFuncSignature(myFuncSignature),
+			AddFuncSignatures(myFuncSignature),
 		NewNewlineGenerator(),
 		NewStructGenerator("MyStruct").
 			AddField("Foo", "string").
@@ -318,7 +318,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatementGenerator("bar"),
-				).AddFuncInvocation(NewFuncInvocationGenerator("foo")),
+				).SetFuncInvocation(NewFuncInvocationGenerator("foo")),
 				NewNewlineGenerator(),
 				NewIfGenerator(`str == ""`).
 					AddStatements(
@@ -405,7 +405,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewNewlineGenerator(),
 		NewPackageGenerator("mypkg"),
 		NewInterfaceGenerator("MyInterface").
-			AddFuncSignature(myFuncSignature),
+			AddFuncSignatures(myFuncSignature),
 		NewNewlineGenerator(),
 		NewStructGenerator("MyStruct").
 			AddField("Foo", "string").
@@ -427,7 +427,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatementGenerator("bar"),
-				).AddFuncInvocation(NewFuncInvocationGenerator("foo")),
+				).SetFuncInvocation(NewFuncInvocationGenerator("foo")),
 				NewNewlineGenerator(),
 				NewIfGenerator(`str == ""`).
 					AddStatements(

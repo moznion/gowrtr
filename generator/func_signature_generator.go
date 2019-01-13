@@ -35,6 +35,7 @@ func NewFuncSignatureGenerator(funcName string) *FuncSignatureGenerator {
 }
 
 // AddFuncParameters adds parameters of the func to `FuncSignatureGenerator`.
+// This method returns a *new* `FuncSignatureGenerator`; it means this method acts as immutable.
 func (f *FuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParameter) *FuncSignatureGenerator {
 	return &FuncSignatureGenerator{
 		FuncName:       f.FuncName,
@@ -44,6 +45,7 @@ func (f *FuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParame
 }
 
 // AddReturnTypes adds return types of the func to `FuncSignatureGenerator`.
+// This method returns a *new* `FuncSignatureGenerator`; it means this method acts as immutable.
 func (f *FuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *FuncSignatureGenerator {
 	return &FuncSignatureGenerator{
 		FuncName:       f.FuncName,

@@ -21,6 +21,7 @@ func NewIfGenerator(condition string, statements ...StatementGenerator) *IfGener
 }
 
 // AddStatements adds statements for `if` block to `IfGenerator`.
+// This method returns a *new* `IfGenerator`; it means this method acts as immutable.
 func (ig *IfGenerator) AddStatements(statements ...StatementGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:    ig.Condition,
@@ -31,6 +32,7 @@ func (ig *IfGenerator) AddStatements(statements ...StatementGenerator) *IfGenera
 }
 
 // AddElseIfBlocks adds `else-if` block to `IfGenerator`.
+// This method returns a *new* `IfGenerator`; it means this method acts as immutable.
 func (ig *IfGenerator) AddElseIfBlocks(blocks ...*ElseIfGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:    ig.Condition,
@@ -41,6 +43,7 @@ func (ig *IfGenerator) AddElseIfBlocks(blocks ...*ElseIfGenerator) *IfGenerator 
 }
 
 // SetElseBlock sets `else` block to `IfGenerator`.
+// This method returns a *new* `IfGenerator`; it means this method acts as immutable.
 func (ig *IfGenerator) SetElseBlock(block *ElseGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:    ig.Condition,

@@ -13,7 +13,7 @@ type StructField struct {
 	Tag  string
 }
 
-// StructGenerator represents a code generator of `struct` notation.
+// StructGenerator represents a code generator for `struct` notation.
 type StructGenerator struct {
 	Name   string
 	Fields []*StructField

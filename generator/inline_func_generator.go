@@ -20,7 +20,8 @@ func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator
 	}
 }
 
-// AddStatements adds statements for the function to InlineFuncGenerator.
+// AddStatements adds statements for the function to `InlineFuncGenerator`.
+// This method returns a *new* `InlineFuncGenerator`; it means this method acts as immutable.
 func (ifg *InlineFuncGenerator) AddStatements(statements ...StatementGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              ifg.GoFunc,
@@ -30,7 +31,8 @@ func (ifg *InlineFuncGenerator) AddStatements(statements ...StatementGenerator) 
 	}
 }
 
-// SetFuncInvocation sets an invocation of the inline func to InlineFuncGenerator.
+// SetFuncInvocation sets an invocation of the inline func to `InlineFuncGenerator`.
+// This method returns a *new* `InlineFuncGenerator`; it means this method acts as immutable.
 func (ifg *InlineFuncGenerator) SetFuncInvocation(funcInvocation *FuncInvocationGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              ifg.GoFunc,

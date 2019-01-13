@@ -6,7 +6,7 @@ import (
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
-// CaseGenerator represents a generator of `case` statement.
+// CaseGenerator represents a code generator for `case` statement.
 // See also: https://tour.golang.org/flowcontrol/9
 type CaseGenerator struct {
 	Condition  string
@@ -22,7 +22,7 @@ func NewCaseGenerator(condition string, statements ...StatementGenerator) *CaseG
 }
 
 // AddStatements adds statements to `CaseGenerator`.
-// This method returns a *new* CaseGenerator; it means this method acts as immutable.
+// This method returns a *new* `CaseGenerator`; it means this method acts as immutable.
 func (c *CaseGenerator) AddStatements(statements ...StatementGenerator) *CaseGenerator {
 	return &CaseGenerator{
 		Condition:  c.Condition,

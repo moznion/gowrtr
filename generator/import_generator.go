@@ -17,6 +17,7 @@ func NewImportGenerator(names ...string) *ImportGenerator {
 }
 
 // AddImports adds import items to `ImportGenerator`.
+// This method returns a *new* `ImportGenerator`; it means this method acts as immutable.
 func (ig *ImportGenerator) AddImports(imps ...string) *ImportGenerator {
 	return &ImportGenerator{
 		Names: append(ig.Names, imps...),

@@ -17,6 +17,7 @@ func NewForGenerator(condition string, statements ...StatementGenerator) *ForGen
 }
 
 // AddStatements adds statements for `for` block to `ForGenerator`.
+// This method returns a *new* `ForGenerator`; it means this method acts as immutable.
 func (fg *ForGenerator) AddStatements(statements ...StatementGenerator) *ForGenerator {
 	return &ForGenerator{
 		Condition:  fg.Condition,

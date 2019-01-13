@@ -17,6 +17,7 @@ func NewElseIfGenerator(condition string, statements ...StatementGenerator) *Els
 }
 
 // AddStatements adds statements for the `else-if` block to `ElseIfGenerator`.
+// This method returns a *new* `ElseIfGenerator`; it means this method acts as immutable.
 func (ig *ElseIfGenerator) AddStatements(statements ...StatementGenerator) *ElseIfGenerator {
 	return &ElseIfGenerator{
 		Condition:  ig.Condition,

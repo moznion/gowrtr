@@ -18,7 +18,8 @@ func NewFuncInvocationGenerator(parameters ...string) *FuncInvocationGenerator {
 	}
 }
 
-// AddParameters adds parameters of func invocation.
+// AddParameters adds parameters of func invocation to `FuncInvocationGenerator`.
+// This method returns a *new* `FuncInvocationGenerator`; it means this method acts as immutable.
 func (fig *FuncInvocationGenerator) AddParameters(parameters ...string) *FuncInvocationGenerator {
 	return NewFuncInvocationGenerator(append(fig.Parameters, parameters...)...)
 }

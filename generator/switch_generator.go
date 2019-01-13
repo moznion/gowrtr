@@ -2,7 +2,7 @@ package generator
 
 import "fmt"
 
-// SwitchGenerator represents a code generator of `switch` statement.
+// SwitchGenerator represents a code generator for `switch` statement.
 // See also: https://tour.golang.org/flowcontrol/9
 type SwitchGenerator struct {
 	Condition        string

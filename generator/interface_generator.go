@@ -21,6 +21,7 @@ func NewInterfaceGenerator(name string, funcSignatures ...*FuncSignatureGenerato
 }
 
 // AddFuncSignatures adds signatures of the func to `InterfaceGenerator`.
+// This method returns a *new* `InterfaceGenerator`; it means this method acts as immutable.
 func (ig *InterfaceGenerator) AddFuncSignatures(sig ...*FuncSignatureGenerator) *InterfaceGenerator {
 	return &InterfaceGenerator{
 		Name:           ig.Name,

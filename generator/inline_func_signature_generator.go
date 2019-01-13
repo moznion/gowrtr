@@ -18,6 +18,7 @@ func NewInlineFuncSignatureGenerator() *InlineFuncSignatureGenerator {
 }
 
 // AddFuncParameters adds parameters of function to `InlineFuncSignatureGenerator`.
+// This method returns a *new* `InlineFuncSignatureGenerator`; it means this method acts as immutable.
 func (f *InlineFuncSignatureGenerator) AddFuncParameters(funcParameters ...*FuncParameter) *InlineFuncSignatureGenerator {
 	return &InlineFuncSignatureGenerator{
 		FuncParameters: append(f.FuncParameters, funcParameters...),
@@ -26,6 +27,7 @@ func (f *InlineFuncSignatureGenerator) AddFuncParameters(funcParameters ...*Func
 }
 
 // AddReturnTypes adds return types of the function to `InlineFuncSignatureGenerator`.
+// This method returns a *new* `InlineFuncSignatureGenerator`; it means this method acts as immutable.
 func (f *InlineFuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *InlineFuncSignatureGenerator {
 	return &InlineFuncSignatureGenerator{
 		FuncParameters: f.FuncParameters,

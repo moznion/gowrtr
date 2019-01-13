@@ -1,6 +1,6 @@
 package generator
 
-// CodeBlockGenerator represents a generator for plain code block.
+// CodeBlockGenerator represents a code generator for plain code block.
 //
 // example:
 // {
@@ -19,7 +19,7 @@ func NewCodeBlockGenerator(statements ...StatementGenerator) *CodeBlockGenerator
 }
 
 // AddStatements adds statements to `CodeBlockGenerator`.
-// This method returns a *new* CodeBlockGenerator; it means this method acts as immutable.
+// This method returns a *new* `CodeBlockGenerator`; it means this method acts as immutable.
 func (c *CodeBlockGenerator) AddStatements(statements ...StatementGenerator) *CodeBlockGenerator {
 	return &CodeBlockGenerator{
 		Statements: append(c.Statements, statements...),

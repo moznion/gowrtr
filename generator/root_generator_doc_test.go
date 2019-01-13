@@ -17,7 +17,7 @@ func ExampleRootGenerator_Generate() {
 		NewNewlineGenerator(),
 		NewPackageGenerator("mypkg"),
 		NewInterfaceGenerator("MyInterface").
-			AddFuncSignature(myFuncSignature),
+			AddFuncSignatures(myFuncSignature),
 		NewNewlineGenerator(),
 		NewStructGenerator("MyStruct").
 			AddField("Foo", "string").
@@ -40,7 +40,7 @@ func ExampleRootGenerator_Generate() {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatementGenerator("bar"),
-				).AddFuncInvocation(NewFuncInvocationGenerator("foo")),
+				).SetFuncInvocation(NewFuncInvocationGenerator("foo")),
 				NewNewlineGenerator(),
 				NewIfGenerator(`str == ""`).
 					AddStatements(
