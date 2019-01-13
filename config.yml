@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.11
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - checkout
+      - run: go get -u golang.org/x/lint/golint
+      - run: make installdeps
+      - run: make ci-test lint vet fmt-check
+      - run: bash <(curl -s https://codecov.io/bash)
+

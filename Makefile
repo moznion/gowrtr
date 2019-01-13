@@ -8,7 +8,7 @@ test: errgen
 	go test -v -cover $(PKGS)
 
 ci-test:
-	go test -v -cover $(PKGS)
+	go test -v -cover -race -coverprofile=coverage.txt -covermode=atomic $(PKGS)
 
 test-coverage: errgen
 	go test -v -cover -coverprofile cover.out $(PKGS)
