@@ -58,15 +58,40 @@ func main() {
 
 And [GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator) shows you a greater number of examples.
 
-Documents
+Description
 --
 
 Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator)
+
+### RootGenerator
 
 - `RootGenerator` is an entry point to generate the go code.
 - `RootGenerator` supports following code formatting on code generating phase. It applies such formatters to generated code.
   - `gofmt`: with `EnableGofmt(gofmtOptions ...string)`
   - `goimports`: with `EnableGoimports()`
+
+### Supported syntax
+
+- [x] `package`
+- [x] `import`
+- [x] `struct`
+- [x] `interface`
+- [x] `if`
+  - [x] `else if`
+  - [x] `else`
+- [x] `switch`
+  - [x] `case`
+  - [x] `default`
+- [x] `for`
+- [x] code block
+- [x] `func`
+- [x] anonymous func
+  - [x] immediately invoking
+- one line statement
+  - [x] raw
+  - [x] newline
+  - [x] `return`
+  - [x] `comment`
 
 License
 --
