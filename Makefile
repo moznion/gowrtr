@@ -37,7 +37,7 @@ bootstrap: installdeps
 	git submodule init
 	git submodule update
 	(cd go-errgen && git remote update && git checkout 1.3.1)
-	rm author/bin/errgen
+	rm -f author/bin/errgen
 	make build-errgen
 
 build-errgen:
