@@ -65,3 +65,69 @@ func TestShouldGenerateIfCodeGiveUpWhenStatementGeneratorRaisesError(t *testing.
 	_, err := generator.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
 }
+
+func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
+	generator := NewIfGenerator("i == 0",
+		NewCommentGenerator(" if"),
+	).AddElseIfBlocks(
+		NewElseIfGenerator("i < 0", NewCommentGenerator(" else if 1")),
+		nil,
+		NewElseIfGenerator("i > 0", NewCommentGenerator(" else if 2")),
+	).SetElseBlock(NewElseGenerator(
+		NewCommentGenerator(" else"),
+	))
+
+	{
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		expected := `if i == 0 {
+	// if
+} else if i < 0 {
+	// else if 1
+} else if i > 0 {
+	// else if 2
+} else {
+	// else
+}
+`
+		assert.Equal(t, expected, gen)
+	}
+
+	{
+		gen, err := generator.Generate(2)
+		assert.NoError(t, err)
+		expected := `		if i == 0 {
+			// if
+		} else if i < 0 {
+			// else if 1
+		} else if i > 0 {
+			// else if 2
+		} else {
+			// else
+		}
+`
+		assert.Equal(t, expected, gen)
+	}
+}
+
+func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {
+	generator := NewIfGenerator("i == 0",
+		NewCommentGenerator(" if"),
+	).AddElseIfBlocks(
+		NewElseIfGenerator("i < 0", NewFuncSignatureGenerator("")),
+	)
+
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+}
+
+func TestShouldGenerateIfElseRaisesError(t *testing.T) {
+	generator := NewIfGenerator("i == 0",
+		NewCommentGenerator(" if"),
+	).SetElseBlock(
+		NewElseGenerator(NewFuncSignatureGenerator("")),
+	)
+
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+}
