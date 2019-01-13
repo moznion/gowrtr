@@ -6,7 +6,7 @@ jobs:
     working_directory: /go/src/github.com/moznion/gowrtr
     steps:
       - checkout
-      - run: go get -u golang.org/x/lint/golint
+      - run: go get -u golang.org/x/lint/golint golang.org/x/tools/cmd/goimports
       - run: make installdeps
       - run: make ci-test lint vet fmt-check
       - run: bash <(curl -s https://codecov.io/bash)
