@@ -5,11 +5,11 @@ import "github.com/moznion/gowrtr/internal/errmsg"
 type InlineFuncGenerator struct {
 	GoFunc              bool
 	InlineFuncSignature *InlineFuncSignatureGenerator
-	Statements          []CodeGeneratable
+	Statements          []StatementGenerator
 	FuncInvocation      *FuncInvocationGenerator
 }
 
-func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator, statements ...CodeGeneratable) *InlineFuncGenerator {
+func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator, statements ...StatementGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              goFunc,
 		InlineFuncSignature: signature,
@@ -17,7 +17,7 @@ func NewInlineFuncGenerator(goFunc bool, signature *InlineFuncSignatureGenerator
 	}
 }
 
-func (ifg *InlineFuncGenerator) AddStatements(statements ...CodeGeneratable) *InlineFuncGenerator {
+func (ifg *InlineFuncGenerator) AddStatements(statements ...StatementGenerator) *InlineFuncGenerator {
 	return &InlineFuncGenerator{
 		GoFunc:              ifg.GoFunc,
 		InlineFuncSignature: ifg.InlineFuncSignature,

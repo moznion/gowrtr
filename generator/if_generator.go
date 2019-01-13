@@ -6,17 +6,17 @@ import (
 
 type IfGenerator struct {
 	Condition  string
-	Statements []CodeGeneratable
+	Statements []StatementGenerator
 }
 
-func NewIfGenerator(condition string, statements ...CodeGeneratable) *IfGenerator {
+func NewIfGenerator(condition string, statements ...StatementGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:  condition,
 		Statements: statements,
 	}
 }
 
-func (ig *IfGenerator) AddStatements(statements ...CodeGeneratable) *IfGenerator {
+func (ig *IfGenerator) AddStatements(statements ...StatementGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:  ig.Condition,
 		Statements: append(ig.Statements, statements...),

@@ -7,10 +7,10 @@ import (
 type FuncGenerator struct {
 	FuncReceiver  *FuncReceiverGenerator
 	FuncSignature *FuncSignatureGenerator
-	Statements    []CodeGeneratable
+	Statements    []StatementGenerator
 }
 
-func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureGenerator, statements ...CodeGeneratable) *FuncGenerator {
+func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureGenerator, statements ...StatementGenerator) *FuncGenerator {
 	return &FuncGenerator{
 		FuncReceiver:  receiver,
 		FuncSignature: signature,
@@ -18,7 +18,7 @@ func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureG
 	}
 }
 
-func (fg *FuncGenerator) AddStatements(statements ...CodeGeneratable) *FuncGenerator {
+func (fg *FuncGenerator) AddStatements(statements ...StatementGenerator) *FuncGenerator {
 	return &FuncGenerator{
 		FuncReceiver:  fg.FuncReceiver,
 		FuncSignature: fg.FuncSignature,

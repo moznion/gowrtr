@@ -6,25 +6,25 @@ import (
 	"os/exec"
 )
 
-type CodeGeneratable interface {
+type StatementGenerator interface {
 	Generate(indentLevel int) (string, error)
 }
 
-type CodeGenerator struct {
-	Statements   []CodeGeneratable
+type RootGenerator struct {
+	Statements   []StatementGenerator
 	Gofmt        bool
 	GofmtOptions []string
 	Goimports    bool
 }
 
-func NewCodeGenerator(statements ...CodeGeneratable) *CodeGenerator {
-	return &CodeGenerator{
+func NewCodeGenerator(statements ...StatementGenerator) *RootGenerator {
+	return &RootGenerator{
 		Statements: statements,
 	}
 }
 
-func (g *CodeGenerator) AddStatements(statements ...CodeGeneratable) *CodeGenerator {
-	return &CodeGenerator{
+func (g *RootGenerator) AddStatements(statements ...StatementGenerator) *RootGenerator {
+	return &RootGenerator{
 		Statements:   append(g.Statements, statements...),
 		Gofmt:        g.Gofmt,
 		GofmtOptions: g.GofmtOptions,
@@ -32,8 +32,8 @@ func (g *CodeGenerator) AddStatements(statements ...CodeGeneratable) *CodeGenera
 	}
 }
 
-func (g *CodeGenerator) EnableGofmt(gofmtOptions ...string) *CodeGenerator {
-	return &CodeGenerator{
+func (g *RootGenerator) EnableGofmt(gofmtOptions ...string) *RootGenerator {
+	return &RootGenerator{
 		Statements:   g.Statements,
 		Gofmt:        true,
 		GofmtOptions: gofmtOptions,
@@ -41,8 +41,8 @@ func (g *CodeGenerator) EnableGofmt(gofmtOptions ...string) *CodeGenerator {
 	}
 }
 
-func (g *CodeGenerator) EnableGoimports() *CodeGenerator {
-	return &CodeGenerator{
+func (g *RootGenerator) EnableGoimports() *RootGenerator {
+	return &RootGenerator{
 		Statements:   g.Statements,
 		Gofmt:        g.Gofmt,
 		GofmtOptions: g.GofmtOptions,
@@ -50,7 +50,7 @@ func (g *CodeGenerator) EnableGoimports() *CodeGenerator {
 	}
 }
 
-func (g *CodeGenerator) Generate(indentLevel int) (string, error) {
+func (g *RootGenerator) Generate(indentLevel int) (string, error) {
 	generatedCode := ""
 
 	for _, statement := range g.Statements {
@@ -72,11 +72,11 @@ func (g *CodeGenerator) Generate(indentLevel int) (string, error) {
 	return generatedCode, nil
 }
 
-func (g *CodeGenerator) applyGofmt(generatedCode string) string {
+func (g *RootGenerator) applyGofmt(generatedCode string) string {
 	return applyCodeFormatter(generatedCode, "gofmt", g.GofmtOptions...)
 }
 
-func (g *CodeGenerator) applyGoimports(generatedCode string) string {
+func (g *RootGenerator) applyGoimports(generatedCode string) string {
 	return applyCodeFormatter(generatedCode, "goimports")
 }
 
