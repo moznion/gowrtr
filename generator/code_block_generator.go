@@ -1,6 +1,6 @@
 package generator
 
-// CodeBlockGenerator represents a plain code block.
+// CodeBlockGenerator represents a generator for plain code block.
 //
 // example:
 // {
