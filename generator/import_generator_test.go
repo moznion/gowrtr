@@ -7,7 +7,7 @@ import (
 )
 
 func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
-	importGenerator := NewImportGenerator("fmt", "math").AddImport("os")
+	importGenerator := NewImportGenerator("fmt", "", "math").AddImports("os")
 
 	expected := `import (
 	"fmt"
@@ -22,7 +22,7 @@ func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
 }
 
 func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T) {
-	importGenerator := NewImportGenerator().AddImport("fmt")
+	importGenerator := NewImportGenerator().AddImports("fmt")
 
 	expected := `import (
 	"fmt"

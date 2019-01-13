@@ -4,22 +4,26 @@ import (
 	"fmt"
 )
 
+// ImportGenerator represents a code generator for `import` statement.
 type ImportGenerator struct {
 	Names []string
 }
 
+// NewImportGenerator returns a new `ImportGenerator`.
 func NewImportGenerator(names ...string) *ImportGenerator {
 	return &ImportGenerator{
 		Names: names,
 	}
 }
 
-func (ig *ImportGenerator) AddImport(imp string) *ImportGenerator {
+// AddImports adds import items to `ImportGenerator`.
+func (ig *ImportGenerator) AddImports(imps ...string) *ImportGenerator {
 	return &ImportGenerator{
-		Names: append(ig.Names, imp),
+		Names: append(ig.Names, imps...),
 	}
 }
 
+// Generate generates `import` statement as golang's code.
 func (ig *ImportGenerator) Generate(indentLevel int) (string, error) {
 	if len(ig.Names) <= 0 {
 		return "", nil
@@ -28,6 +32,9 @@ func (ig *ImportGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 	stmt := indent + "import (\n"
 	for _, name := range ig.Names {
+		if name == "" {
+			continue
+		}
 		stmt += fmt.Sprintf("%s\t\"%s\"\n", indent, name)
 	}
 	stmt += indent + ")\n"
