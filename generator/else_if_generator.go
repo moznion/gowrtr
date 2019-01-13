@@ -2,11 +2,13 @@ package generator
 
 import "fmt"
 
+// ElseIfGenerator represents a code generator for `else-if` block.
 type ElseIfGenerator struct {
 	Condition  string
 	Statements []StatementGenerator
 }
 
+// NewElseIfGenerator returns a new `ElseIfGenerator`.
 func NewElseIfGenerator(condition string, statements ...StatementGenerator) *ElseIfGenerator {
 	return &ElseIfGenerator{
 		Condition:  condition,
@@ -14,6 +16,7 @@ func NewElseIfGenerator(condition string, statements ...StatementGenerator) *Els
 	}
 }
 
+// AddStatements adds statements for the `else-if` block to `ElseIfGenerator`.
 func (ig *ElseIfGenerator) AddStatements(statements ...StatementGenerator) *ElseIfGenerator {
 	return &ElseIfGenerator{
 		Condition:  ig.Condition,
@@ -21,6 +24,7 @@ func (ig *ElseIfGenerator) AddStatements(statements ...StatementGenerator) *Else
 	}
 }
 
+// Generate generates `else-if` block as golang's code.
 func (ig *ElseIfGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
