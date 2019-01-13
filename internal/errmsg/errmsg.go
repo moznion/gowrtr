@@ -15,4 +15,5 @@ type errs struct {
 	InlineFuncSignatureIsNilError       error `errmsg:"inline func signature must not be nil, bit it gets nil"`
 	FuncInvocationParameterIsEmptyError error `errmsg:"a parameter of function invocation must not be nil, but it gets nil"`
 	CodeFormatterError                  error `errmsg:"code formatter raises error: command=\"%s\", err=\"%s\", msg=\"%s\"" vars:"cmd string, msg string, err error"`
+	CaseConditionIsEmptyError           error `errmsg:"condition of case must not be empty, but it gets empty"`
 }

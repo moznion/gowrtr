@@ -71,6 +71,11 @@ func CodeFormatterError(cmd string, msg string, err error) error {
 	return fmt.Errorf(`[GOWRTR-13] code formatter raises error: command="%s", err="%s", msg="%s"`, cmd, msg, err)
 }
 
+// CaseConditionIsEmptyError returns the error.
+func CaseConditionIsEmptyError() error {
+	return errors.New(`[GOWRTR-14] condition of case must not be empty, but it gets empty`)
+}
+
 // ErrsList returns the list of errors.
 func ErrsList() []string {
 	return []string{
@@ -87,5 +92,6 @@ func ErrsList() []string {
 		`[GOWRTR-11] inline func signature must not be nil, bit it gets nil`,
 		`[GOWRTR-12] a parameter of function invocation must not be nil, but it gets nil`,
 		`[GOWRTR-13] code formatter raises error: command="%s", err="%s", msg="%s"`,
+		`[GOWRTR-14] condition of case must not be empty, but it gets empty`,
 	}
 }
