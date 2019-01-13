@@ -38,6 +38,16 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				fmt.Printf("%d\n", i)
 			}
 		}
+
+		switch str {
+		case "":
+			// empty string
+		case "foo":
+			// foo string
+		default:
+			// default
+		}
+
 		return str, nil
 	}
 }
@@ -87,6 +97,22 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewRawStatementGenerator(`fmt.Printf("%d\n", i)`, true),
 						),
 					),
+				NewNewlineGenerator(),
+				NewSwitchGenerator("str").
+					AddCaseStatements(
+						NewCaseGenerator(
+							`""`,
+							NewCommentGenerator(" empty string"),
+						),
+						NewCaseGenerator(
+							`"foo"`,
+							NewCommentGenerator(" foo string"),
+						),
+					).
+					SetDefaultStatement(
+						NewDefaultCaseGenerator(NewCommentGenerator(" default")),
+					),
+				NewNewlineGenerator(),
 				NewReturnStatementGenerator("str", "nil"),
 			),
 		),
@@ -127,6 +153,16 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 						fmt.Printf("%d\n", i)
 					}
 				}
+
+				switch str {
+				case "":
+					// empty string
+				case "foo":
+					// foo string
+				default:
+					// default
+				}
+
 				return str, nil
 			}
 		}
@@ -176,6 +212,22 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 							NewRawStatementGenerator(`fmt.Printf("%d\n", i)`, true),
 						),
 					),
+				NewNewlineGenerator(),
+				NewSwitchGenerator("str").
+					AddCaseStatements(
+						NewCaseGenerator(
+							`""`,
+							NewCommentGenerator(" empty string"),
+						),
+						NewCaseGenerator(
+							`"foo"`,
+							NewCommentGenerator(" foo string"),
+						),
+					).
+					SetDefaultStatement(
+						NewDefaultCaseGenerator(NewCommentGenerator(" default")),
+					),
+				NewNewlineGenerator(),
 				NewReturnStatementGenerator("str", "nil"),
 			),
 		),
@@ -216,6 +268,16 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				fmt.Printf("%d\n", i)
 			}
 		}
+
+		switch str {
+		case "":
+			// empty string
+		case "foo":
+			// foo string
+		default:
+			// default
+		}
+
 		return str, nil
 	}
 }
@@ -264,6 +326,22 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewRawStatementGenerator(`fmt.Printf("%d\n", i)`, true),
 						),
 					),
+				NewNewlineGenerator(),
+				NewSwitchGenerator("str").
+					AddCaseStatements(
+						NewCaseGenerator(
+							`""`,
+							NewCommentGenerator(" empty string"),
+						),
+						NewCaseGenerator(
+							`"foo"`,
+							NewCommentGenerator(" foo string"),
+						),
+					).
+					SetDefaultStatement(
+						NewDefaultCaseGenerator(NewCommentGenerator(" default")),
+					),
+				NewNewlineGenerator(),
 				NewReturnStatementGenerator("str", "nil"),
 			),
 		),
@@ -302,6 +380,16 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				fmt.Printf("%d\n", i)
 			}
 		}
+
+		switch str {
+		case "":
+			// empty string
+		case "foo":
+			// foo string
+		default:
+			// default
+		}
+
 		return str, nil
 	}
 }
@@ -347,6 +435,22 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewRawStatementGenerator(`fmt.Printf("%d\n", i)`, true),
 						),
 					),
+				NewNewlineGenerator(),
+				NewSwitchGenerator("str").
+					AddCaseStatements(
+						NewCaseGenerator(
+							`""`,
+							NewCommentGenerator(" empty string"),
+						),
+						NewCaseGenerator(
+							`"foo"`,
+							NewCommentGenerator(" foo string"),
+						),
+					).
+					SetDefaultStatement(
+						NewDefaultCaseGenerator(NewCommentGenerator(" default")),
+					),
+				NewNewlineGenerator(),
 				NewReturnStatementGenerator("str", "nil"),
 			),
 		),
