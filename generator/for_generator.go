@@ -2,11 +2,13 @@ package generator
 
 import "fmt"
 
+// ForGenerator represents a code generator for `for` block.
 type ForGenerator struct {
 	Condition  string
 	Statements []StatementGenerator
 }
 
+// NewForGenerator returns a new `ForGenerator`.
 func NewForGenerator(condition string, statements ...StatementGenerator) *ForGenerator {
 	return &ForGenerator{
 		Condition:  condition,
@@ -14,6 +16,7 @@ func NewForGenerator(condition string, statements ...StatementGenerator) *ForGen
 	}
 }
 
+// AddStatements adds statements for `for` block to `ForGenerator`.
 func (fg *ForGenerator) AddStatements(statements ...StatementGenerator) *ForGenerator {
 	return &ForGenerator{
 		Condition:  fg.Condition,
@@ -21,6 +24,7 @@ func (fg *ForGenerator) AddStatements(statements ...StatementGenerator) *ForGene
 	}
 }
 
+// Generate generates a `for` block as golang's code.
 func (fg *ForGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
