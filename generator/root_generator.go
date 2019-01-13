@@ -73,7 +73,7 @@ func (g *RootGenerator) EnableSyntaxChecking() *RootGenerator {
 	}
 }
 
-// Generate generates golang's code according to registered statements.
+// Generate generates golang code according to registered statements.
 func (g *RootGenerator) Generate(indentLevel int) (string, error) {
 	generatedCode := ""
 

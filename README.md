@@ -43,7 +43,7 @@ func main() {
 }
 ```
 
-then it generates the golang's code like so:
+then it generates the golang code like so:
 
 ```go
 // THIS CODE WAS AUTO GENERATED
@@ -63,7 +63,7 @@ Documents
 
 Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator)
 
-- `RootGenerator` is a entry point to generate the go code.
+- `RootGenerator` is an entry point to generate the go code.
 - `RootGenerator` supports following code formatting on code generating phase. It applies such formatters to generated code.
   - `gofmt`: with `EnableGofmt(gofmtOptions ...string)`
   - `goimports`: with `EnableGoimports()`

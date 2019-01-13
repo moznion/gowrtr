@@ -22,7 +22,7 @@ func (ig *ElseGenerator) AddStatements(statements ...StatementGenerator) *ElseGe
 	}
 }
 
-// Generate generates `else` block as golang's code.
+// Generate generates `else` block as golang code.
 func (ig *ElseGenerator) Generate(indentLevel int) (string, error) {
 	stmt := fmt.Sprintf(" else {\n")
 

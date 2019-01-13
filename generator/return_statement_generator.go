@@ -22,7 +22,7 @@ func (r *ReturnStatementGenerator) AddReturnItems(returnItems ...string) *Return
 	}
 }
 
-// Generate generates `return` statement as golang's code.
+// Generate generates `return` statement as golang code.
 func (r *ReturnStatementGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

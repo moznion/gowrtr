@@ -22,7 +22,7 @@ func (d *DefaultCaseGenerator) AddStatements(statements ...StatementGenerator) *
 	}
 }
 
-// Generate generates `default` block as golang's code.
+// Generate generates `default` block as golang code.
 func (d *DefaultCaseGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 	nextIndentLevel := indentLevel + 1

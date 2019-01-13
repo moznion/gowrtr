@@ -24,7 +24,7 @@ func (fig *FuncInvocationGenerator) AddParameters(parameters ...string) *FuncInv
 	return NewFuncInvocationGenerator(append(fig.Parameters, parameters...)...)
 }
 
-// Generate generates the func invocation as golang's code.
+// Generate generates the func invocation as golang code.
 func (fig *FuncInvocationGenerator) Generate(indentLevel int) (string, error) {
 	for _, param := range fig.Parameters {
 		if param == "" {

@@ -30,7 +30,7 @@ func (fg *FuncGenerator) AddStatements(statements ...StatementGenerator) *FuncGe
 	}
 }
 
-// Generate generates a func block as golang's code.
+// Generate generates a func block as golang code.
 func (fg *FuncGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

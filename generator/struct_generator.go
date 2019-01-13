@@ -45,7 +45,7 @@ func (sg *StructGenerator) AddField(name string, typ string, tag ...string) *Str
 	}
 }
 
-// Generate generates `struct` block as golang's code.
+// Generate generates `struct` block as golang code.
 func (sg *StructGenerator) Generate(indentLevel int) (string, error) {
 	if sg.Name == "" {
 		return "", errmsg.StructNameIsNilErr()

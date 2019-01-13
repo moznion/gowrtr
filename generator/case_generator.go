@@ -30,7 +30,7 @@ func (c *CaseGenerator) AddStatements(statements ...StatementGenerator) *CaseGen
 	}
 }
 
-// Generate generates `case` statement as golang's code.
+// Generate generates `case` statement as golang code.
 func (c *CaseGenerator) Generate(indentLevel int) (string, error) {
 	condition := c.Condition
 	if condition == "" {

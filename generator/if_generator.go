@@ -53,7 +53,7 @@ func (ig *IfGenerator) SetElseBlock(block *ElseGenerator) *IfGenerator {
 	}
 }
 
-// Generate generates `if` block as golang's code.
+// Generate generates `if` block as golang code.
 func (ig *IfGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

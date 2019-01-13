@@ -25,7 +25,7 @@ func (ig *ElseIfGenerator) AddStatements(statements ...StatementGenerator) *Else
 	}
 }
 
-// Generate generates `else-if` block as golang's code.
+// Generate generates `else-if` block as golang code.
 func (ig *ElseIfGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

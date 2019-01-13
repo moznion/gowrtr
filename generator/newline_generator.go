@@ -9,7 +9,7 @@ func NewNewlineGenerator() *NewlineGenerator {
 	return &NewlineGenerator{}
 }
 
-// Generate generates a newline statement as golang's code.
+// Generate generates a newline statement as golang code.
 func (n *NewlineGenerator) Generate(indentLevel int) (string, error) {
 	return "\n", nil
 }

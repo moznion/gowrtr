@@ -20,7 +20,7 @@ func NewFuncReceiverGenerator(name string, typ string) *FuncReceiverGenerator {
 	}
 }
 
-// Generate generates a receiver of the func as golang's code.
+// Generate generates a receiver of the func as golang code.
 func (f *FuncReceiverGenerator) Generate(indentLevel int) (string, error) {
 	name := f.Name
 	typ := f.Type

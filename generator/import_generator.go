@@ -24,7 +24,7 @@ func (ig *ImportGenerator) AddImports(imps ...string) *ImportGenerator {
 	}
 }
 
-// Generate generates `import` statement as golang's code.
+// Generate generates `import` statement as golang code.
 func (ig *ImportGenerator) Generate(indentLevel int) (string, error) {
 	if len(ig.Names) <= 0 {
 		return "", nil

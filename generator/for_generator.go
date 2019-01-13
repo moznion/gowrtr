@@ -25,7 +25,7 @@ func (fg *ForGenerator) AddStatements(statements ...StatementGenerator) *ForGene
 	}
 }
 
-// Generate generates a `for` block as golang's code.
+// Generate generates a `for` block as golang code.
 func (fg *ForGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

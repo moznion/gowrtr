@@ -54,7 +54,7 @@ func (f *FuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *FuncSign
 	}
 }
 
-// Generate generates a signature of the func as golang's code.
+// Generate generates a signature of the func as golang code.
 func (f *FuncSignatureGenerator) Generate(indentLevel int) (string, error) {
 	if f.FuncName == "" {
 		return "", errmsg.FuncNameIsEmptyError()

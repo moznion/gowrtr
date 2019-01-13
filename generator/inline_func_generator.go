@@ -42,7 +42,7 @@ func (ifg *InlineFuncGenerator) SetFuncInvocation(funcInvocation *FuncInvocation
 	}
 }
 
-// Generate generates an inline func as golang's code.
+// Generate generates an inline func as golang code.
 func (ifg *InlineFuncGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

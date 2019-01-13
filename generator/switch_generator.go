@@ -37,7 +37,7 @@ func (s *SwitchGenerator) SetDefaultStatement(statement *DefaultCaseGenerator) *
 	}
 }
 
-// Generate generates `switch` statement as golang's code.
+// Generate generates `switch` statement as golang code.
 func (s *SwitchGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

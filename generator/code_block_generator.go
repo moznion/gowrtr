@@ -26,7 +26,7 @@ func (c *CodeBlockGenerator) AddStatements(statements ...StatementGenerator) *Co
 	}
 }
 
-// Generate generates plain code block as golang's code.
+// Generate generates plain code block as golang code.
 func (c *CodeBlockGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 

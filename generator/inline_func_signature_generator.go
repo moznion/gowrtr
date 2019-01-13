@@ -35,7 +35,7 @@ func (f *InlineFuncSignatureGenerator) AddReturnTypes(returnTypes ...string) *In
 	}
 }
 
-// Generate generates a signature of the inline func as golang's code.
+// Generate generates a signature of the inline func as golang code.
 func (f *InlineFuncSignatureGenerator) Generate(indentLevel int) (string, error) {
 	stmt := "("
 

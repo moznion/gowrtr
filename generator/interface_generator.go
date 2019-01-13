@@ -29,7 +29,7 @@ func (ig *InterfaceGenerator) AddFuncSignatures(sig ...*FuncSignatureGenerator) 
 	}
 }
 
-// Generate generates `interface` block as golang's code.
+// Generate generates `interface` block as golang code.
 func (ig *InterfaceGenerator) Generate(indentLevel int) (string, error) {
 	if ig.Name == "" {
 		return "", errmsg.InterfaceNameIsEmptyError()
