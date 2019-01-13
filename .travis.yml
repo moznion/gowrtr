@@ -4,11 +4,11 @@ go:
   - 1.11
   - master
 
-script: make check
+script: make ci-test lint vet fmt-check
 
 install:
   - go get -u golang.org/x/lint/golint
-  - make bootstrap
+  - make installdeps
 
 sudo: false
 
