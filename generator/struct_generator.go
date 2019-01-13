@@ -6,23 +6,28 @@ import (
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
+// StructField represents a field of the struct.
 type StructField struct {
 	Name string
 	Type string
 	Tag  string
 }
 
+// StructGenerator represents a code generator of `struct` notation.
 type StructGenerator struct {
 	Name   string
 	Fields []*StructField
 }
 
+// NewStructGenerator returns a new `StructGenerator`.
 func NewStructGenerator(name string) *StructGenerator {
 	return &StructGenerator{
 		Name: name,
 	}
 }
 
+// AddField adds a struct field to `StructGenerator`.
+// This method returns a *new* `StructGenerator`; it means this method acts as immutable.
 func (sg *StructGenerator) AddField(name string, typ string, tag ...string) *StructGenerator {
 	l := len(tag)
 	t := ""
@@ -40,6 +45,7 @@ func (sg *StructGenerator) AddField(name string, typ string, tag ...string) *Str
 	}
 }
 
+// Generate generates `struct` block as golang's code.
 func (sg *StructGenerator) Generate(indentLevel int) (string, error) {
 	if sg.Name == "" {
 		return "", errmsg.StructNameIsNilErr()
