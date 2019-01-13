@@ -132,7 +132,10 @@ func applyCodeFormatter(generatedCode string, formatterCmdName string, formatter
 	formatterCmd.Stderr = &errout
 
 	echoCmd.Start()
-	formatterCmd.Start()
+	if err := formatterCmd.Start(); err != nil {
+		cmds := []string{formatterCmdName}
+		return "", errmsg.CodeFormatterError(strings.Join(append(cmds, formatterOpts...), " "), errout.String(), err)
+	}
 	echoCmd.Wait()
 	w.Close()
 	err := formatterCmd.Wait()
