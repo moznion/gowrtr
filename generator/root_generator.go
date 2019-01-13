@@ -1,4 +1,4 @@
-package gowrtr
+package generator
 
 import (
 	"bytes"

@@ -1,4 +1,4 @@
-package gowrtr
+package generator
 
 type CodeBlockGenerator struct {
 	Statements []StatementGenerator

@@ -1,4 +1,4 @@
-package gowrtr
+package generator
 
 type StatementGenerator interface {
 	Generate(indentLevel int) (string, error)
