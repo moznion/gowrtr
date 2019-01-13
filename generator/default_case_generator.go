@@ -2,22 +2,26 @@ package generator
 
 import "fmt"
 
+// DefaultCaseGenerator represents a code generator for `default` block of `switch-case` notation.
 type DefaultCaseGenerator struct {
 	Statements []StatementGenerator
 }
 
+// NewDefaultCaseGenerator returns a new `DefaultCaseGenerator`.
 func NewDefaultCaseGenerator(statements ...StatementGenerator) *DefaultCaseGenerator {
 	return &DefaultCaseGenerator{
 		Statements: statements,
 	}
 }
 
+// AddStatements adds statements for `default` block to `DefaultCaseGenerator`.
 func (d *DefaultCaseGenerator) AddStatements(statements ...StatementGenerator) *DefaultCaseGenerator {
 	return &DefaultCaseGenerator{
 		Statements: append(d.Statements, statements...),
 	}
 }
 
+// Generate generates `default` block as golang's code.
 func (d *DefaultCaseGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 	nextIndentLevel := indentLevel + 1
