@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// IfGenerator represents a code generator for `if`, `else-if` and `else` block.
 type IfGenerator struct {
 	Condition    string
 	Statements   []StatementGenerator
@@ -11,6 +12,7 @@ type IfGenerator struct {
 	ElseBlock    *ElseGenerator
 }
 
+// NewIfGenerator returns a new `IfGenerator`.
 func NewIfGenerator(condition string, statements ...StatementGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:  condition,
@@ -18,6 +20,7 @@ func NewIfGenerator(condition string, statements ...StatementGenerator) *IfGener
 	}
 }
 
+// AddStatements adds statements for `if` block to `IfGenerator`.
 func (ig *IfGenerator) AddStatements(statements ...StatementGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:    ig.Condition,
@@ -27,6 +30,7 @@ func (ig *IfGenerator) AddStatements(statements ...StatementGenerator) *IfGenera
 	}
 }
 
+// AddElseIfBlocks adds `else-if` block to `IfGenerator`.
 func (ig *IfGenerator) AddElseIfBlocks(blocks ...*ElseIfGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:    ig.Condition,
@@ -36,6 +40,7 @@ func (ig *IfGenerator) AddElseIfBlocks(blocks ...*ElseIfGenerator) *IfGenerator 
 	}
 }
 
+// SetElseBlock sets `else` block to `IfGenerator`.
 func (ig *IfGenerator) SetElseBlock(block *ElseGenerator) *IfGenerator {
 	return &IfGenerator{
 		Condition:    ig.Condition,
@@ -45,6 +50,7 @@ func (ig *IfGenerator) SetElseBlock(block *ElseGenerator) *IfGenerator {
 	}
 }
 
+// Generate generates `if` block as golang's code.
 func (ig *IfGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
