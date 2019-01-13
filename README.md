@@ -1,4 +1,4 @@
-gowrtr [![CircleCI](https://circleci.com/gh/moznion/gowrtr.svg?style=svg)](https://circleci.com/gh/moznion/gowrtr) [![codecov](https://codecov.io/gh/moznion/gowrtr/branch/master/graph/badge.svg)](https://codecov.io/gh/moznion/gowrtr) [![GoDoc](https://godoc.org/github.com/moznion/gowrtr?status.svg)](https://godoc.org/github.com/moznion/gowrtr)
+gowrtr [![CircleCI](https://circleci.com/gh/moznion/gowrtr.svg?style=svg)](https://circleci.com/gh/moznion/gowrtr) [![codecov](https://codecov.io/gh/moznion/gowrtr/branch/master/graph/badge.svg)](https://codecov.io/gh/moznion/gowrtr) [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator)
 ==
 
 gowrtr is a library that supports golang code generating.
@@ -56,12 +56,12 @@ func main() {
 }
 ```
 
-And [GoDoc](https://godoc.org/github.com/moznion/gowrtr) shows you a greater number of examples.
+And [GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator) shows you a greater number of examples.
 
 Documents
 --
 
-Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr?status.svg)](https://godoc.org/github.com/moznion/gowrtr)
+Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator)
 
 - `RootGenerator` is a entry point to generate the go code.
 - `RootGenerator` supports following code formatting on code generating phase. It applies such formatters to generated code.
