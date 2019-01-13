@@ -24,11 +24,11 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	dataset := map[string]*InterfaceGenerator{
 		exp1: NewInterfaceGenerator("myInterface"),
 		exp2: NewInterfaceGenerator("myInterface").
-			AddFuncSignature(NewFuncSignatureGenerator("myFunc")),
+			AddFuncSignatures(NewFuncSignatureGenerator("myFunc")),
 		exp3: NewInterfaceGenerator(
 			"myInterface",
 			NewFuncSignatureGenerator("myFunc1"),
-		).AddFuncSignature(
+		).AddFuncSignatures(
 			NewFuncSignatureGenerator("myFunc2").
 				AddFuncParameters(NewFuncParameter("foo", "string")).
 				AddReturnTypes("string", "error"),
@@ -58,11 +58,11 @@ func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 	dataset := map[string]*InterfaceGenerator{
 		exp1: NewInterfaceGenerator("myInterface"),
 		exp2: NewInterfaceGenerator("myInterface").
-			AddFuncSignature(NewFuncSignatureGenerator("myFunc")),
+			AddFuncSignatures(NewFuncSignatureGenerator("myFunc")),
 		exp3: NewInterfaceGenerator(
 			"myInterface",
 			NewFuncSignatureGenerator("myFunc1"),
-		).AddFuncSignature(
+		).AddFuncSignatures(
 			NewFuncSignatureGenerator("myFunc2").
 				AddFuncParameters(NewFuncParameter("foo", "string")).
 				AddReturnTypes("string", "error"),

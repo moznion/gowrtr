@@ -6,11 +6,13 @@ import (
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
+// InterfaceGenerator represents a code generator for `interface` block.
 type InterfaceGenerator struct {
 	Name           string
 	FuncSignatures []*FuncSignatureGenerator
 }
 
+// NewInterfaceGenerator returns a new `InterfaceGenerator`.
 func NewInterfaceGenerator(name string, funcSignatures ...*FuncSignatureGenerator) *InterfaceGenerator {
 	return &InterfaceGenerator{
 		Name:           name,
@@ -18,13 +20,15 @@ func NewInterfaceGenerator(name string, funcSignatures ...*FuncSignatureGenerato
 	}
 }
 
-func (ig *InterfaceGenerator) AddFuncSignature(sig *FuncSignatureGenerator) *InterfaceGenerator {
+// AddFuncSignatures adds signatures of the func to `InterfaceGenerator`.
+func (ig *InterfaceGenerator) AddFuncSignatures(sig ...*FuncSignatureGenerator) *InterfaceGenerator {
 	return &InterfaceGenerator{
 		Name:           ig.Name,
-		FuncSignatures: append(ig.FuncSignatures, sig),
+		FuncSignatures: append(ig.FuncSignatures, sig...),
 	}
 }
 
+// Generate generates `interface` block as golang's code.
 func (ig *InterfaceGenerator) Generate(indentLevel int) (string, error) {
 	if ig.Name == "" {
 		return "", errmsg.InterfaceNameIsEmptyError()
