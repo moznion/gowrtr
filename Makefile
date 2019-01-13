@@ -3,11 +3,12 @@
 PKGS := $(shell go list ./... | grep -v go-errgen)
 
 check: test lint vet fmt-check
+ci-check: ci-test lint vet fmt-check
 
 test: errgen
 	go test -v -cover $(PKGS)
 
-ci-test:
+ci-test: errgen
 	go test -v -cover -race -coverprofile=coverage.txt -covermode=atomic $(PKGS)
 
 test-coverage: errgen
@@ -37,16 +38,10 @@ installdeps:
 	GO111MODULE=on go mod tidy
 
 bootstrap: installdeps
-	git submodule init
-	git submodule update
-	(cd go-errgen && git remote update && git checkout 1.3.1)
-	rm -f author/bin/errgen
-	make build-errgen
+	go get -u golang.org/x/lint/golint \
+		golang.org/x/tools/cmd/goimports \
+		github.com/moznion/go-errgen/cmd/errgen
 
-build-errgen:
-	if [ ! -f author/bin/errgen ]; then \
-		go build -o author/bin/errgen go-errgen/cmd/errgen/errgen.go; \
-		fi
-
-errgen: build-errgen
+errgen:
 	./author/errgen.sh
+

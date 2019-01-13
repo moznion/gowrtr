@@ -1,3 +1,0 @@
-[submodule "go-errgen"]
-	path = go-errgen
-	url = https://github.com/moznion/go-errgen
