@@ -10,7 +10,7 @@ import (
 
 func TestShouldGenerateFuncCode(t *testing.T) {
 	generator := NewFuncGenerator(
-		nil,
+		NewFuncReceiverGenerator("m", "*MyStruct"),
 		NewFuncSignatureGenerator("myFunc").
 			AddFuncParameters(
 				NewFuncParameter("foo", ""),
@@ -24,7 +24,7 @@ func TestShouldGenerateFuncCode(t *testing.T) {
 	)
 
 	{
-		expected := `func myFunc(foo, bar string) (string, error) {
+		expected := `func (m *MyStruct) myFunc(foo, bar string) (string, error) {
 	// do something
 
 	return foo+bar, nil
@@ -36,7 +36,7 @@ func TestShouldGenerateFuncCode(t *testing.T) {
 	}
 
 	{
-		expected := `		func myFunc(foo, bar string) (string, error) {
+		expected := `		func (m *MyStruct) myFunc(foo, bar string) (string, error) {
 			// do something
 
 			return foo+bar, nil

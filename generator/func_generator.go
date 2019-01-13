@@ -4,12 +4,14 @@ import (
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
+// FuncGenerator represents a code generator for the func.
 type FuncGenerator struct {
 	FuncReceiver  *FuncReceiverGenerator
 	FuncSignature *FuncSignatureGenerator
 	Statements    []StatementGenerator
 }
 
+// NewFuncGenerator returns a new `FuncGenerator`.
 func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureGenerator, statements ...StatementGenerator) *FuncGenerator {
 	return &FuncGenerator{
 		FuncReceiver:  receiver,
@@ -18,6 +20,7 @@ func NewFuncGenerator(receiver *FuncReceiverGenerator, signature *FuncSignatureG
 	}
 }
 
+// AddStatements adds statements for the func to `FuncGenerator`.
 func (fg *FuncGenerator) AddStatements(statements ...StatementGenerator) *FuncGenerator {
 	return &FuncGenerator{
 		FuncReceiver:  fg.FuncReceiver,
@@ -26,6 +29,7 @@ func (fg *FuncGenerator) AddStatements(statements ...StatementGenerator) *FuncGe
 	}
 }
 
+// Generate generates a func block as golang's code.
 func (fg *FuncGenerator) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
