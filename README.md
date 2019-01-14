@@ -70,6 +70,10 @@ Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr
   - `gofmt`: with `EnableGofmt(gofmtOptions ...string)`
   - `goimports`: with `EnableGoimports()`
 
+### Immutability
+
+Methods of this library act as immutable. It means it doesn't change any internal state implicitly, so you can keep a snapshot of the code generator. That is useful to reuse and derive the code generator.
+
 ### Supported syntax
 
 - [x] `package`
