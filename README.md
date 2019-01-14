@@ -20,16 +20,16 @@ import (
 )
 
 func main() {
-	generator := generator.NewRootGenerator(
-		generator.NewCommentGenerator(" THIS CODE WAS AUTO GENERATED"),
-		generator.NewPackageGenerator("main"),
-		generator.NewNewlineGenerator(),
+	generator := generator.NewRoot(
+		generator.NewComment(" THIS CODE WAS AUTO GENERATED"),
+		generator.NewPackage("main"),
+		generator.NewNewline(),
 	).AddStatements(
-		generator.NewFuncGenerator(
+		generator.NewFunc(
 			nil,
-			generator.NewFuncSignatureGenerator("main"),
+			generator.NewFuncSignature("main"),
 		).AddStatements(
-			generator.NewRawStatementGenerator(`fmt.Println("hello, world!")`),
+			generator.NewRawStatement(`fmt.Println("hello, world!")`),
 		),
 	).
 		EnableGofmt("-s").
@@ -63,10 +63,10 @@ Description
 
 Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator)
 
-### RootGenerator
+### Root
 
-- `RootGenerator` is an entry point to generate the go code.
-- `RootGenerator` supports following code formatting on code generating phase. It applies such formatters to generated code.
+- `Root` is an entry point to generate the go code.
+- `Root` supports following code formatting on code generating phase. It applies such formatters to generated code.
   - `gofmt`: with `EnableGofmt(gofmtOptions ...string)`
   - `goimports`: with `EnableGoimports()`
 
