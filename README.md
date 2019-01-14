@@ -97,6 +97,21 @@ Methods of this library act as immutable. It means it doesn't change any interna
   - [x] `return`
   - [x] `comment`
 
+For developers of this library
+--
+
+### Setup development environment
+
+```
+$ make bootstrap
+```
+
+### How to define and generate error messages
+
+Please edit `internal/errmsg/errmsg.go` and execute `make errgen`.
+
+See also: [moznion/go-errgen](https://github.com/moznion/go-errgen)
+
 License
 --
 
