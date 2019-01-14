@@ -72,7 +72,7 @@ Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr
 
 ### Immutability
 
-Methods of this library act as immutable. It means it doesn't change any internal state implicitly, so you can keep a snapshot of the code generator. That is useful to reuse and derive the code generator.
+Methods of this library act as immutable. It means it doesn't change any internal state implicitly, so you can take a snapshot of the code generator. That is useful to reuse and derive the code generator instance.
 
 ### Supported syntax
 
