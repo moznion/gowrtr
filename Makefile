@@ -38,7 +38,7 @@ installdeps:
 	GO111MODULE=on go mod tidy
 
 bootstrap: installdeps
-	go get -u golang.org/x/lint/golint \
+	GO111MODULE=on go get -u golang.org/x/lint/golint \
 		golang.org/x/tools/cmd/goimports \
 		github.com/moznion/go-errgen/cmd/errgen
 
