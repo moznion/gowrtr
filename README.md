@@ -112,6 +112,12 @@ Please edit `internal/errmsg/errmsg.go` and execute `make errgen`.
 
 See also: [moznion/go-errgen](https://github.com/moznion/go-errgen)
 
+Blog posts
+--
+
+- English: [gowrtr - a library that supports golang code generation](https://moznion.hatenablog.jp/entry/2019/01/15/094236)
+- Japanese: [gowrtr - goコード生成支援ライブラリ](https://moznion.hatenadiary.com/entry/2019/01/14/111719)
+
 License
 --
 
