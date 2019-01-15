@@ -1,4 +1,4 @@
-gowrtr [![CircleCI](https://circleci.com/gh/moznion/gowrtr.svg?style=svg)](https://circleci.com/gh/moznion/gowrtr) [![codecov](https://codecov.io/gh/moznion/gowrtr/branch/master/graph/badge.svg)](https://codecov.io/gh/moznion/gowrtr) [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator)
+gowrtr [![CircleCI](https://circleci.com/gh/moznion/gowrtr.svg?style=svg)](https://circleci.com/gh/moznion/gowrtr) [![codecov](https://codecov.io/gh/moznion/gowrtr/branch/master/graph/badge.svg)](https://codecov.io/gh/moznion/gowrtr) [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator) [![Go Report Card](https://goreportcard.com/badge/github.com/moznion/gowrtr)](https://goreportcard.com/report/github.com/moznion/gowrtr)
 ==
 
 gowrtr (pronunciation:`go writer`) is a library that supports golang code generation.
