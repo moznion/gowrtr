@@ -28,7 +28,7 @@ func TestShouldGenerateRawStatementWithFormattingSuccessful(t *testing.T) {
 
 func TestShouldGenerateRawStatementWithNewlineOption(t *testing.T) {
 	{
-		generator := NewRawStatement(`i := 0`).WithNewLine(true)
+		generator := NewRawStatement(`i := 0`).WithNewline(true)
 
 		gen, err := generator.Generate(0)
 		assert.NoError(t, err)
@@ -40,7 +40,7 @@ func TestShouldGenerateRawStatementWithNewlineOption(t *testing.T) {
 	}
 
 	{
-		generator := NewRawStatement(`i := 0`).WithNewLine(false)
+		generator := NewRawStatement(`i := 0`).WithNewline(false)
 
 		gen, err := generator.Generate(0)
 		assert.NoError(t, err)

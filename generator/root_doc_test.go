@@ -33,7 +33,7 @@ func ExampleRoot_Generate() {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ").WithNewLine(false),
+				NewRawStatement("str := ").WithNewline(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().

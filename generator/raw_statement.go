@@ -5,15 +5,15 @@ import "fmt"
 // RawStatement represents a code generator for `raw statement`.
 // `raw statement` means plain text statement.
 type RawStatement struct {
-	Statement   string
-	WithNewline bool
+	statement   string
+	withNewline bool
 }
 
 // NewRawStatement returns a new `RawStatement`.
 func NewRawStatement(stmt string) *RawStatement {
 	return &RawStatement{
-		Statement:   stmt,
-		WithNewline: true,
+		statement:   stmt,
+		withNewline: true,
 	}
 }
 
@@ -21,17 +21,17 @@ func NewRawStatement(stmt string) *RawStatement {
 // If `args` is not empty, this method formats `stmt` with `args` by `fmt.Sprintf`.
 func NewRawStatementf(stmt string, args ...interface{}) *RawStatement {
 	return &RawStatement{
-		Statement:   fmt.Sprintf(stmt, args...),
-		WithNewline: true,
+		statement:   fmt.Sprintf(stmt, args...),
+		withNewline: true,
 	}
 }
 
-// WithNewLine specifies whether append newline or not.
+// WithNewline specifies whether append newline or not.
 // Default value is `true`, so this method might be used when you want to suppress to break the line.
-func (r *RawStatement) WithNewLine(with bool) *RawStatement {
+func (r *RawStatement) WithNewline(with bool) *RawStatement {
 	return &RawStatement{
-		Statement:   r.Statement,
-		WithNewline: with,
+		statement:   r.statement,
+		withNewline: with,
 	}
 }
 
@@ -40,9 +40,9 @@ func (r *RawStatement) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
 	newline := ""
-	if r.WithNewline {
+	if r.withNewline {
 		newline = "\n"
 	}
 
-	return indent + r.Statement + newline, nil
+	return indent + r.statement + newline, nil
 }

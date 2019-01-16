@@ -82,7 +82,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ").WithNewLine(false),
+				NewRawStatement("str := ").WithNewline(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -197,7 +197,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ").WithNewLine(false),
+				NewRawStatement("str := ").WithNewline(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -311,7 +311,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ").WithNewLine(false),
+				NewRawStatement("str := ").WithNewline(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -420,7 +420,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ").WithNewLine(false),
+				NewRawStatement("str := ").WithNewline(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
