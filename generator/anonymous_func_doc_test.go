@@ -15,7 +15,7 @@ func ExampleAnonymousFunc_Generate() {
 			).
 			AddReturnTypes("string", "error"),
 		NewComment(" do something"),
-		NewRawStatement(`fmt.Printf("%d", i)`, true),
+		NewRawStatement(`fmt.Printf("%d", i)`),
 	).SetFuncInvocation(NewFuncInvocation("foo", "bar"))
 
 	generated, err := generator.Generate(0)

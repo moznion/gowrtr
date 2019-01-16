@@ -10,7 +10,7 @@ func ExampleElse_Generate() {
 		NewComment(" XXX test test"),
 		NewComment(" do something"),
 	).AddStatements(
-		NewRawStatement(`fmt.Printf("%d", i)`, true),
+		NewRawStatement(`fmt.Printf("%d", i)`),
 	)
 
 	generated, err := generator.Generate(0)

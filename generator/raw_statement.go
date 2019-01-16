@@ -8,16 +8,19 @@ type RawStatement struct {
 }
 
 // NewRawStatement returns a new `RawStatement`.
-// `withNewline` is an option to control whether append a newline to statement or not. The default value is `true`.
-func NewRawStatement(stmt string, withNewline ...bool) *RawStatement {
-	nl := true
-	if len(withNewline) > 0 {
-		nl = withNewline[0]
-	}
-
+func NewRawStatement(stmt string) *RawStatement {
 	return &RawStatement{
 		Statement:   stmt,
-		WithNewline: nl,
+		WithNewline: true,
+	}
+}
+
+// WithNewLine specifies whether append newline or not.
+// Default value is `true`, so this method might be used when you want to suppress to break the line.
+func (r *RawStatement) WithNewLine(with bool) *RawStatement {
+	return &RawStatement{
+		Statement:   r.Statement,
+		WithNewline: with,
 	}
 }
 

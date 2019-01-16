@@ -13,7 +13,7 @@ func TestShouldGenerateElseCode(t *testing.T) {
 		NewComment(" XXX test test"),
 		NewComment(" do something"),
 	).AddStatements(
-		NewRawStatement(`fmt.Printf("%d", i)`, true),
+		NewRawStatement(`fmt.Printf("%d", i)`),
 	)
 
 	{

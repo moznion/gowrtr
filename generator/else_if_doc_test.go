@@ -11,7 +11,7 @@ func ExampleElseIf_Generate() {
 			NewComment(" XXX: test test"),
 			NewComment(" do something"),
 		).
-		AddStatements(NewRawStatement(`fmt.Printf("%d", i)`, true))
+		AddStatements(NewRawStatement(`fmt.Printf("%d", i)`))
 
 	generated, err := generator.Generate(0)
 	if err != nil {

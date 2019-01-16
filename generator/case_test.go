@@ -13,7 +13,7 @@ func TestShouldGenerateCase(t *testing.T) {
 		`"foo"`,
 		NewComment(" XXX test test"),
 		NewComment(" do something"),
-	).AddStatements(NewRawStatement(`fmt.Printf("test\n")`, true))
+	).AddStatements(NewRawStatement(`fmt.Printf("test\n")`))
 
 	{
 		gen, err := generator.Generate(0)

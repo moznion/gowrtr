@@ -82,7 +82,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ", false),
+				NewRawStatement("str := ").WithNewLine(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -94,7 +94,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewIf(`str == ""`).
 					AddStatements(
 						NewFor(`i := 0; i < 3; i++`).AddStatements(
-							NewRawStatement(`fmt.Printf("%d\n", i)`, true),
+							NewRawStatement(`fmt.Printf("%d\n", i)`),
 						),
 					),
 				NewNewline(),
@@ -197,7 +197,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ", false),
+				NewRawStatement("str := ").WithNewLine(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -209,7 +209,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 				NewIf(`str == ""`).
 					AddStatements(
 						NewFor(`i := 0; i < 3; i++`).AddStatements(
-							NewRawStatement(`fmt.Printf("%d\n", i)`, true),
+							NewRawStatement(`fmt.Printf("%d\n", i)`),
 						),
 					),
 				NewNewline(),
@@ -311,7 +311,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ", false),
+				NewRawStatement("str := ").WithNewLine(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -323,7 +323,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewIf(`str == ""`).
 					AddStatements(
 						NewFor(`i := 0; i < 3; i++`).AddStatements(
-							NewRawStatement(`fmt.Printf("%d\n", i)`, true),
+							NewRawStatement(`fmt.Printf("%d\n", i)`),
 						),
 					),
 				NewNewline(),
@@ -420,7 +420,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ", false),
+				NewRawStatement("str := ").WithNewLine(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -432,7 +432,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewIf(`str == ""`).
 					AddStatements(
 						NewFor(`i := 0; i < 3; i++`).AddStatements(
-							NewRawStatement(`fmt.Printf("%d\n", i)`, true),
+							NewRawStatement(`fmt.Printf("%d\n", i)`),
 						),
 					),
 				NewNewline(),
@@ -481,7 +481,7 @@ func TestShouldGenerateCodeRaisesError(t *testing.T) {
 func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 	{
 		generator := NewRoot(
-			NewRawStatement("\timport something", true),
+			NewRawStatement("\timport something"),
 		).EnableSyntaxChecking()
 
 		_, err := generator.Generate(0)
@@ -490,7 +490,7 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 
 	{
 		generator := NewRoot(
-			NewRawStatement("\timport something", true),
+			NewRawStatement("\timport something"),
 		).EnableGofmt()
 
 		_, err := generator.Generate(0)
@@ -499,7 +499,7 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 
 	{
 		generator := NewRoot(
-			NewRawStatement("\timport something", true),
+			NewRawStatement("\timport something"),
 		).EnableGoimports()
 
 		_, err := generator.Generate(0)
