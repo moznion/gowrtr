@@ -15,14 +15,14 @@ func TestShouldGenerateAnonymousFuncSignatureCode(t *testing.T) {
 	assert.Equal(t, "()", gen)
 
 	generator = generator.
-		AddFuncParameters(NewFuncParameter("foo", "string")).
+		AddParameters(NewFuncParameter("foo", "string")).
 		AddReturnTypes("string")
 	gen, err = generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "(foo string) string", gen)
 
 	generator = NewAnonymousFuncSignature().
-		AddFuncParameters(
+		AddParameters(
 			NewFuncParameter("foo", "string"),
 			NewFuncParameter("bar", "int64"),
 		).
@@ -30,10 +30,14 @@ func TestShouldGenerateAnonymousFuncSignatureCode(t *testing.T) {
 	gen, err = generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "(foo string, bar int64) (string, error)", gen)
+
+	gen, err = generator.Parameters(NewFuncParameter("buz", "error")).ReturnTypes("error").Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "(buz error) error", gen)
 }
 
 func TestShouldGenerateAnonymousFuncSignatureRaisesErrorWhenParamNameIsEmpty(t *testing.T) {
-	generator := NewAnonymousFuncSignature().AddFuncParameters(
+	generator := NewAnonymousFuncSignature().AddParameters(
 		NewFuncParameter("", "string"),
 	)
 	_, err := generator.Generate(0)
@@ -41,7 +45,7 @@ func TestShouldGenerateAnonymousFuncSignatureRaisesErrorWhenParamNameIsEmpty(t *
 }
 
 func TestShouldGenerateAnonymousFuncSignatureRaisesErrorWhenParamTypeIsEmpty(t *testing.T) {
-	generator := NewAnonymousFuncSignature().AddFuncParameters(
+	generator := NewAnonymousFuncSignature().AddParameters(
 		NewFuncParameter("foo", ""),
 	)
 	_, err := generator.Generate(0)

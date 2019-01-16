@@ -69,7 +69,7 @@ func TestShouldGenerateAnonymousFuncWithSignature(t *testing.T) {
 	generator := NewAnonymousFunc(
 		false,
 		NewAnonymousFuncSignature().
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", "string"),
 				NewFuncParameter("bar", "int64"),
 			).
@@ -92,7 +92,7 @@ func TestShouldGenerateAnonymousGoFuncWithInvocation(t *testing.T) {
 	generator := NewAnonymousFunc(
 		true,
 		NewAnonymousFuncSignature().
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", "string"),
 				NewFuncParameter("bar", "int64"),
 			).
@@ -123,7 +123,7 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureIsNil(t
 func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureRaisesError(t *testing.T) {
 	generator := NewAnonymousFunc(
 		false,
-		NewAnonymousFuncSignature().AddFuncParameters(
+		NewAnonymousFuncSignature().AddParameters(
 			NewFuncParameter("", "string"),
 		),
 	)

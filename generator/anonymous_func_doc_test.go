@@ -9,7 +9,7 @@ func ExampleAnonymousFunc_Generate() {
 	generator := NewAnonymousFunc(
 		true,
 		NewAnonymousFuncSignature().
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", "string"),
 				NewFuncParameter("bar", "int64"),
 			).

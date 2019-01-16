@@ -7,7 +7,7 @@ import (
 
 func ExampleAnonymousFuncSignature_Generate() {
 	generator := NewAnonymousFuncSignature().
-		AddFuncParameters(
+		AddParameters(
 			NewFuncParameter("foo", "string"),
 			NewFuncParameter("bar", "int64"),
 		).

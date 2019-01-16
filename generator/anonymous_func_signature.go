@@ -8,8 +8,8 @@ import (
 
 // AnonymousFuncSignature represents a code generator for signature of anonymous func.
 type AnonymousFuncSignature struct {
-	FuncParameters []*FuncParameter
-	ReturnTypes    []string
+	funcParameters []*FuncParameter
+	returnTypes    []string
 }
 
 // NewAnonymousFuncSignature returns a new `AnonymousFuncSignature`.
@@ -17,21 +17,39 @@ func NewAnonymousFuncSignature() *AnonymousFuncSignature {
 	return &AnonymousFuncSignature{}
 }
 
-// AddFuncParameters adds parameters of function to `AnonymousFuncSignature`.
+// AddParameters adds parameters of function to `AnonymousFuncSignature`. This does "not" set, just add.
 // This method returns a *new* `AnonymousFuncSignature`; it means this method acts as immutable.
-func (f *AnonymousFuncSignature) AddFuncParameters(funcParameters ...*FuncParameter) *AnonymousFuncSignature {
+func (f *AnonymousFuncSignature) AddParameters(funcParameters ...*FuncParameter) *AnonymousFuncSignature {
 	return &AnonymousFuncSignature{
-		FuncParameters: append(f.FuncParameters, funcParameters...),
-		ReturnTypes:    f.ReturnTypes,
+		funcParameters: append(f.funcParameters, funcParameters...),
+		returnTypes:    f.returnTypes,
 	}
 }
 
-// AddReturnTypes adds return types of the function to `AnonymousFuncSignature`.
+// Parameters sets parameters of function to `AnonymousFuncSignature`. This does "not" add, just set.
+// This method returns a *new* `AnonymousFuncSignature`; it means this method acts as immutable.
+func (f *AnonymousFuncSignature) Parameters(funcParameters ...*FuncParameter) *AnonymousFuncSignature {
+	return &AnonymousFuncSignature{
+		funcParameters: funcParameters,
+		returnTypes:    f.returnTypes,
+	}
+}
+
+// AddReturnTypes adds return types of the function to `AnonymousFuncSignature`. This does "not" set, just add.
 // This method returns a *new* `AnonymousFuncSignature`; it means this method acts as immutable.
 func (f *AnonymousFuncSignature) AddReturnTypes(returnTypes ...string) *AnonymousFuncSignature {
 	return &AnonymousFuncSignature{
-		FuncParameters: f.FuncParameters,
-		ReturnTypes:    append(f.ReturnTypes, returnTypes...),
+		funcParameters: f.funcParameters,
+		returnTypes:    append(f.returnTypes, returnTypes...),
+	}
+}
+
+// ReturnTypes sets return types of the function to `AnonymousFuncSignature`. This does "not" add, just set.
+// This method returns a *new* `AnonymousFuncSignature`; it means this method acts as immutable.
+func (f *AnonymousFuncSignature) ReturnTypes(returnTypes ...string) *AnonymousFuncSignature {
+	return &AnonymousFuncSignature{
+		funcParameters: f.funcParameters,
+		returnTypes:    returnTypes,
 	}
 }
 
@@ -40,8 +58,8 @@ func (f *AnonymousFuncSignature) Generate(indentLevel int) (string, error) {
 	stmt := "("
 
 	typeExisted := true
-	params := make([]string, len(f.FuncParameters))
-	for i, param := range f.FuncParameters {
+	params := make([]string, len(f.funcParameters))
+	for i, param := range f.funcParameters {
 		if param.Name == "" {
 			return "", errmsg.FuncParameterNameIsEmptyErr()
 		}
@@ -60,7 +78,7 @@ func (f *AnonymousFuncSignature) Generate(indentLevel int) (string, error) {
 
 	stmt += strings.Join(params, ", ") + ")"
 
-	returnTypes := f.ReturnTypes
+	returnTypes := f.returnTypes
 	switch len(returnTypes) {
 	case 0:
 		// NOP

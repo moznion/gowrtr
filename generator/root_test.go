@@ -86,7 +86,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
-						AddFuncParameters(NewFuncParameter("bar", "string")).
+						AddParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
 				).Invocation(NewFuncInvocation("foo")),
@@ -201,7 +201,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
-						AddFuncParameters(NewFuncParameter("bar", "string")).
+						AddParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
 				).Invocation(NewFuncInvocation("foo")),
@@ -315,7 +315,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
-						AddFuncParameters(NewFuncParameter("bar", "string")).
+						AddParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
 				).Invocation(NewFuncInvocation("foo")),
@@ -424,7 +424,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
-						AddFuncParameters(NewFuncParameter("bar", "string")).
+						AddParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
 				).Invocation(NewFuncInvocation("foo")),

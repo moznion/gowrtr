@@ -37,7 +37,7 @@ func ExampleRoot_Generate() {
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
-						AddFuncParameters(NewFuncParameter("bar", "string")).
+						AddParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
 				).Invocation(NewFuncInvocation("foo")),
