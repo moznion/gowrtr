@@ -18,6 +18,14 @@ func TestShouldGenerateRawStatementSuccessful(t *testing.T) {
 	assert.Equal(t, "\t\ti := 0\n", gen)
 }
 
+func TestShouldGenerateRawStatementWithFormattingSuccessful(t *testing.T) {
+	generator := NewRawStatementf(`s := "%s"`, "test-str")
+
+	gen, err := generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "s := \"test-str\"\n", gen)
+}
+
 func TestShouldGenerateRawStatementWithNewlineOption(t *testing.T) {
 	{
 		generator := NewRawStatement(`i := 0`).WithNewLine(true)

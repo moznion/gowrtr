@@ -1,5 +1,7 @@
 package generator
 
+import "fmt"
+
 // RawStatement represents a code generator for `raw statement`.
 // `raw statement` means plain text statement.
 type RawStatement struct {
@@ -11,6 +13,15 @@ type RawStatement struct {
 func NewRawStatement(stmt string) *RawStatement {
 	return &RawStatement{
 		Statement:   stmt,
+		WithNewline: true,
+	}
+}
+
+// NewRawStatementf returns a new `RawStatement` with formatting.
+// If `args` is not empty, this method formats `stmt` with `args` by `fmt.Sprintf`.
+func NewRawStatementf(stmt string, args ...interface{}) *RawStatement {
+	return &RawStatement{
+		Statement:   fmt.Sprintf(stmt, args...),
 		WithNewline: true,
 	}
 }
