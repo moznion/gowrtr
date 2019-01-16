@@ -39,6 +39,32 @@ func TestShouldGenerateAnonymousFunc(t *testing.T) {
 	}
 }
 
+func TestShouldGenerateAnonymousFuncWithSetterMethod(t *testing.T) {
+
+	expected := `func() {
+	// do something
+	fmt.Printf("%d", i)
+}
+`
+	generator := NewAnonymousFunc(false,
+		NewAnonymousFuncSignature(),
+		NewComment(" do something"),
+		NewRawStatement(`fmt.Printf("%d", i)`),
+	)
+	gen, err := generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
+
+	generator = generator.Statements(NewComment("modified"))
+	expected = `func() {
+	//modified
+}
+`
+	gen, err = generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
+}
+
 func TestShouldGenerateAnonymousFuncWithSignature(t *testing.T) {
 	generator := NewAnonymousFunc(
 		false,
