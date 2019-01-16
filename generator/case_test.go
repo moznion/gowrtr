@@ -36,6 +36,16 @@ func TestShouldGenerateCase(t *testing.T) {
 `
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.Statements(NewComment("modified"))
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		expected := `case "foo":
+	//modified
+`
+		assert.Equal(t, expected, gen)
+	}
 }
 
 func TestShouldGenerateCaseRaisesErrorWhenConditionIsEmpty(t *testing.T) {
