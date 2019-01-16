@@ -33,7 +33,7 @@ func ExampleRoot_Generate() {
 				AddReturnTypes("string", "error"),
 		).AddStatements(
 			NewCodeBlock(
-				NewRawStatement("str := ", false),
+				NewRawStatement("str := ").WithNewLine(false),
 				NewAnonymousFunc(
 					false,
 					NewAnonymousFuncSignature().
@@ -45,7 +45,7 @@ func ExampleRoot_Generate() {
 				NewIf(`str == ""`).
 					AddStatements(
 						NewFor(`i := 0; i < 3; i++`).AddStatements(
-							NewRawStatement(`fmt.Printf("%d\n", i)`, true),
+							NewRawStatement(`fmt.Printf("%d\n", i)`),
 						),
 					),
 				NewNewline(),

@@ -14,6 +14,14 @@ func NewComment(comment string) *Comment {
 	}
 }
 
+// NewCommentf returns a new `Comment` with formatting.
+// If `args` is not empty, this method formats `stmt` with `args` by `fmt.Sprintf`.
+func NewCommentf(comment string, args ...interface{}) *Comment {
+	return &Comment{
+		Comment: fmt.Sprintf(comment, args...),
+	}
+}
+
 // Generate generates one line comment statement.
 func (c *Comment) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)

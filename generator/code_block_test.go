@@ -11,7 +11,7 @@ import (
 func TestShouldGenerateCodeBlock(t *testing.T) {
 	generator := NewCodeBlock(
 		NewComment(" do something"),
-		NewRawStatement(`fmt.Printf("%d", i)`, true),
+		NewRawStatement(`fmt.Printf("%d", i)`),
 	)
 
 	{
@@ -64,7 +64,7 @@ func TestShouldGenerateCodeBlockWithExpandingMethod(t *testing.T) {
 		NewComment(" XXX: test test"),
 		NewComment(" do something"),
 	).AddStatements(
-		NewRawStatement(`fmt.Printf("%d", i)`, true),
+		NewRawStatement(`fmt.Printf("%d", i)`),
 	)
 
 	expected := `{

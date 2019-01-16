@@ -31,7 +31,7 @@ func TestShouldGenerateAnonymousFunc(t *testing.T) {
 `
 		generator = generator.AddStatements(
 			NewComment(" do something"),
-			NewRawStatement(`fmt.Printf("%d", i)`, true),
+			NewRawStatement(`fmt.Printf("%d", i)`),
 		)
 		gen, err := generator.Generate(0)
 		assert.NoError(t, err)
@@ -49,7 +49,7 @@ func TestShouldGenerateAnonymousFuncWithSignature(t *testing.T) {
 			).
 			AddReturnTypes("string", "error"),
 		NewComment(" do something"),
-		NewRawStatement(`fmt.Printf("%d", i)`, true),
+		NewRawStatement(`fmt.Printf("%d", i)`),
 	)
 
 	expected := `func(foo string, bar int64) (string, error) {
@@ -72,7 +72,7 @@ func TestShouldGenerateAnonymousGoFuncWithInvocation(t *testing.T) {
 			).
 			AddReturnTypes("string", "error"),
 		NewComment(" do something"),
-		NewRawStatement(`fmt.Printf("%d", i)`, true),
+		NewRawStatement(`fmt.Printf("%d", i)`),
 	).SetFuncInvocation(NewFuncInvocation("foo", "bar"))
 
 	expected := `go func(foo string, bar int64) (string, error) {
