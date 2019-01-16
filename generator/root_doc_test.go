@@ -40,7 +40,7 @@ func ExampleRoot_Generate() {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
-				).SetFuncInvocation(NewFuncInvocation("foo")),
+				).Invocation(NewFuncInvocation("foo")),
 				NewNewline(),
 				NewIf(`str == ""`).
 					AddStatements(

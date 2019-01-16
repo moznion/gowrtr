@@ -42,9 +42,9 @@ func (ifg *AnonymousFunc) Statements(statements ...Statement) *AnonymousFunc {
 	}
 }
 
-// SetFuncInvocation sets an invocation of the anonymous func to `AnonymousFunc`.
+// Invocation sets an invocation of the anonymous func to `AnonymousFunc`.
 // This method returns a *new* `AnonymousFunc`; it means this method acts as immutable.
-func (ifg *AnonymousFunc) SetFuncInvocation(funcInvocation *FuncInvocation) *AnonymousFunc {
+func (ifg *AnonymousFunc) Invocation(funcInvocation *FuncInvocation) *AnonymousFunc {
 	return &AnonymousFunc{
 		goFunc:                 ifg.goFunc,
 		anonymousFuncSignature: ifg.anonymousFuncSignature,

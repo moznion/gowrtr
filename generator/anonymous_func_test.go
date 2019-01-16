@@ -99,7 +99,7 @@ func TestShouldGenerateAnonymousGoFuncWithInvocation(t *testing.T) {
 			AddReturnTypes("string", "error"),
 		NewComment(" do something"),
 		NewRawStatement(`fmt.Printf("%d", i)`),
-	).SetFuncInvocation(NewFuncInvocation("foo", "bar"))
+	).Invocation(NewFuncInvocation("foo", "bar"))
 
 	expected := `go func(foo string, bar int64) (string, error) {
 	// do something
@@ -146,7 +146,7 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenFuncInvocationRaisesError(t *
 	generator := NewAnonymousFunc(
 		false,
 		NewAnonymousFuncSignature(),
-	).SetFuncInvocation(NewFuncInvocation(""))
+	).Invocation(NewFuncInvocation(""))
 	_, err := generator.Generate(0)
 	assert.EqualError(t, err, errmsg.FuncInvocationParameterIsEmptyError().Error())
 }

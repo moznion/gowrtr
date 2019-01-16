@@ -89,7 +89,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
-				).SetFuncInvocation(NewFuncInvocation("foo")),
+				).Invocation(NewFuncInvocation("foo")),
 				NewNewline(),
 				NewIf(`str == ""`).
 					AddStatements(
@@ -204,7 +204,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
-				).SetFuncInvocation(NewFuncInvocation("foo")),
+				).Invocation(NewFuncInvocation("foo")),
 				NewNewline(),
 				NewIf(`str == ""`).
 					AddStatements(
@@ -318,7 +318,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
-				).SetFuncInvocation(NewFuncInvocation("foo")),
+				).Invocation(NewFuncInvocation("foo")),
 				NewNewline(),
 				NewIf(`str == ""`).
 					AddStatements(
@@ -427,7 +427,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 						AddFuncParameters(NewFuncParameter("bar", "string")).
 						AddReturnTypes("string"),
 					NewReturnStatement("bar"),
-				).SetFuncInvocation(NewFuncInvocation("foo")),
+				).Invocation(NewFuncInvocation("foo")),
 				NewNewline(),
 				NewIf(`str == ""`).
 					AddStatements(
