@@ -16,11 +16,19 @@ func NewImport(names ...string) *Import {
 	}
 }
 
-// AddImports adds import items to `Import`.
+// AddImports adds import items to `Import`. This does *not* set, just add.
 // This method returns a *new* `Import`; it means this method acts as immutable.
 func (ig *Import) AddImports(imps ...string) *Import {
 	return &Import{
 		Names: append(ig.Names, imps...),
+	}
+}
+
+// Imports sets import items to `Import`. This does *not* add, just set.
+// This method returns a *new* `Import`; it means this method acts as immutable.
+func (ig *Import) Imports(imps ...string) *Import {
+	return &Import{
+		Names: imps,
 	}
 }
 

@@ -19,6 +19,16 @@ func TestShouldGenerateImportStatementBeSucceeded(t *testing.T) {
 	gen, err := importGenerator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)
+
+	importGenerator = importGenerator.Imports("foo", "bar")
+	expected = `import (
+	"foo"
+	"bar"
+)
+`
+	gen, err = importGenerator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
 }
 
 func TestShouldGenerateImportStatementBeSucceededWithSingleImportee(t *testing.T) {
