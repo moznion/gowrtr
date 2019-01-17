@@ -37,6 +37,16 @@ func TestShouldGenerateElseCode(t *testing.T) {
 		}`
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.Statements(NewComment("modified"))
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		expected := ` else {
+	//modified
+}`
+		assert.Equal(t, expected, gen)
+	}
 }
 
 func TestShouldGenerateElseCodeRaisesError(t *testing.T) {
