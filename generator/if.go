@@ -6,50 +6,72 @@ import (
 
 // If represents a code generator for `if`, `else-if` and `else` block.
 type If struct {
-	Condition    string
-	Statements   []Statement
-	ElseIfBlocks []*ElseIf
-	ElseBlock    *Else
+	condition    string
+	statements   []Statement
+	elseIfBlocks []*ElseIf
+	elseBlock    *Else
 }
 
 // NewIf returns a new `If`.
 func NewIf(condition string, statements ...Statement) *If {
 	return &If{
-		Condition:  condition,
-		Statements: statements,
+		condition:  condition,
+		statements: statements,
 	}
 }
 
-// AddStatements adds statements for `if` block to `If`.
+// AddStatements adds statements for `if` block to `If`. This does *not* set, just add.
 // This method returns a *new* `If`; it means this method acts as immutable.
 func (ig *If) AddStatements(statements ...Statement) *If {
 	return &If{
-		Condition:    ig.Condition,
-		Statements:   append(ig.Statements, statements...),
-		ElseIfBlocks: ig.ElseIfBlocks,
-		ElseBlock:    ig.ElseBlock,
+		condition:    ig.condition,
+		statements:   append(ig.statements, statements...),
+		elseIfBlocks: ig.elseIfBlocks,
+		elseBlock:    ig.elseBlock,
 	}
 }
 
-// AddElseIfBlocks adds `else-if` block to `If`.
+// Statements sets statements for `if` block to `If`. This does *not* add, just set.
+// This method returns a *new* `If`; it means this method acts as immutable.
+func (ig *If) Statements(statements ...Statement) *If {
+	return &If{
+		condition:    ig.condition,
+		statements:   statements,
+		elseIfBlocks: ig.elseIfBlocks,
+		elseBlock:    ig.elseBlock,
+	}
+}
+
+// AddElseIfBlocks adds `else-if` block to `If`. This does *not* set, just add.
 // This method returns a *new* `If`; it means this method acts as immutable.
 func (ig *If) AddElseIfBlocks(blocks ...*ElseIf) *If {
 	return &If{
-		Condition:    ig.Condition,
-		Statements:   ig.Statements,
-		ElseIfBlocks: append(ig.ElseIfBlocks, blocks...),
-		ElseBlock:    ig.ElseBlock,
+		condition:    ig.condition,
+		statements:   ig.statements,
+		elseIfBlocks: append(ig.elseIfBlocks, blocks...),
+		elseBlock:    ig.elseBlock,
 	}
 }
 
-// SetElseBlock sets `else` block to `If`.
+// ElseIfBlocks sets `else-if` block to `If`. This does *not* add, just set.
 // This method returns a *new* `If`; it means this method acts as immutable.
-func (ig *If) SetElseBlock(block *Else) *If {
+func (ig *If) ElseIfBlocks(blocks ...*ElseIf) *If {
 	return &If{
-		Condition:    ig.Condition,
-		Statements:   ig.Statements,
-		ElseIfBlocks: ig.ElseIfBlocks,
-		ElseBlock:    block,
+		condition:    ig.condition,
+		statements:   ig.statements,
+		elseIfBlocks: blocks,
+		elseBlock:    ig.elseBlock,
+	}
+}
+
+// ElseBlock sets `else` block to `If`.
+// This method returns a *new* `If`; it means this method acts as immutable.
+func (ig *If) ElseBlock(block *Else) *If {
+	return &If{
+		condition:    ig.condition,
+		statements:   ig.statements,
+		elseIfBlocks: ig.elseIfBlocks,
+		elseBlock:    block,
 	}
 }
 
@@ -57,10 +79,10 @@ func (ig *If) SetElseBlock(block *Else) *If {
 func (ig *If) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
-	stmt := fmt.Sprintf("%sif %s {\n", indent, ig.Condition)
+	stmt := fmt.Sprintf("%sif %s {\n", indent, ig.condition)
 
 	nextIndentLevel := indentLevel + 1
-	for _, c := range ig.Statements {
+	for _, c := range ig.statements {
 		gen, err := c.Generate(nextIndentLevel)
 		if err != nil {
 			return "", err
@@ -70,7 +92,7 @@ func (ig *If) Generate(indentLevel int) (string, error) {
 
 	stmt += fmt.Sprintf("%s}", indent)
 
-	for _, elseIfBlock := range ig.ElseIfBlocks {
+	for _, elseIfBlock := range ig.elseIfBlocks {
 		if elseIfBlock == nil {
 			continue
 		}
@@ -82,7 +104,7 @@ func (ig *If) Generate(indentLevel int) (string, error) {
 		stmt += elseIfCode
 	}
 
-	if elseBlock := ig.ElseBlock; elseBlock != nil {
+	if elseBlock := ig.elseBlock; elseBlock != nil {
 		elseCode, err := elseBlock.Generate(indentLevel)
 		if err != nil {
 			return "", err

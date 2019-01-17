@@ -35,6 +35,17 @@ func TestShouldGenerateIfCode(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.Statements(NewComment("modified"))
+		expected := `if i > 0 {
+	//modified
+}
+`
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, gen)
+	}
 }
 
 func TestShouldGenerateIfCodeWithExpandingMethod(t *testing.T) {
@@ -73,7 +84,7 @@ func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
 		NewElseIf("i < 0", NewComment(" else if 1")),
 		nil,
 		NewElseIf("i > 0", NewComment(" else if 2")),
-	).SetElseBlock(NewElse(
+	).ElseBlock(NewElse(
 		NewComment(" else"),
 	))
 
@@ -108,6 +119,25 @@ func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
 `
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.ElseIfBlocks(
+			NewElseIf("ii == 0").Statements(NewComment(" modified")),
+		)
+		gen, err := generator.Generate(0)
+
+		assert.NoError(t, err)
+		expected := `if i == 0 {
+	// if
+} else if ii == 0 {
+	// modified
+} else {
+	// else
+}
+`
+		assert.Equal(t, expected, gen)
+	}
+
 }
 
 func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {
@@ -124,7 +154,7 @@ func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {
 func TestShouldGenerateIfElseRaisesError(t *testing.T) {
 	generator := NewIf("i == 0",
 		NewComment(" if"),
-	).SetElseBlock(
+	).ElseBlock(
 		NewElse(NewFuncSignature("")),
 	)
 

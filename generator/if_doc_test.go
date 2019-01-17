@@ -12,7 +12,7 @@ func ExampleIf_Generate() {
 		NewElseIf("i < 0", NewComment(" else if 1")),
 		nil,
 		NewElseIf("i > 0", NewComment(" else if 2")),
-	).SetElseBlock(NewElse(
+	).ElseBlock(NewElse(
 		NewComment(" else"),
 	))
 
