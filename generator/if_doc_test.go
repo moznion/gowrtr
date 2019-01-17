@@ -8,11 +8,11 @@ import (
 func ExampleIf_Generate() {
 	generator := NewIf("i == 0",
 		NewComment(" if"),
-	).AddElseIfBlocks(
+	).AddElseIf(
 		NewElseIf("i < 0", NewComment(" else if 1")),
 		nil,
 		NewElseIf("i > 0", NewComment(" else if 2")),
-	).ElseBlock(NewElse(
+	).Else(NewElse(
 		NewComment(" else"),
 	))
 

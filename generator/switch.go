@@ -17,9 +17,9 @@ func NewSwitch(condition string) *Switch {
 	}
 }
 
-// AddCaseStatements adds `case` statements to `Switch`. This does *not* set, just add.
+// AddCase adds `case` statements to `Switch`. This does *not* set, just add.
 // This method returns a *new* `Switch`; it means this method acts as immutable.
-func (s *Switch) AddCaseStatements(statements ...*Case) *Switch {
+func (s *Switch) AddCase(statements ...*Case) *Switch {
 	return &Switch{
 		condition:        s.condition,
 		caseStatements:   append(s.caseStatements, statements...),
@@ -27,9 +27,9 @@ func (s *Switch) AddCaseStatements(statements ...*Case) *Switch {
 	}
 }
 
-// CaseStatements sets `case` statements to `Switch`. This does *not* add, just set.
+// Case sets `case` statements to `Switch`. This does *not* add, just set.
 // This method returns a *new* `Switch`; it means this method acts as immutable.
-func (s *Switch) CaseStatements(statements ...*Case) *Switch {
+func (s *Switch) Case(statements ...*Case) *Switch {
 	return &Switch{
 		condition:        s.condition,
 		caseStatements:   statements,
@@ -37,9 +37,9 @@ func (s *Switch) CaseStatements(statements ...*Case) *Switch {
 	}
 }
 
-// DefaultStatement sets a `default` statement to `Switch`.
+// Default sets a `default` statement to `Switch`.
 // This method returns a *new* `Switch`; it means this method acts as immutable.
-func (s *Switch) DefaultStatement(statement *DefaultCase) *Switch {
+func (s *Switch) Default(statement *DefaultCase) *Switch {
 	return &Switch{
 		condition:        s.condition,
 		caseStatements:   s.caseStatements,

@@ -7,11 +7,11 @@ import (
 
 func ExampleSwitch_Generate() {
 	generator := NewSwitch("str")
-	generator = generator.AddCaseStatements(
+	generator = generator.AddCase(
 		NewCase(`"foo"`, NewRawStatement(`fmt.Printf("str is foo\n")`)),
 		NewCase(`"bar"`, NewRawStatement(`fmt.Printf("str is bar\n")`)),
 	)
-	generator = generator.DefaultStatement(
+	generator = generator.Default(
 		NewDefaultCase(NewRawStatement(`fmt.Printf("here is default\n")`)),
 	)
 

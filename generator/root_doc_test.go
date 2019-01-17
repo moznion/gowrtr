@@ -50,7 +50,7 @@ func ExampleRoot_Generate() {
 					),
 				NewNewline(),
 				NewSwitch("str").
-					AddCaseStatements(
+					AddCase(
 						NewCase(
 							`""`,
 							NewComment(" empty string"),
@@ -60,7 +60,7 @@ func ExampleRoot_Generate() {
 							NewComment(" foo string"),
 						),
 					).
-					DefaultStatement(
+					Default(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),

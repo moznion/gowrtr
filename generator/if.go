@@ -42,9 +42,9 @@ func (ig *If) Statements(statements ...Statement) *If {
 	}
 }
 
-// AddElseIfBlocks adds `else-if` block to `If`. This does *not* set, just add.
+// AddElseIf adds `else-if` block to `If`. This does *not* set, just add.
 // This method returns a *new* `If`; it means this method acts as immutable.
-func (ig *If) AddElseIfBlocks(blocks ...*ElseIf) *If {
+func (ig *If) AddElseIf(blocks ...*ElseIf) *If {
 	return &If{
 		condition:    ig.condition,
 		statements:   ig.statements,
@@ -53,9 +53,9 @@ func (ig *If) AddElseIfBlocks(blocks ...*ElseIf) *If {
 	}
 }
 
-// ElseIfBlocks sets `else-if` block to `If`. This does *not* add, just set.
+// ElseIf sets `else-if` block to `If`. This does *not* add, just set.
 // This method returns a *new* `If`; it means this method acts as immutable.
-func (ig *If) ElseIfBlocks(blocks ...*ElseIf) *If {
+func (ig *If) ElseIf(blocks ...*ElseIf) *If {
 	return &If{
 		condition:    ig.condition,
 		statements:   ig.statements,
@@ -64,9 +64,9 @@ func (ig *If) ElseIfBlocks(blocks ...*ElseIf) *If {
 	}
 }
 
-// ElseBlock sets `else` block to `If`.
+// Else sets `else` block to `If`.
 // This method returns a *new* `If`; it means this method acts as immutable.
-func (ig *If) ElseBlock(block *Else) *If {
+func (ig *If) Else(block *Else) *If {
 	return &If{
 		condition:    ig.condition,
 		statements:   ig.statements,

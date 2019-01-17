@@ -80,11 +80,11 @@ func TestShouldGenerateIfCodeGiveUpWhenStatementRaisesError(t *testing.T) {
 func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
 	generator := NewIf("i == 0",
 		NewComment(" if"),
-	).AddElseIfBlocks(
+	).AddElseIf(
 		NewElseIf("i < 0", NewComment(" else if 1")),
 		nil,
 		NewElseIf("i > 0", NewComment(" else if 2")),
-	).ElseBlock(NewElse(
+	).Else(NewElse(
 		NewComment(" else"),
 	))
 
@@ -121,7 +121,7 @@ func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
 	}
 
 	{
-		generator = generator.ElseIfBlocks(
+		generator = generator.ElseIf(
 			NewElseIf("ii == 0").Statements(NewComment(" modified")),
 		)
 		gen, err := generator.Generate(0)
@@ -143,7 +143,7 @@ func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
 func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {
 	generator := NewIf("i == 0",
 		NewComment(" if"),
-	).AddElseIfBlocks(
+	).AddElseIf(
 		NewElseIf("i < 0", NewFuncSignature("")),
 	)
 
@@ -154,7 +154,7 @@ func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {
 func TestShouldGenerateIfElseRaisesError(t *testing.T) {
 	generator := NewIf("i == 0",
 		NewComment(" if"),
-	).ElseBlock(
+	).Else(
 		NewElse(NewFuncSignature("")),
 	)
 

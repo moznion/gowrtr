@@ -99,7 +99,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 					),
 				NewNewline(),
 				NewSwitch("str").
-					AddCaseStatements(
+					AddCase(
 						NewCase(
 							`""`,
 							NewComment(" empty string"),
@@ -109,7 +109,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewComment(" foo string"),
 						),
 					).
-					DefaultStatement(
+					Default(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),
@@ -217,7 +217,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 					),
 				NewNewline(),
 				NewSwitch("str").
-					AddCaseStatements(
+					AddCase(
 						NewCase(
 							`""`,
 							NewComment(" empty string"),
@@ -227,7 +227,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 							NewComment(" foo string"),
 						),
 					).
-					DefaultStatement(
+					Default(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),
@@ -331,7 +331,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 					),
 				NewNewline(),
 				NewSwitch("str").
-					AddCaseStatements(
+					AddCase(
 						NewCase(
 							`""`,
 							NewComment(" empty string"),
@@ -341,7 +341,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewComment(" foo string"),
 						),
 					).
-					DefaultStatement(
+					Default(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),
@@ -440,7 +440,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 					),
 				NewNewline(),
 				NewSwitch("str").
-					AddCaseStatements(
+					AddCase(
 						NewCase(
 							`""`,
 							NewComment(" empty string"),
@@ -450,7 +450,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewComment(" foo string"),
 						),
 					).
-					DefaultStatement(
+					Default(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),

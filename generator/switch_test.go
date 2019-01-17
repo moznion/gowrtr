@@ -19,11 +19,11 @@ func TestShouldGenerateSwitch(t *testing.T) {
 		assert.Equal(t, expected, gen)
 	}
 
-	generator = generator.AddCaseStatements(
+	generator = generator.AddCase(
 		NewCase("1", NewComment(" one")),
 		nil,
 		NewCase("2", NewComment(" two")),
-	).DefaultStatement(
+	).Default(
 		NewDefaultCase(NewComment(" default")),
 	)
 
@@ -58,7 +58,7 @@ default:
 	}
 
 	{
-		generator = generator.CaseStatements(NewCase("123", NewComment("modified")))
+		generator = generator.Case(NewCase("123", NewComment("modified")))
 		gen, err := generator.Generate(0)
 		assert.NoError(t, err)
 		expected := `switch foo {
@@ -73,7 +73,7 @@ default:
 }
 
 func TestShouldGenerateSwitchRaisesErrorWhenCaseRaisesError(t *testing.T) {
-	generator := NewSwitch("foo").AddCaseStatements(
+	generator := NewSwitch("foo").AddCase(
 		NewCase(""),
 	)
 	_, err := generator.Generate(0)
@@ -81,7 +81,7 @@ func TestShouldGenerateSwitchRaisesErrorWhenCaseRaisesError(t *testing.T) {
 }
 
 func TestShouldGenerateSwitchRaisesErrorWhenDefaultRaisesError(t *testing.T) {
-	generator := NewSwitch("foo").DefaultStatement(
+	generator := NewSwitch("foo").Default(
 		NewDefaultCase(
 			NewFunc(nil, NewFuncSignature("")),
 		),
