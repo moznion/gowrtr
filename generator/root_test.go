@@ -119,9 +119,12 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 	)
 
 	generated, err := generator.EnableSyntaxChecking().Generate(0)
-
 	assert.NoError(t, err)
 	assert.Equal(t, expected, generated)
+
+	generated, err = generator.Statements(NewComment("modified")).Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "//modified\n", generated)
 }
 
 func TestShouldGenerateCodeWithIndent(t *testing.T) {

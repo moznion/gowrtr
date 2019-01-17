@@ -11,29 +11,41 @@ import (
 
 // Root is a code generator for the entry point.
 type Root struct {
-	Statements     []Statement
-	Gofmt          bool
-	GofmtOptions   []string
-	Goimports      bool
-	SyntaxChecking bool
+	statements     []Statement
+	gofmt          bool
+	gofmtOptions   []string
+	goimports      bool
+	syntaxChecking bool
 }
 
 // NewRoot generates a new `Root`.
 func NewRoot(statements ...Statement) *Root {
 	return &Root{
-		Statements: statements,
+		statements: statements,
 	}
 }
 
-// AddStatements adds statements to Root.
+// AddStatements adds statements to Root. This does *not* set, just add.
 // This method returns a *new* `Root`; it means this method acts as immutable.
 func (g *Root) AddStatements(statements ...Statement) *Root {
 	return &Root{
-		Statements:     append(g.Statements, statements...),
-		Gofmt:          g.Gofmt,
-		GofmtOptions:   g.GofmtOptions,
-		Goimports:      g.Goimports,
-		SyntaxChecking: g.SyntaxChecking,
+		statements:     append(g.statements, statements...),
+		gofmt:          g.gofmt,
+		gofmtOptions:   g.gofmtOptions,
+		goimports:      g.goimports,
+		syntaxChecking: g.syntaxChecking,
+	}
+}
+
+// Statements sets statements to Root. This does *not* add, just set.
+// This method returns a *new* `Root`; it means this method acts as immutable.
+func (g *Root) Statements(statements ...Statement) *Root {
+	return &Root{
+		statements:     statements,
+		gofmt:          g.gofmt,
+		gofmtOptions:   g.gofmtOptions,
+		goimports:      g.goimports,
+		syntaxChecking: g.syntaxChecking,
 	}
 }
 
@@ -41,11 +53,11 @@ func (g *Root) AddStatements(statements ...Statement) *Root {
 // This method returns a *new* `Root`; it means this method acts as immutable.
 func (g *Root) EnableGofmt(gofmtOptions ...string) *Root {
 	return &Root{
-		Statements:     g.Statements,
-		Gofmt:          true,
-		GofmtOptions:   gofmtOptions,
-		Goimports:      g.Goimports,
-		SyntaxChecking: g.SyntaxChecking,
+		statements:     g.statements,
+		gofmt:          true,
+		gofmtOptions:   gofmtOptions,
+		goimports:      g.goimports,
+		syntaxChecking: g.syntaxChecking,
 	}
 }
 
@@ -53,11 +65,11 @@ func (g *Root) EnableGofmt(gofmtOptions ...string) *Root {
 // This method returns a *new* `Root`; it means this method acts as immutable.
 func (g *Root) EnableGoimports() *Root {
 	return &Root{
-		Statements:     g.Statements,
-		Gofmt:          g.Gofmt,
-		GofmtOptions:   g.GofmtOptions,
-		Goimports:      true,
-		SyntaxChecking: g.SyntaxChecking,
+		statements:     g.statements,
+		gofmt:          g.gofmt,
+		gofmtOptions:   g.gofmtOptions,
+		goimports:      true,
+		syntaxChecking: g.syntaxChecking,
 	}
 }
 
@@ -65,11 +77,11 @@ func (g *Root) EnableGoimports() *Root {
 // This method returns a *new* `Root`; it means this method acts as immutable.
 func (g *Root) EnableSyntaxChecking() *Root {
 	return &Root{
-		Statements:     g.Statements,
-		Gofmt:          g.Gofmt,
-		GofmtOptions:   g.GofmtOptions,
-		Goimports:      g.Goimports,
-		SyntaxChecking: true,
+		statements:     g.statements,
+		gofmt:          g.gofmt,
+		gofmtOptions:   g.gofmtOptions,
+		goimports:      g.goimports,
+		syntaxChecking: true,
 	}
 }
 
@@ -77,7 +89,7 @@ func (g *Root) EnableSyntaxChecking() *Root {
 func (g *Root) Generate(indentLevel int) (string, error) {
 	generatedCode := ""
 
-	for _, statement := range g.Statements {
+	for _, statement := range g.statements {
 		gen, err := statement.Generate(indentLevel)
 		if err != nil {
 			return "", err
@@ -85,22 +97,22 @@ func (g *Root) Generate(indentLevel int) (string, error) {
 		generatedCode += gen
 	}
 
-	if g.SyntaxChecking {
+	if g.syntaxChecking {
 		_, err := g.applyGofmt(generatedCode, "-e")
 		if err != nil {
 			return "", err
 		}
 	}
 
-	if g.Gofmt {
+	if g.gofmt {
 		var err error
-		generatedCode, err = g.applyGofmt(generatedCode, g.GofmtOptions...)
+		generatedCode, err = g.applyGofmt(generatedCode, g.gofmtOptions...)
 		if err != nil {
 			return "", err
 		}
 	}
 
-	if g.Goimports {
+	if g.goimports {
 		var err error
 		generatedCode, err = g.applyGoimports(generatedCode)
 		if err != nil {
