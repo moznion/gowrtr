@@ -35,6 +35,16 @@ func TestShouldGenerateDefaultCase(t *testing.T) {
 `
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.Statements(NewComment("modified"))
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		expected := `default:
+	//modified
+`
+		assert.Equal(t, expected, gen)
+	}
 }
 
 func TestShouldGenerateDefaultCaseRaisesErrorWhenStatementsRaisesError(t *testing.T) {
