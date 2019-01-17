@@ -7,7 +7,7 @@ import (
 
 func ExampleRoot_Generate() {
 	myFuncSignature := NewFuncSignature("MyFunc").
-		AddFuncParameters(
+		AddParameters(
 			NewFuncParameter("foo", "string"),
 		).
 		AddReturnTypes("string", "error")
@@ -27,7 +27,7 @@ func ExampleRoot_Generate() {
 		NewFunc(
 			NewFuncReceiver("m", "*MyStruct"),
 			NewFuncSignature("MyFunc").
-				AddFuncParameters(
+				AddParameters(
 					NewFuncParameter("foo", "string"),
 				).
 				AddReturnTypes("string", "error"),

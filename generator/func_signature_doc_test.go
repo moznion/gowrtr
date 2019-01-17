@@ -8,7 +8,7 @@ import (
 func ExampleFuncSignature_Generate() {
 	generator := NewFuncSignature(
 		"myFunc",
-	).AddFuncParameters(
+	).AddParameters(
 		NewFuncParameter("foo", "string"),
 		NewFuncParameter("bar", "int"),
 	).AddReturnTypes("string", "error")

@@ -12,7 +12,7 @@ func TestShouldGenerateFuncCode(t *testing.T) {
 	generator := NewFunc(
 		NewFuncReceiver("m", "*MyStruct"),
 		NewFuncSignature("myFunc").
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", ""),
 				NewFuncParameter("bar", "string"),
 			).
@@ -63,7 +63,7 @@ func TestShouldGenerateFuncCodeGiveUpWhenFuncNameIsEmpty(t *testing.T) {
 	generator := NewFunc(
 		nil,
 		NewFuncSignature("").
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", ""),
 				NewFuncParameter("bar", "string"),
 			),
@@ -87,7 +87,7 @@ func TestShouldGenerateFuncCodeGiveUpWhenFuncReceiverRaisesError(t *testing.T) {
 	generator := NewFunc(
 		NewFuncReceiver("", "*Foo"),
 		NewFuncSignature("myFunc").
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", ""),
 				NewFuncParameter("bar", "string"),
 			),
@@ -101,7 +101,7 @@ func TestShouldGenerateFuncCodeGiveUpWhenStatementRaisesError(t *testing.T) {
 	generator := NewFunc(
 		nil,
 		NewFuncSignature("myFunc").
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", ""),
 				NewFuncParameter("bar", "string"),
 			).

@@ -14,9 +14,9 @@ type FuncParameter struct {
 
 // FuncSignature represents a code generator for the signature of the func.
 type FuncSignature struct {
-	FuncName       string
-	FuncParameters []*FuncParameter
-	ReturnTypes    []string
+	funcName       string
+	funcParameters []*FuncParameter
+	returnTypes    []string
 }
 
 // NewFuncParameter returns a new `FuncSignature`.
@@ -30,41 +30,61 @@ func NewFuncParameter(name string, typ string) *FuncParameter {
 // NewFuncSignature returns a new `FuncSignature`.
 func NewFuncSignature(funcName string) *FuncSignature {
 	return &FuncSignature{
-		FuncName: funcName,
+		funcName: funcName,
 	}
 }
 
-// AddFuncParameters adds parameters of the func to `FuncSignature`.
+// AddParameters adds parameters of the func to `FuncSignature`. This does *not* set, just add.
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
-func (f *FuncSignature) AddFuncParameters(funcParameters ...*FuncParameter) *FuncSignature {
+func (f *FuncSignature) AddParameters(funcParameters ...*FuncParameter) *FuncSignature {
 	return &FuncSignature{
-		FuncName:       f.FuncName,
-		FuncParameters: append(f.FuncParameters, funcParameters...),
-		ReturnTypes:    f.ReturnTypes,
+		funcName:       f.funcName,
+		funcParameters: append(f.funcParameters, funcParameters...),
+		returnTypes:    f.returnTypes,
 	}
 }
 
-// AddReturnTypes adds return types of the func to `FuncSignature`.
+// Parameters sets parameters of the func to `FuncSignature`. This does *not* add, just set.
+// This method returns a *new* `FuncSignature`; it means this method acts as immutable.
+func (f *FuncSignature) Parameters(funcParameters ...*FuncParameter) *FuncSignature {
+	return &FuncSignature{
+		funcName:       f.funcName,
+		funcParameters: funcParameters,
+		returnTypes:    f.returnTypes,
+	}
+}
+
+// AddReturnTypes adds return types of the func to `FuncSignature`. This does *not* set, just add.
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) AddReturnTypes(returnTypes ...string) *FuncSignature {
 	return &FuncSignature{
-		FuncName:       f.FuncName,
-		FuncParameters: f.FuncParameters,
-		ReturnTypes:    append(f.ReturnTypes, returnTypes...),
+		funcName:       f.funcName,
+		funcParameters: f.funcParameters,
+		returnTypes:    append(f.returnTypes, returnTypes...),
+	}
+}
+
+// ReturnTypes sets return types of the func to `FuncSignature`. This does *not* add, just set.
+// This method returns a *new* `FuncSignature`; it means this method acts as immutable.
+func (f *FuncSignature) ReturnTypes(returnTypes ...string) *FuncSignature {
+	return &FuncSignature{
+		funcName:       f.funcName,
+		funcParameters: f.funcParameters,
+		returnTypes:    returnTypes,
 	}
 }
 
 // Generate generates a signature of the func as golang code.
 func (f *FuncSignature) Generate(indentLevel int) (string, error) {
-	if f.FuncName == "" {
+	if f.funcName == "" {
 		return "", errmsg.FuncNameIsEmptyError()
 	}
 
-	stmt := f.FuncName + "("
+	stmt := f.funcName + "("
 
 	typeExisted := true
-	params := make([]string, len(f.FuncParameters))
-	for i, param := range f.FuncParameters {
+	params := make([]string, len(f.funcParameters))
+	for i, param := range f.funcParameters {
 		if param.Name == "" {
 			return "", errmsg.FuncParameterNameIsEmptyErr()
 		}
@@ -83,7 +103,7 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 
 	stmt += strings.Join(params, ", ") + ")"
 
-	returnTypes := f.ReturnTypes
+	returnTypes := f.returnTypes
 	switch len(returnTypes) {
 	case 0:
 		// NOP

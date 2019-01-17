@@ -9,7 +9,7 @@ func ExampleFunc_Generate() {
 	generator := NewFunc(
 		NewFuncReceiver("m", "*MyStruct"),
 		NewFuncSignature("myFunc").
-			AddFuncParameters(
+			AddParameters(
 				NewFuncParameter("foo", ""),
 				NewFuncParameter("bar", "string"),
 			).

@@ -16,35 +16,44 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 
 		"myFunc(foo string)": NewFuncSignature(
 			"myFunc",
-		).AddFuncParameters(NewFuncParameter("foo", "string")),
+		).AddParameters(NewFuncParameter("foo", "string")),
 
 		"myFunc(foo string, bar int)": NewFuncSignature(
 			"myFunc",
-		).AddFuncParameters(
+		).AddParameters(
 			NewFuncParameter("foo", "string"),
 			NewFuncParameter("bar", "int"),
 		),
 
 		"myFunc(foo, bar string)": NewFuncSignature(
 			"myFunc",
-		).AddFuncParameters(
+		).AddParameters(
 			NewFuncParameter("foo", ""),
 			NewFuncParameter("bar", "string"),
 		),
 
 		"myFunc(foo string, bar int) string": NewFuncSignature(
 			"myFunc",
-		).AddFuncParameters(
+		).AddParameters(
 			NewFuncParameter("foo", "string"),
 			NewFuncParameter("bar", "int"),
 		).AddReturnTypes("string"),
 
 		"myFunc(foo string, bar int) (string, error)": NewFuncSignature(
 			"myFunc",
-		).AddFuncParameters(
+		).AddParameters(
 			NewFuncParameter("foo", "string"),
 			NewFuncParameter("bar", "int"),
 		).AddReturnTypes("string", "error"),
+
+		"myFunc(buz error) int64": NewFuncSignature(
+			"myFunc",
+		).AddParameters(
+			NewFuncParameter("foo", "string"),
+			NewFuncParameter("bar", "int"),
+		).AddReturnTypes("string", "error").
+			Parameters(NewFuncParameter("buz", "error")).
+			ReturnTypes("int64"),
 	}
 
 	for expected, signature := range dataset {
@@ -62,7 +71,7 @@ func TestShouldRaiseErrorWhenFuncNameIsEmpty(t *testing.T) {
 }
 
 func TestShouldRaiseErrorWhenFuncParameterNameIsEmpty(t *testing.T) {
-	sig := NewFuncSignature("myFunc").AddFuncParameters(
+	sig := NewFuncSignature("myFunc").AddParameters(
 		NewFuncParameter("foo", "string"),
 		NewFuncParameter("", "int"),
 		NewFuncParameter("buz", "error"),
@@ -73,7 +82,7 @@ func TestShouldRaiseErrorWhenFuncParameterNameIsEmpty(t *testing.T) {
 }
 
 func TestShouldRaiseErrorWhenLastFuncParameterTypeIsEmpty(t *testing.T) {
-	sig := NewFuncSignature("myFunc").AddFuncParameters(
+	sig := NewFuncSignature("myFunc").AddParameters(
 		NewFuncParameter("foo", "string"),
 		NewFuncParameter("bar", ""),
 		NewFuncParameter("buz", ""),

@@ -9,7 +9,7 @@ func ExampleInterface_Generate() {
 	generator := NewInterface(
 		"MyInterface",
 		NewFuncSignature("fooFunc").
-			AddFuncParameters(NewFuncParameter("foo", "string")).
+			AddParameters(NewFuncParameter("foo", "string")).
 			AddReturnTypes("string", "error"),
 	).AddFuncSignatures(
 		NewFuncSignature("barFunc"),

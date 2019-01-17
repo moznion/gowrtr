@@ -53,7 +53,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 }
 `
 	myFuncSignature := NewFuncSignature("MyFunc").
-		AddFuncParameters(
+		AddParameters(
 			NewFuncParameter("foo", "string"),
 		).
 		AddReturnTypes("string", "error")
@@ -76,7 +76,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewFunc(
 			NewFuncReceiver("m", "*MyStruct"),
 			NewFuncSignature("MyFunc").
-				AddFuncParameters(
+				AddParameters(
 					NewFuncParameter("foo", "string"),
 				).
 				AddReturnTypes("string", "error"),
@@ -168,7 +168,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 		}
 `
 	myFuncSignature := NewFuncSignature("MyFunc").
-		AddFuncParameters(
+		AddParameters(
 			NewFuncParameter("foo", "string"),
 		).
 		AddReturnTypes("string", "error")
@@ -191,7 +191,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 		NewFunc(
 			NewFuncReceiver("m", "*MyStruct"),
 			NewFuncSignature("MyFunc").
-				AddFuncParameters(
+				AddParameters(
 					NewFuncParameter("foo", "string"),
 				).
 				AddReturnTypes("string", "error"),
@@ -283,7 +283,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 }
 `
 	myFuncSignature := NewFuncSignature("MyFunc").
-		AddFuncParameters(
+		AddParameters(
 			NewFuncParameter("foo", "string"),
 		).
 		AddReturnTypes("string", "error")
@@ -305,7 +305,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewFunc(
 			NewFuncReceiver("m", "*MyStruct"),
 			NewFuncSignature("MyFunc").
-				AddFuncParameters(
+				AddParameters(
 					NewFuncParameter("foo", "string"),
 				).
 				AddReturnTypes("string", "error"),
@@ -395,7 +395,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 }
 `
 	myFuncSignature := NewFuncSignature("MyFunc").
-		AddFuncParameters(
+		AddParameters(
 			NewFuncParameter("foo", "string"),
 		).
 		AddReturnTypes("string", "error")
@@ -414,7 +414,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewFunc(
 			NewFuncReceiver("m", "*MyStruct"),
 			NewFuncSignature("MyFunc").
-				AddFuncParameters(
+				AddParameters(
 					NewFuncParameter("foo", "string"),
 				).
 				AddReturnTypes("string", "error"),

@@ -30,7 +30,7 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 			NewFuncSignature("myFunc1"),
 		).AddFuncSignatures(
 			NewFuncSignature("myFunc2").
-				AddFuncParameters(NewFuncParameter("foo", "string")).
+				AddParameters(NewFuncParameter("foo", "string")).
 				AddReturnTypes("string", "error"),
 		),
 	}
@@ -64,7 +64,7 @@ func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 			NewFuncSignature("myFunc1"),
 		).AddFuncSignatures(
 			NewFuncSignature("myFunc2").
-				AddFuncParameters(NewFuncParameter("foo", "string")).
+				AddParameters(NewFuncParameter("foo", "string")).
 				AddReturnTypes("string", "error"),
 		),
 	}
