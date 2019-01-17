@@ -22,7 +22,7 @@ func (r *ReturnStatement) AddReturnItems(returnItems ...string) *ReturnStatement
 	}
 }
 
-// ReturnItems adds return items to `ReturnStatement`. This does *not* add, just set.
+// ReturnItems sets return items to `ReturnStatement`. This does *not* add, just set.
 // This method returns a *new* `ReturnStatement`; it means this method acts as immutable.
 func (r *ReturnStatement) ReturnItems(returnItems ...string) *ReturnStatement {
 	return &ReturnStatement{

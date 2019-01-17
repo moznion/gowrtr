@@ -22,7 +22,7 @@ func (e *Else) AddStatements(statements ...Statement) *Else {
 	}
 }
 
-// Statements adds statements for `else` block to `Else`. This does *not* set, just add.
+// Statements sets statements for `else` block to `Else`. This does *not* add, just set.
 // This method returns a *new* `Else`; it means this method acts as immutable.
 func (e *Else) Statements(statements ...Statement) *Else {
 	return &Else{
