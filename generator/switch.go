@@ -5,25 +5,35 @@ import "fmt"
 // Switch represents a code generator for `switch` statement.
 // See also: https://tour.golang.org/flowcontrol/9
 type Switch struct {
-	Condition        string
-	CaseStatements   []*Case
-	DefaultStatement *DefaultCase
+	condition        string
+	caseStatements   []*Case
+	defaultStatement *DefaultCase
 }
 
 // NewSwitch returns a new `Switch`.
 func NewSwitch(condition string) *Switch {
 	return &Switch{
-		Condition: condition,
+		condition: condition,
 	}
 }
 
-// AddCaseStatements adds `case` statements to `Switch`.
+// AddCaseStatements adds `case` statements to `Switch`. This does *not* set, just add.
 // This method returns a *new* `Switch`; it means this method acts as immutable.
 func (s *Switch) AddCaseStatements(statements ...*Case) *Switch {
 	return &Switch{
-		Condition:        s.Condition,
-		CaseStatements:   append(s.CaseStatements, statements...),
-		DefaultStatement: s.DefaultStatement,
+		condition:        s.condition,
+		caseStatements:   append(s.caseStatements, statements...),
+		defaultStatement: s.defaultStatement,
+	}
+}
+
+// CaseStatements sets `case` statements to `Switch`. This does *not* add, just set.
+// This method returns a *new* `Switch`; it means this method acts as immutable.
+func (s *Switch) CaseStatements(statements ...*Case) *Switch {
+	return &Switch{
+		condition:        s.condition,
+		caseStatements:   statements,
+		defaultStatement: s.defaultStatement,
 	}
 }
 
@@ -31,9 +41,9 @@ func (s *Switch) AddCaseStatements(statements ...*Case) *Switch {
 // This method returns a *new* `Switch`; it means this method acts as immutable.
 func (s *Switch) SetDefaultStatement(statement *DefaultCase) *Switch {
 	return &Switch{
-		Condition:        s.Condition,
-		CaseStatements:   s.CaseStatements,
-		DefaultStatement: statement,
+		condition:        s.condition,
+		caseStatements:   s.caseStatements,
+		defaultStatement: statement,
 	}
 }
 
@@ -41,8 +51,8 @@ func (s *Switch) SetDefaultStatement(statement *DefaultCase) *Switch {
 func (s *Switch) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
-	stmt := fmt.Sprintf("%sswitch %s {\n", indent, s.Condition)
-	for _, statement := range s.CaseStatements {
+	stmt := fmt.Sprintf("%sswitch %s {\n", indent, s.condition)
+	for _, statement := range s.caseStatements {
 		if statement == nil {
 			continue
 		}
@@ -53,7 +63,7 @@ func (s *Switch) Generate(indentLevel int) (string, error) {
 		stmt += gen
 	}
 
-	if defaultStatement := s.DefaultStatement; defaultStatement != nil {
+	if defaultStatement := s.defaultStatement; defaultStatement != nil {
 		gen, err := defaultStatement.Generate(indentLevel)
 		if err != nil {
 			return "", err

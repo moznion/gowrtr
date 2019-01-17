@@ -56,6 +56,20 @@ default:
 `
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.CaseStatements(NewCase("123", NewComment("modified")))
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		expected := `switch foo {
+case 123:
+	//modified
+default:
+	// default
+}
+`
+		assert.Equal(t, expected, gen)
+	}
 }
 
 func TestShouldGenerateSwitchRaisesErrorWhenCaseRaisesError(t *testing.T) {
