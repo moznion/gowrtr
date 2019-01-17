@@ -8,21 +8,29 @@ package generator
 //   fmt.Println("blah blah")
 // }
 type CodeBlock struct {
-	Statements []Statement
+	statements []Statement
 }
 
 // NewCodeBlock returns a new `CodeBlock`.
 func NewCodeBlock(statements ...Statement) *CodeBlock {
 	return &CodeBlock{
-		Statements: statements,
+		statements: statements,
 	}
 }
 
-// AddStatements adds statements to `CodeBlock`.
+// AddStatements adds statements to `CodeBlock`. This does *not* set, just add.
 // This method returns a *new* `CodeBlock`; it means this method acts as immutable.
 func (c *CodeBlock) AddStatements(statements ...Statement) *CodeBlock {
 	return &CodeBlock{
-		Statements: append(c.Statements, statements...),
+		statements: append(c.statements, statements...),
+	}
+}
+
+// Statements sets statements to `CodeBlock`. This does *not* add, just set.
+// This method returns a *new* `CodeBlock`; it means this method acts as immutable.
+func (c *CodeBlock) Statements(statements ...Statement) *CodeBlock {
+	return &CodeBlock{
+		statements: statements,
 	}
 }
 
@@ -33,7 +41,7 @@ func (c *CodeBlock) Generate(indentLevel int) (string, error) {
 	stmt := indent + "{\n"
 
 	nextIndentLevel := indentLevel + 1
-	for _, generator := range c.Statements {
+	for _, generator := range c.statements {
 		gen, err := generator.Generate(nextIndentLevel)
 		if err != nil {
 			return "", err
