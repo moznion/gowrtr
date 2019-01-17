@@ -6,13 +6,13 @@ import (
 
 // Import represents a code generator for `import` statement.
 type Import struct {
-	Names []string
+	names []string
 }
 
 // NewImport returns a new `Import`.
 func NewImport(names ...string) *Import {
 	return &Import{
-		Names: names,
+		names: names,
 	}
 }
 
@@ -20,7 +20,7 @@ func NewImport(names ...string) *Import {
 // This method returns a *new* `Import`; it means this method acts as immutable.
 func (ig *Import) AddImports(imps ...string) *Import {
 	return &Import{
-		Names: append(ig.Names, imps...),
+		names: append(ig.names, imps...),
 	}
 }
 
@@ -28,19 +28,19 @@ func (ig *Import) AddImports(imps ...string) *Import {
 // This method returns a *new* `Import`; it means this method acts as immutable.
 func (ig *Import) Imports(imps ...string) *Import {
 	return &Import{
-		Names: imps,
+		names: imps,
 	}
 }
 
 // Generate generates `import` statement as golang code.
 func (ig *Import) Generate(indentLevel int) (string, error) {
-	if len(ig.Names) <= 0 {
+	if len(ig.names) <= 0 {
 		return "", nil
 	}
 
 	indent := buildIndent(indentLevel)
 	stmt := indent + "import (\n"
-	for _, name := range ig.Names {
+	for _, name := range ig.names {
 		if name == "" {
 			continue
 		}

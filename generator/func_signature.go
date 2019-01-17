@@ -8,8 +8,8 @@ import (
 
 // FuncParameter represents a parameter of the func.
 type FuncParameter struct {
-	Name string
-	Type string
+	name string
+	typ  string
 }
 
 // FuncSignature represents a code generator for the signature of the func.
@@ -22,8 +22,8 @@ type FuncSignature struct {
 // NewFuncParameter returns a new `FuncSignature`.
 func NewFuncParameter(name string, typ string) *FuncParameter {
 	return &FuncParameter{
-		Name: name,
-		Type: typ,
+		name: name,
+		typ:  typ,
 	}
 }
 
@@ -85,14 +85,14 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 	typeExisted := true
 	params := make([]string, len(f.funcParameters))
 	for i, param := range f.funcParameters {
-		if param.Name == "" {
+		if param.name == "" {
 			return "", errmsg.FuncParameterNameIsEmptyErr()
 		}
 
-		paramSet := param.Name
-		typeExisted = param.Type != ""
+		paramSet := param.name
+		typeExisted = param.typ != ""
 		if typeExisted {
-			paramSet += " " + param.Type
+			paramSet += " " + param.typ
 		}
 		params[i] = paramSet
 	}

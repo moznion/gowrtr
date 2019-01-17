@@ -60,14 +60,14 @@ func (f *AnonymousFuncSignature) Generate(indentLevel int) (string, error) {
 	typeExisted := true
 	params := make([]string, len(f.funcParameters))
 	for i, param := range f.funcParameters {
-		if param.Name == "" {
+		if param.name == "" {
 			return "", errmsg.FuncParameterNameIsEmptyErr()
 		}
 
-		paramSet := param.Name
-		typeExisted = param.Type != ""
+		paramSet := param.name
+		typeExisted = param.typ != ""
 		if typeExisted {
-			paramSet += " " + param.Type
+			paramSet += " " + param.typ
 		}
 		params[i] = paramSet
 	}

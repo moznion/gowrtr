@@ -8,21 +8,21 @@ import (
 
 // StructField represents a field of the struct.
 type StructField struct {
-	Name string
-	Type string
-	Tag  string
+	name string
+	typ  string
+	tag  string
 }
 
 // Struct represents a code generator for `struct` notation.
 type Struct struct {
-	Name   string
-	Fields []*StructField
+	name   string
+	fields []*StructField
 }
 
 // NewStruct returns a new `Struct`.
 func NewStruct(name string) *Struct {
 	return &Struct{
-		Name: name,
+		name: name,
 	}
 }
 
@@ -36,34 +36,34 @@ func (sg *Struct) AddField(name string, typ string, tag ...string) *Struct {
 	}
 
 	return &Struct{
-		Name: sg.Name,
-		Fields: append(sg.Fields, &StructField{
-			Name: name,
-			Type: typ,
-			Tag:  t,
+		name: sg.name,
+		fields: append(sg.fields, &StructField{
+			name: name,
+			typ:  typ,
+			tag:  t,
 		}),
 	}
 }
 
 // Generate generates `struct` block as golang code.
 func (sg *Struct) Generate(indentLevel int) (string, error) {
-	if sg.Name == "" {
+	if sg.name == "" {
 		return "", errmsg.StructNameIsNilErr()
 	}
 
 	indent := buildIndent(indentLevel)
-	stmt := fmt.Sprintf("%stype %s struct {\n", indent, sg.Name)
+	stmt := fmt.Sprintf("%stype %s struct {\n", indent, sg.name)
 
-	for _, field := range sg.Fields {
-		if field.Name == "" {
+	for _, field := range sg.fields {
+		if field.name == "" {
 			return "", errmsg.StructFieldNameIsEmptyErr()
 		}
-		if field.Type == "" {
+		if field.typ == "" {
 			return "", errmsg.StructFieldTypeIsEmptyErr()
 		}
 
-		stmt += fmt.Sprintf("%s\t%s %s", indent, field.Name, field.Type)
-		if tag := field.Tag; tag != "" {
+		stmt += fmt.Sprintf("%s\t%s %s", indent, field.name, field.typ)
+		if tag := field.tag; tag != "" {
 			stmt += fmt.Sprintf(" `%s`", tag)
 		}
 		stmt += "\n"
