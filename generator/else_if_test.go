@@ -33,6 +33,16 @@ func TestShouldGenerateElseIfCode(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.Statements(NewComment("modified"))
+		expected := ` else if i > 0 {
+	//modified
+}`
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, gen)
+	}
 }
 
 func TestShouldGenerateElseIfWithExpandingMethod(t *testing.T) {
