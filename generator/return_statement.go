@@ -4,21 +4,29 @@ import "strings"
 
 // ReturnStatement represents a code generator for `return` statement.
 type ReturnStatement struct {
-	ReturnItems []string
+	returnItems []string
 }
 
 // NewReturnStatement returns a new `ReturnStatement`.
 func NewReturnStatement(returnItems ...string) *ReturnStatement {
 	return &ReturnStatement{
-		ReturnItems: returnItems,
+		returnItems: returnItems,
 	}
 }
 
-// AddReturnItems adds return items to `ReturnStatement`.
+// AddReturnItems adds return items to `ReturnStatement`. This does *not* set, just add.
 // This method returns a *new* `ReturnStatement`; it means this method acts as immutable.
 func (r *ReturnStatement) AddReturnItems(returnItems ...string) *ReturnStatement {
 	return &ReturnStatement{
-		ReturnItems: append(r.ReturnItems, returnItems...),
+		returnItems: append(r.returnItems, returnItems...),
+	}
+}
+
+// ReturnItems adds return items to `ReturnStatement`. This does *not* add, just set.
+// This method returns a *new* `ReturnStatement`; it means this method acts as immutable.
+func (r *ReturnStatement) ReturnItems(returnItems ...string) *ReturnStatement {
+	return &ReturnStatement{
+		returnItems: returnItems,
 	}
 }
 
@@ -27,7 +35,7 @@ func (r *ReturnStatement) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
 	stmt := indent + "return"
-	if ret := strings.Join(r.ReturnItems, ", "); ret != "" {
+	if ret := strings.Join(r.returnItems, ", "); ret != "" {
 		stmt += " " + ret
 	}
 	stmt += "\n"

@@ -16,4 +16,9 @@ func TestShouldGenerateReturnStatement(t *testing.T) {
 	gen, err = generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "return foo, err\n", gen)
+
+	generator = generator.ReturnItems("bar")
+	gen, err = generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "return bar\n", gen)
 }
