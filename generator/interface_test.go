@@ -24,11 +24,11 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	dataset := map[string]*Interface{
 		exp1: NewInterface("myInterface"),
 		exp2: NewInterface("myInterface").
-			AddFuncSignatures(NewFuncSignature("myFunc")),
+			AddSignatures(NewFuncSignature("myFunc")),
 		exp3: NewInterface(
 			"myInterface",
 			NewFuncSignature("myFunc1"),
-		).AddFuncSignatures(
+		).AddSignatures(
 			NewFuncSignature("myFunc2").
 				AddParameters(NewFuncParameter("foo", "string")).
 				AddReturnTypes("string", "error"),
@@ -46,7 +46,7 @@ func TestShouldGeneratingInterfaceCodeWithSetter(t *testing.T) {
 	generator := NewInterface(
 		"myInterface",
 		NewFuncSignature("myFunc1"),
-	).AddFuncSignatures(
+	).AddSignatures(
 		NewFuncSignature("myFunc2").
 			AddParameters(NewFuncParameter("foo", "string")).
 			AddReturnTypes("string", "error"),
@@ -61,7 +61,7 @@ func TestShouldGeneratingInterfaceCodeWithSetter(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, expected, got)
 
-	generator = generator.FuncSignatures(NewFuncSignature("myFunc3"))
+	generator = generator.Signatures(NewFuncSignature("myFunc3"))
 	expected = `type myInterface interface {
 	myFunc3()
 }
@@ -87,11 +87,11 @@ func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 	dataset := map[string]*Interface{
 		exp1: NewInterface("myInterface"),
 		exp2: NewInterface("myInterface").
-			AddFuncSignatures(NewFuncSignature("myFunc")),
+			AddSignatures(NewFuncSignature("myFunc")),
 		exp3: NewInterface(
 			"myInterface",
 			NewFuncSignature("myFunc1"),
-		).AddFuncSignatures(
+		).AddSignatures(
 			NewFuncSignature("myFunc2").
 				AddParameters(NewFuncParameter("foo", "string")).
 				AddReturnTypes("string", "error"),

@@ -20,18 +20,18 @@ func NewInterface(name string, funcSignatures ...*FuncSignature) *Interface {
 	}
 }
 
-// AddFuncSignatures adds signatures of the func to `Interface`. This does *not* set, just add.
+// AddSignatures adds signatures of the func to `Interface`. This does *not* set, just add.
 // This method returns a *new* `Interface`; it means this method acts as immutable.
-func (ig *Interface) AddFuncSignatures(sig ...*FuncSignature) *Interface {
+func (ig *Interface) AddSignatures(sig ...*FuncSignature) *Interface {
 	return &Interface{
 		name:           ig.name,
 		funcSignatures: append(ig.funcSignatures, sig...),
 	}
 }
 
-// FuncSignatures sets signatures of the func to `Interface`. This does *not* add, just set.
+// Signatures sets signatures of the func to `Interface`. This does *not* add, just set.
 // This method returns a *new* `Interface`; it means this method acts as immutable.
-func (ig *Interface) FuncSignatures(sig ...*FuncSignature) *Interface {
+func (ig *Interface) Signatures(sig ...*FuncSignature) *Interface {
 	return &Interface{
 		name:           ig.name,
 		funcSignatures: sig,

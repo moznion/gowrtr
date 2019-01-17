@@ -66,7 +66,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewImport("fmt"),
 		NewNewline(),
 		NewInterface("MyInterface").
-			AddFuncSignatures(myFuncSignature),
+			AddSignatures(myFuncSignature),
 		NewNewline(),
 		NewStruct("MyStruct").
 			AddField("Foo", "string").
@@ -181,7 +181,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 		NewImport("fmt"),
 		NewNewline(),
 		NewInterface("MyInterface").
-			AddFuncSignatures(myFuncSignature),
+			AddSignatures(myFuncSignature),
 		NewNewline(),
 		NewStruct("MyStruct").
 			AddField("Foo", "string").
@@ -296,7 +296,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewImport("fmt"),
 		NewNewline(),
 		NewInterface("MyInterface").
-			AddFuncSignatures(myFuncSignature),
+			AddSignatures(myFuncSignature),
 		NewNewline(),
 		NewStruct("MyStruct").
 			AddField("Foo", "string").
@@ -405,7 +405,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 		NewNewline(),
 		NewPackage("mypkg"),
 		NewInterface("MyInterface").
-			AddFuncSignatures(myFuncSignature),
+			AddSignatures(myFuncSignature),
 		NewNewline(),
 		NewStruct("MyStruct").
 			AddField("Foo", "string").

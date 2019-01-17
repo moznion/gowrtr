@@ -11,7 +11,7 @@ func ExampleInterface_Generate() {
 		NewFuncSignature("fooFunc").
 			AddParameters(NewFuncParameter("foo", "string")).
 			AddReturnTypes("string", "error"),
-	).AddFuncSignatures(
+	).AddSignatures(
 		NewFuncSignature("barFunc"),
 	)
 

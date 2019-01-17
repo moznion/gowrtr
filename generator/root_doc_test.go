@@ -17,7 +17,7 @@ func ExampleRoot_Generate() {
 		NewNewline(),
 		NewPackage("mypkg"),
 		NewInterface("MyInterface").
-			AddFuncSignatures(myFuncSignature),
+			AddSignatures(myFuncSignature),
 		NewNewline(),
 		NewStruct("MyStruct").
 			AddField("Foo", "string").
