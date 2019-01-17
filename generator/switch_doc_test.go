@@ -11,7 +11,7 @@ func ExampleSwitch_Generate() {
 		NewCase(`"foo"`, NewRawStatement(`fmt.Printf("str is foo\n")`)),
 		NewCase(`"bar"`, NewRawStatement(`fmt.Printf("str is bar\n")`)),
 	)
-	generator = generator.SetDefaultStatement(
+	generator = generator.DefaultStatement(
 		NewDefaultCase(NewRawStatement(`fmt.Printf("here is default\n")`)),
 	)
 

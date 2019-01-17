@@ -109,7 +109,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewComment(" foo string"),
 						),
 					).
-					SetDefaultStatement(
+					DefaultStatement(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),
@@ -227,7 +227,7 @@ func TestShouldGenerateCodeWithIndent(t *testing.T) {
 							NewComment(" foo string"),
 						),
 					).
-					SetDefaultStatement(
+					DefaultStatement(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),
@@ -341,7 +341,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewComment(" foo string"),
 						),
 					).
-					SetDefaultStatement(
+					DefaultStatement(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),
@@ -450,7 +450,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 							NewComment(" foo string"),
 						),
 					).
-					SetDefaultStatement(
+					DefaultStatement(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),

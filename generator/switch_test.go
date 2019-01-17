@@ -23,7 +23,7 @@ func TestShouldGenerateSwitch(t *testing.T) {
 		NewCase("1", NewComment(" one")),
 		nil,
 		NewCase("2", NewComment(" two")),
-	).SetDefaultStatement(
+	).DefaultStatement(
 		NewDefaultCase(NewComment(" default")),
 	)
 
@@ -81,7 +81,7 @@ func TestShouldGenerateSwitchRaisesErrorWhenCaseRaisesError(t *testing.T) {
 }
 
 func TestShouldGenerateSwitchRaisesErrorWhenDefaultRaisesError(t *testing.T) {
-	generator := NewSwitch("foo").SetDefaultStatement(
+	generator := NewSwitch("foo").DefaultStatement(
 		NewDefaultCase(
 			NewFunc(nil, NewFuncSignature("")),
 		),

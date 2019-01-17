@@ -37,9 +37,9 @@ func (s *Switch) CaseStatements(statements ...*Case) *Switch {
 	}
 }
 
-// SetDefaultStatement sets a `default` statement to `Switch`.
+// DefaultStatement sets a `default` statement to `Switch`.
 // This method returns a *new* `Switch`; it means this method acts as immutable.
-func (s *Switch) SetDefaultStatement(statement *DefaultCase) *Switch {
+func (s *Switch) DefaultStatement(statement *DefaultCase) *Switch {
 	return &Switch{
 		condition:        s.condition,
 		caseStatements:   s.caseStatements,

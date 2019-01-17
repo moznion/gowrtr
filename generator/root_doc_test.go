@@ -60,7 +60,7 @@ func ExampleRoot_Generate() {
 							NewComment(" foo string"),
 						),
 					).
-					SetDefaultStatement(
+					DefaultStatement(
 						NewDefaultCase(NewComment(" default")),
 					),
 				NewNewline(),
