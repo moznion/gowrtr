@@ -42,6 +42,35 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	}
 }
 
+func TestShouldGeneratingInterfaceCodeWithSetter(t *testing.T) {
+	generator := NewInterface(
+		"myInterface",
+		NewFuncSignature("myFunc1"),
+	).AddFuncSignatures(
+		NewFuncSignature("myFunc2").
+			AddParameters(NewFuncParameter("foo", "string")).
+			AddReturnTypes("string", "error"),
+	)
+
+	expected := `type myInterface interface {
+	myFunc1()
+	myFunc2(foo string) (string, error)
+}
+`
+	got, err := generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, got)
+
+	generator = generator.FuncSignatures(NewFuncSignature("myFunc3"))
+	expected = `type myInterface interface {
+	myFunc3()
+}
+`
+	got, err = generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, expected, got)
+}
+
 func TestShouldGeneratingInterfaceCodeWithIndentBeSuccessful(t *testing.T) {
 	exp1 := `		type myInterface interface {
 		}
