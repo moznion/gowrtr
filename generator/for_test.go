@@ -35,6 +35,17 @@ func TestShouldGenerateForCode(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected, gen)
 	}
+
+	{
+		generator = generator.Statements(NewComment("modified"))
+		expected := `for i := 0; i < foo; i++ {
+	//modified
+}
+`
+		gen, err := generator.Generate(0)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, gen)
+	}
 }
 
 func TestShouldGenerateForCodeWithExpandingMethod(t *testing.T) {
