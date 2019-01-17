@@ -348,7 +348,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewReturnStatement("str", "nil"),
 			),
 		),
-	).EnableGofmt("-s")
+	).Gofmt("-s")
 
 	generated, err := generator.Generate(0)
 
@@ -457,7 +457,7 @@ func (m *MyStruct) MyFunc(foo string) (string, error) {
 				NewReturnStatement("str", "nil"),
 			),
 		),
-	).EnableGoimports()
+	).Goimports()
 
 	generated, err := generator.Generate(0)
 
@@ -494,7 +494,7 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 	{
 		generator := NewRoot(
 			NewRawStatement("\timport something"),
-		).EnableGofmt()
+		).Gofmt()
 
 		_, err := generator.Generate(0)
 		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="gofmt".+`), err.Error())
@@ -503,7 +503,7 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 	{
 		generator := NewRoot(
 			NewRawStatement("\timport something"),
-		).EnableGoimports()
+		).Goimports()
 
 		_, err := generator.Generate(0)
 		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="goimports".+`), err.Error())

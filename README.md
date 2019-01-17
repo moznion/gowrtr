@@ -32,8 +32,8 @@ func main() {
 			generator.NewRawStatement(`fmt.Println("hello, world!")`),
 		),
 	).
-		EnableGofmt("-s").
-		EnableGoimports()
+		Gofmt("-s").
+		Goimports()
 
 	generated, err := generator.Generate(0)
 	if err != nil {
@@ -67,8 +67,8 @@ Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr
 
 - `Root` is an entry point to generate the go code.
 - `Root` supports following code formatting on code generating phase. It applies such formatters to generated code.
-  - `gofmt`: with `EnableGofmt(gofmtOptions ...string)`
-  - `goimports`: with `EnableGoimports()`
+  - `gofmt`: with `Gofmt(gofmtOptions ...string)`
+  - `goimports`: with `Goimports()`
 
 ### Immutability
 

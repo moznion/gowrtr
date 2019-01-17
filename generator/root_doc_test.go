@@ -70,8 +70,8 @@ func ExampleRoot_Generate() {
 	)
 
 	generated, err := generator.
-		EnableGofmt("-s").
-		EnableGoimports().
+		Gofmt("-s").
+		Goimports().
 		Generate(0)
 	if err != nil {
 		log.Fatal(err)

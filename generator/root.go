@@ -49,9 +49,9 @@ func (g *Root) Statements(statements ...Statement) *Root {
 	}
 }
 
-// EnableGofmt enables `gofmt`. If `gofmt` is enabled, it applies `gofmt` on code generation phase.
+// Gofmt enables `gofmt`. If `gofmt` is enabled, it applies `gofmt` on code generation phase.
 // This method returns a *new* `Root`; it means this method acts as immutable.
-func (g *Root) EnableGofmt(gofmtOptions ...string) *Root {
+func (g *Root) Gofmt(gofmtOptions ...string) *Root {
 	return &Root{
 		statements:     g.statements,
 		gofmt:          true,
@@ -61,9 +61,9 @@ func (g *Root) EnableGofmt(gofmtOptions ...string) *Root {
 	}
 }
 
-// EnableGoimports enables `goimports`. If `goimports` is enabled, it applies `goimports` on code generation phase.
+// Goimports enables `goimports`. If `goimports` is enabled, it applies `goimports` on code generation phase.
 // This method returns a *new* `Root`; it means this method acts as immutable.
-func (g *Root) EnableGoimports() *Root {
+func (g *Root) Goimports() *Root {
 	return &Root{
 		statements:     g.statements,
 		gofmt:          g.gofmt,
