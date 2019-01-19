@@ -2,6 +2,8 @@ package generator
 
 import (
 	"fmt"
+
+	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
 // If represents a code generator for `if`, `else-if` and `else` block.
@@ -78,6 +80,10 @@ func (ig *If) Else(block *Else) *If {
 // Generate generates `if` block as golang code.
 func (ig *If) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
+
+	if ig.condition == "" {
+		return "", errmsg.IfConditionIsEmptyError()
+	}
 
 	stmt := fmt.Sprintf("%sif %s {\n", indent, ig.condition)
 

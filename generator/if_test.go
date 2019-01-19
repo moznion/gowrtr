@@ -140,6 +140,11 @@ func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
 
 }
 
+func TestShouldGenerateIfRaisesError(t *testing.T) {
+	_, err := NewIf("").Generate(0)
+	assert.EqualError(t, err, errmsg.IfConditionIsEmptyError().Error())
+}
+
 func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {
 	generator := NewIf("i == 0",
 		NewComment(" if"),
