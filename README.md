@@ -80,6 +80,7 @@ Methods of this library act as immutable. It means it doesn't change any interna
 - [x] `import`
 - [x] `struct`
 - [x] `interface`
+- [x] [composite literal](https://golang.org/doc/effective_go.html#composite_literals)
 - [x] `if`
   - [x] `else if`
   - [x] `else`
