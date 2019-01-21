@@ -146,7 +146,9 @@ func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
 
 func TestShouldGenerateIfRaisesError(t *testing.T) {
 	_, err := NewIf("").Generate(0)
-	assert.EqualError(t, err, errmsg.IfConditionIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.IfConditionIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {

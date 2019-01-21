@@ -12,6 +12,7 @@ type If struct {
 	statements   []Statement
 	elseIfBlocks []*ElseIf
 	elseBlock    *Else
+	caller       string
 }
 
 // NewIf returns a new `If`.
@@ -19,6 +20,7 @@ func NewIf(condition string, statements ...Statement) *If {
 	return &If{
 		condition:  condition,
 		statements: statements,
+		caller:     fetchClientCallerLine(),
 	}
 }
 
@@ -30,6 +32,7 @@ func (ig *If) AddStatements(statements ...Statement) *If {
 		statements:   append(ig.statements, statements...),
 		elseIfBlocks: ig.elseIfBlocks,
 		elseBlock:    ig.elseBlock,
+		caller:       ig.caller,
 	}
 }
 
@@ -41,6 +44,7 @@ func (ig *If) Statements(statements ...Statement) *If {
 		statements:   statements,
 		elseIfBlocks: ig.elseIfBlocks,
 		elseBlock:    ig.elseBlock,
+		caller:       ig.caller,
 	}
 }
 
@@ -52,6 +56,7 @@ func (ig *If) AddElseIf(blocks ...*ElseIf) *If {
 		statements:   ig.statements,
 		elseIfBlocks: append(ig.elseIfBlocks, blocks...),
 		elseBlock:    ig.elseBlock,
+		caller:       ig.caller,
 	}
 }
 
@@ -63,6 +68,7 @@ func (ig *If) ElseIf(blocks ...*ElseIf) *If {
 		statements:   ig.statements,
 		elseIfBlocks: blocks,
 		elseBlock:    ig.elseBlock,
+		caller:       ig.caller,
 	}
 }
 
@@ -74,6 +80,7 @@ func (ig *If) Else(block *Else) *If {
 		statements:   ig.statements,
 		elseIfBlocks: ig.elseIfBlocks,
 		elseBlock:    block,
+		caller:       ig.caller,
 	}
 }
 
@@ -82,7 +89,7 @@ func (ig *If) Generate(indentLevel int) (string, error) {
 	indent := buildIndent(indentLevel)
 
 	if ig.condition == "" {
-		return "", errmsg.IfConditionIsEmptyError()
+		return "", errmsg.IfConditionIsEmptyError(ig.caller)
 	}
 
 	stmt := fmt.Sprintf("%sif %s {\n", indent, ig.condition)
