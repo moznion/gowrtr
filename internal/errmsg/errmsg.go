@@ -9,8 +9,8 @@ type errs struct {
 	LastFuncParameterTypeIsEmptyErr                   error `errmsg:"the last func parameter type must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	FuncNameIsEmptyError                              error `errmsg:"name of func must not be empty, but it gets empty"`
 	InterfaceNameIsEmptyError                         error `errmsg:"name of interface must not be empty, but it gets empty"`
-	FuncReceiverNameIsEmptyError                      error `errmsg:"name of func receiver must not be empty, but it gets empty"`
-	FuncReceiverTypeIsEmptyError                      error `errmsg:"type of func receiver must not be empty, but it gets empty"`
+	FuncReceiverNameIsEmptyError                      error `errmsg:"name of func receiver must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
+	FuncReceiverTypeIsEmptyError                      error `errmsg:"type of func receiver must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	FuncSignatureIsNilError                           error `errmsg:"func signature must not be nil, bit it gets nil (caused at %s)" vars:"caller string"`
 	AnonymousFuncSignatureIsNilError                  error `errmsg:"anonymous func signature must not be nil, bit it gets nil (caused at %s)" vars:"caller string"`
 	FuncInvocationParameterIsEmptyError               error `errmsg:"a parameter of function invocation must not be nil, but it gets nil (caused at %s)" vars:"caller string"`

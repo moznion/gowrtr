@@ -98,7 +98,9 @@ func TestShouldGenerateFuncCodeGiveUpWhenFuncReceiverRaisesError(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncReceiverNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncReceiverNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateFuncCodeGiveUpWhenStatementRaisesError(t *testing.T) {

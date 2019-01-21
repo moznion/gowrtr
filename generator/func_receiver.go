@@ -8,33 +8,35 @@ import (
 
 // FuncReceiver represents a code generator for the receiver of the func.
 type FuncReceiver struct {
-	Name string
-	Type string
+	name   string
+	typ    string
+	caller string
 }
 
 // NewFuncReceiver returns a new `FuncReceiver`.
 func NewFuncReceiver(name string, typ string) *FuncReceiver {
 	return &FuncReceiver{
-		Name: name,
-		Type: typ,
+		name:   name,
+		typ:    typ,
+		caller: fetchClientCallerLine(),
 	}
 }
 
 // Generate generates a receiver of the func as golang code.
 func (f *FuncReceiver) Generate(indentLevel int) (string, error) {
-	name := f.Name
-	typ := f.Type
+	name := f.name
+	typ := f.typ
 
 	if typ == "" && name == "" {
 		return "", nil
 	}
 
 	if name == "" {
-		return "", errmsg.FuncReceiverNameIsEmptyError()
+		return "", errmsg.FuncReceiverNameIsEmptyError(f.caller)
 	}
 
 	if typ == "" {
-		return "", errmsg.FuncReceiverTypeIsEmptyError()
+		return "", errmsg.FuncReceiverTypeIsEmptyError(f.caller)
 	}
 
 	return fmt.Sprintf("(%s %s)", name, typ), nil
