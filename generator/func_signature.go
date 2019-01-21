@@ -108,7 +108,14 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 	case 0:
 		// NOP
 	case 1:
-		stmt += " " + returnTypes[0]
+		retType := returnTypes[0]
+		openingLit := " "
+		closingLit := ""
+		if strings.Contains(retType, " ") {
+			openingLit = " ("
+			closingLit = ")"
+		}
+		stmt += openingLit + retType + closingLit
 	default:
 		stmt += " (" + strings.Join(returnTypes, ", ") + ")"
 	}

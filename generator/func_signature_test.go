@@ -91,3 +91,17 @@ func TestShouldRaiseErrorWhenLastFuncParameterTypeIsEmpty(t *testing.T) {
 	_, err := sig.Generate(0)
 	assert.EqualError(t, err, errmsg.LastFuncParameterTypeIsEmptyErr().Error())
 }
+
+func TestShouldGeneratingFuncSignatureWithNamedReturnValue(t *testing.T) {
+	{
+		sig, err := NewFuncSignature("myFunc").ReturnTypes("err error").Generate(0)
+		assert.NoError(t, err)
+		assert.Equal(t, "myFunc() (err error)", sig)
+	}
+
+	{
+		sig, err := NewFuncSignature("myFunc").ReturnTypes("s string", "err error").Generate(0)
+		assert.NoError(t, err)
+		assert.Equal(t, "myFunc() (s string, err error)", sig)
+	}
+}
