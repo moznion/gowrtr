@@ -43,5 +43,5 @@ bootstrap: installdeps
 		github.com/moznion/go-errgen/cmd/errgen
 
 errgen:
-	./author/errgen.sh
+	go generate ./...
 
