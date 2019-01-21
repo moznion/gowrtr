@@ -11,6 +11,7 @@ import (
 type Case struct {
 	condition  string
 	statements []Statement
+	caller     string
 }
 
 // NewCase creates a new `Case`.
@@ -18,6 +19,7 @@ func NewCase(condition string, statements ...Statement) *Case {
 	return &Case{
 		condition:  condition,
 		statements: statements,
+		caller:     fetchClientCallerLine(),
 	}
 }
 
@@ -43,7 +45,7 @@ func (c *Case) Statements(statements ...Statement) *Case {
 func (c *Case) Generate(indentLevel int) (string, error) {
 	condition := c.condition
 	if condition == "" {
-		return "", errmsg.CaseConditionIsEmptyError()
+		return "", errmsg.CaseConditionIsEmptyError(c.caller)
 	}
 
 	indent := buildIndent(indentLevel)
