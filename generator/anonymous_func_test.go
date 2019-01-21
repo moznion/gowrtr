@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -117,7 +119,9 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureIsNil(t
 		nil,
 	)
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.AnonymousFuncSignatureIsNilError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.AnonymousFuncSignatureIsNilError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureRaisesError(t *testing.T) {

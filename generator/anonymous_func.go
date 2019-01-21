@@ -1,6 +1,8 @@
 package generator
 
-import "github.com/moznion/gowrtr/internal/errmsg"
+import (
+	"github.com/moznion/gowrtr/internal/errmsg"
+)
 
 // AnonymousFunc represents a code generator for anonymous func.
 type AnonymousFunc struct {
@@ -8,6 +10,7 @@ type AnonymousFunc struct {
 	anonymousFuncSignature *AnonymousFuncSignature
 	statements             []Statement
 	funcInvocation         *FuncInvocation
+	caller                 string
 }
 
 // NewAnonymousFunc returns a new `AnonymousFunc`.
@@ -17,6 +20,7 @@ func NewAnonymousFunc(goFunc bool, signature *AnonymousFuncSignature, statements
 		goFunc:                 goFunc,
 		anonymousFuncSignature: signature,
 		statements:             statements,
+		caller:                 fetchClientCallerLine(),
 	}
 }
 
@@ -28,6 +32,7 @@ func (ifg *AnonymousFunc) AddStatements(statements ...Statement) *AnonymousFunc 
 		anonymousFuncSignature: ifg.anonymousFuncSignature,
 		statements:             append(ifg.statements, statements...),
 		funcInvocation:         ifg.funcInvocation,
+		caller:                 ifg.caller,
 	}
 }
 
@@ -39,6 +44,7 @@ func (ifg *AnonymousFunc) Statements(statements ...Statement) *AnonymousFunc {
 		anonymousFuncSignature: ifg.anonymousFuncSignature,
 		statements:             statements,
 		funcInvocation:         ifg.funcInvocation,
+		caller:                 ifg.caller,
 	}
 }
 
@@ -50,6 +56,7 @@ func (ifg *AnonymousFunc) Invocation(funcInvocation *FuncInvocation) *AnonymousF
 		anonymousFuncSignature: ifg.anonymousFuncSignature,
 		statements:             ifg.statements,
 		funcInvocation:         funcInvocation,
+		caller:                 ifg.caller,
 	}
 }
 
@@ -64,7 +71,7 @@ func (ifg *AnonymousFunc) Generate(indentLevel int) (string, error) {
 	stmt += "func"
 
 	if ifg.anonymousFuncSignature == nil {
-		return "", errmsg.AnonymousFuncSignatureIsNilError()
+		return "", errmsg.AnonymousFuncSignatureIsNilError(ifg.caller)
 	}
 
 	sig, err := ifg.anonymousFuncSignature.Generate(0)
