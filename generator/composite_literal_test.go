@@ -55,7 +55,28 @@ func TestShouldGenerateCompositeLiteralBeSuccess(t *testing.T) {
 	}
 }
 
+func TestShouldGenerateCompositeLiteralWithEmptyKey(t *testing.T) {
+	composeGenerator := NewCompositeLiteral("[]string").
+		AddFieldStr("", "foo").
+		AddFieldStr("", "bar").
+		AddFieldStr("", "buz")
+	gen, err := composeGenerator.Generate(0)
+	expected := `[]string{
+	"foo",
+	"bar",
+	"buz",
+}
+`
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
+}
+
 func TestShouldGenerateCompositeLiteralRaiseError(t *testing.T) {
 	_, err := NewCompositeLiteral("").AddField("foo", NewIf("")).Generate(0)
 	assert.EqualError(t, err, errmsg.IfConditionIsEmptyError().Error())
+}
+
+func TestShouldGenerateCompositeLiteralRaiseErrorWhenValueIsEmpty(t *testing.T) {
+	_, err := NewCompositeLiteral("[]string").AddField("foo", NewRawStatement("")).Generate(0)
+	assert.EqualError(t, err, errmsg.ValueOfCompositeLiteralIsEmptyError().Error())
 }
