@@ -15,8 +15,9 @@ type compositeLiteralField struct {
 // CompositeLiteral represents a code generator for composite literal.
 // Please see also: https://golang.org/doc/effective_go.html#composite_literals
 type CompositeLiteral struct {
-	typ    string
-	fields []*compositeLiteralField
+	typ     string
+	fields  []*compositeLiteralField
+	callers []string
 }
 
 // NewCompositeLiteral returns a new `CompositeLiteral`.
@@ -35,6 +36,7 @@ func (c *CompositeLiteral) AddField(key string, value Statement) *CompositeLiter
 			key:   key,
 			value: value,
 		}),
+		callers: append(c.callers, fetchClientCallerLine()),
 	}
 }
 
@@ -47,6 +49,7 @@ func (c *CompositeLiteral) AddFieldStr(key string, value string) *CompositeLiter
 			key:   key,
 			value: NewRawStatement(fmt.Sprintf(`"%s"`, value)),
 		}),
+		callers: append(c.callers, fetchClientCallerLine()),
 	}
 }
 
@@ -59,6 +62,7 @@ func (c *CompositeLiteral) AddFieldRaw(key string, value interface{}) *Composite
 			key:   key,
 			value: NewRawStatement(fmt.Sprintf("%v", value)),
 		}),
+		callers: append(c.callers, fetchClientCallerLine()),
 	}
 }
 
@@ -68,7 +72,7 @@ func (c *CompositeLiteral) Generate(indentLevel int) (string, error) {
 	nextLevelIndent := buildIndent(indentLevel + 1)
 
 	stmt := fmt.Sprintf("%s%s{\n", indent, c.typ)
-	for _, field := range c.fields {
+	for i, field := range c.fields {
 		genValue, err := field.value.Generate(indentLevel + 1)
 		if err != nil {
 			return "", err
@@ -82,7 +86,7 @@ func (c *CompositeLiteral) Generate(indentLevel int) (string, error) {
 			stmt += key + ": "
 		}
 		if genValue == "" {
-			return "", errmsg.ValueOfCompositeLiteralIsEmptyError()
+			return "", errmsg.ValueOfCompositeLiteralIsEmptyError(c.callers[i])
 		}
 		stmt += fmt.Sprintf("%s,\n", genValue)
 	}

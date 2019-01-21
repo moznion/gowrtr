@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -67,7 +69,9 @@ func TestShouldRaiseErrorWhenFuncNameIsEmpty(t *testing.T) {
 	sig := NewFuncSignature("")
 
 	_, err := sig.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldRaiseErrorWhenFuncParameterNameIsEmpty(t *testing.T) {
@@ -78,7 +82,9 @@ func TestShouldRaiseErrorWhenFuncParameterNameIsEmpty(t *testing.T) {
 	)
 
 	_, err := sig.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncParameterNameIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncParameterNameIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldRaiseErrorWhenLastFuncParameterTypeIsEmpty(t *testing.T) {
@@ -89,7 +95,9 @@ func TestShouldRaiseErrorWhenLastFuncParameterTypeIsEmpty(t *testing.T) {
 	)
 
 	_, err := sig.Generate(0)
-	assert.EqualError(t, err, errmsg.LastFuncParameterTypeIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.LastFuncParameterTypeIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGeneratingFuncSignatureWithNamedReturnValue(t *testing.T) {
@@ -170,5 +178,7 @@ func TestShouldGeneratingFuncSignatureRaisesUnnamedRetTypeIsAfterNamedRetType(t 
 		AddReturnTypeStructs(NewFuncReturnType("string", "foo")).
 		AddReturnTypeStructs(NewFuncReturnType("error", ""))
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError("").Error(), " ")[0],
+	), err.Error())
 }

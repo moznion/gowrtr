@@ -9,6 +9,7 @@ type Func struct {
 	funcReceiver  *FuncReceiver
 	funcSignature *FuncSignature
 	statements    []Statement
+	caller        string
 }
 
 // NewFunc returns a new `Func`.
@@ -17,6 +18,7 @@ func NewFunc(receiver *FuncReceiver, signature *FuncSignature, statements ...Sta
 		funcReceiver:  receiver,
 		funcSignature: signature,
 		statements:    statements,
+		caller:        fetchClientCallerLine(),
 	}
 }
 
@@ -59,7 +61,7 @@ func (fg *Func) Generate(indentLevel int) (string, error) {
 	}
 
 	if fg.funcSignature == nil {
-		return "", errmsg.FuncSignatureIsNilError()
+		return "", errmsg.FuncSignatureIsNilError(fg.caller)
 	}
 	sig, err := fg.funcSignature.Generate(0)
 	if err != nil {

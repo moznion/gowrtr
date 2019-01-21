@@ -34,9 +34,12 @@ func (frt *FuncReturnType) Generate(indentLevel int) (string, error) {
 
 // FuncSignature represents a code generator for the signature of the func.
 type FuncSignature struct {
-	funcName       string
-	funcParameters []*FuncParameter
-	returnTypes    []*FuncReturnType
+	funcName           string
+	funcParameters     []*FuncParameter
+	returnTypes        []*FuncReturnType
+	paramCallers       []string
+	funcNameCaller     string
+	returnTypesCallers []string
 }
 
 // NewFuncParameter returns a new `FuncSignature`.
@@ -63,7 +66,8 @@ func NewFuncReturnType(typ string, name ...string) *FuncReturnType {
 // NewFuncSignature returns a new `FuncSignature`.
 func NewFuncSignature(funcName string) *FuncSignature {
 	return &FuncSignature{
-		funcName: funcName,
+		funcName:       funcName,
+		funcNameCaller: fetchClientCallerLine(),
 	}
 }
 
@@ -71,9 +75,12 @@ func NewFuncSignature(funcName string) *FuncSignature {
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) AddParameters(funcParameters ...*FuncParameter) *FuncSignature {
 	return &FuncSignature{
-		funcName:       f.funcName,
-		funcParameters: append(f.funcParameters, funcParameters...),
-		returnTypes:    f.returnTypes,
+		funcName:           f.funcName,
+		funcParameters:     append(f.funcParameters, funcParameters...),
+		returnTypes:        f.returnTypes,
+		paramCallers:       append(f.paramCallers, fetchClientCallerLineAsSlice(len(funcParameters))...),
+		funcNameCaller:     f.funcNameCaller,
+		returnTypesCallers: f.returnTypesCallers,
 	}
 }
 
@@ -81,9 +88,12 @@ func (f *FuncSignature) AddParameters(funcParameters ...*FuncParameter) *FuncSig
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) Parameters(funcParameters ...*FuncParameter) *FuncSignature {
 	return &FuncSignature{
-		funcName:       f.funcName,
-		funcParameters: funcParameters,
-		returnTypes:    f.returnTypes,
+		funcName:           f.funcName,
+		funcParameters:     funcParameters,
+		returnTypes:        f.returnTypes,
+		paramCallers:       fetchClientCallerLineAsSlice(len(funcParameters)),
+		funcNameCaller:     f.funcNameCaller,
+		returnTypesCallers: f.returnTypesCallers,
 	}
 }
 
@@ -105,9 +115,12 @@ func (f *FuncSignature) AddReturnTypes(returnTypes ...string) *FuncSignature {
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) AddReturnTypeStructs(returnTypes ...*FuncReturnType) *FuncSignature {
 	return &FuncSignature{
-		funcName:       f.funcName,
-		funcParameters: f.funcParameters,
-		returnTypes:    append(f.returnTypes, returnTypes...),
+		funcName:           f.funcName,
+		funcParameters:     f.funcParameters,
+		returnTypes:        append(f.returnTypes, returnTypes...),
+		paramCallers:       f.paramCallers,
+		funcNameCaller:     f.funcNameCaller,
+		returnTypesCallers: append(f.returnTypesCallers, fetchClientCallerLineAsSlice(len(returnTypes))...),
 	}
 }
 
@@ -129,25 +142,29 @@ func (f *FuncSignature) ReturnTypes(returnTypes ...string) *FuncSignature {
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) ReturnTypeStructs(returnTypes ...*FuncReturnType) *FuncSignature {
 	return &FuncSignature{
-		funcName:       f.funcName,
-		funcParameters: f.funcParameters,
-		returnTypes:    returnTypes,
+		funcName:           f.funcName,
+		funcParameters:     f.funcParameters,
+		returnTypes:        returnTypes,
+		paramCallers:       f.paramCallers,
+		funcNameCaller:     f.funcNameCaller,
+		returnTypesCallers: fetchClientCallerLineAsSlice(len(returnTypes)),
 	}
 }
 
 // Generate generates a signature of the func as golang code.
 func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 	if f.funcName == "" {
-		return "", errmsg.FuncNameIsEmptyError()
+		return "", errmsg.FuncNameIsEmptyError(f.funcNameCaller)
 	}
 
 	stmt := f.funcName + "("
 
 	typeExisted := true
+	typeMissingCaller := ""
 	params := make([]string, len(f.funcParameters))
 	for i, param := range f.funcParameters {
 		if param.name == "" {
-			return "", errmsg.FuncParameterNameIsEmptyErr()
+			return "", errmsg.FuncParameterNameIsEmptyErr(f.paramCallers[i])
 		}
 
 		paramSet := param.name
@@ -155,11 +172,14 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 		if typeExisted {
 			paramSet += " " + param.typ
 		}
+		if !typeExisted {
+			typeMissingCaller = f.paramCallers[i]
+		}
 		params[i] = paramSet
 	}
 
 	if !typeExisted {
-		return "", errmsg.LastFuncParameterTypeIsEmptyErr()
+		return "", errmsg.LastFuncParameterTypeIsEmptyErr(typeMissingCaller)
 	}
 
 	stmt += strings.Join(params, ", ") + ")"
@@ -189,7 +209,7 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 				namedRetTypeAppeared = isNamedRetType
 			}
 			if namedRetTypeAppeared && !isNamedRetType {
-				return "", errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError()
+				return "", errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError(f.returnTypesCallers[i])
 			}
 		}
 		stmt += " (" + strings.Join(retTypes, ", ") + ")"

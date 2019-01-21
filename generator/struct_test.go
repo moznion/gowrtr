@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -43,17 +45,23 @@ func TestShouldRaiseErrorWhenStructNameIsEmpty(t *testing.T) {
 	structGenerator := NewStruct("")
 
 	_, err := structGenerator.Generate(0)
-	assert.EqualError(t, err, errmsg.StructNameIsNilErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.StructNameIsNilErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldRaiseErrorWhenFieldNameIsEmpty(t *testing.T) {
 	structGenerator := NewStruct("TestStruct").AddField("", "string")
 	_, err := structGenerator.Generate(0)
-	assert.EqualError(t, err, errmsg.StructFieldNameIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.StructFieldNameIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldRaiseErrorWhenFieldTypeIsEmpty(t *testing.T) {
 	structGenerator := NewStruct("TestStruct").AddField("Foo", "")
 	_, err := structGenerator.Generate(0)
-	assert.EqualError(t, err, errmsg.StructFieldTypeIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.StructFieldTypeIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }

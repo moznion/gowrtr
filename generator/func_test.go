@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -70,7 +72,9 @@ func TestShouldGenerateFuncCodeGiveUpWhenFuncNameIsEmpty(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateFuncCodeGiveUpWhenFuncSignatureIsNil(t *testing.T) {
@@ -80,7 +84,9 @@ func TestShouldGenerateFuncCodeGiveUpWhenFuncSignatureIsNil(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncSignatureIsNilError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncSignatureIsNilError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateFuncCodeGiveUpWhenFuncReceiverRaisesError(t *testing.T) {
@@ -94,7 +100,9 @@ func TestShouldGenerateFuncCodeGiveUpWhenFuncReceiverRaisesError(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncReceiverNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncReceiverNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateFuncCodeGiveUpWhenStatementRaisesError(t *testing.T) {
@@ -110,5 +118,7 @@ func TestShouldGenerateFuncCodeGiveUpWhenStatementRaisesError(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }

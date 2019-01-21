@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -34,5 +36,7 @@ func TestShouldGenerateFuncInvocationCode(t *testing.T) {
 func TestShouldGenerateFuncInvocationRaisesErrorWhenParameterIsEmpty(t *testing.T) {
 	generator := NewFuncInvocation("foo", "", "bar")
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncInvocationParameterIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncInvocationParameterIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }

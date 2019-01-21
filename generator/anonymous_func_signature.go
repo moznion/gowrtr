@@ -10,6 +10,7 @@ import (
 type AnonymousFuncSignature struct {
 	funcParameters []*FuncParameter
 	returnTypes    []string
+	callers        []string
 }
 
 // NewAnonymousFuncSignature returns a new `AnonymousFuncSignature`.
@@ -23,6 +24,7 @@ func (f *AnonymousFuncSignature) AddParameters(funcParameters ...*FuncParameter)
 	return &AnonymousFuncSignature{
 		funcParameters: append(f.funcParameters, funcParameters...),
 		returnTypes:    f.returnTypes,
+		callers:        append(f.callers, fetchClientCallerLineAsSlice(len(funcParameters))...),
 	}
 }
 
@@ -32,6 +34,7 @@ func (f *AnonymousFuncSignature) Parameters(funcParameters ...*FuncParameter) *A
 	return &AnonymousFuncSignature{
 		funcParameters: funcParameters,
 		returnTypes:    f.returnTypes,
+		callers:        fetchClientCallerLineAsSlice(len(funcParameters)),
 	}
 }
 
@@ -41,6 +44,7 @@ func (f *AnonymousFuncSignature) AddReturnTypes(returnTypes ...string) *Anonymou
 	return &AnonymousFuncSignature{
 		funcParameters: f.funcParameters,
 		returnTypes:    append(f.returnTypes, returnTypes...),
+		callers:        f.callers,
 	}
 }
 
@@ -50,6 +54,7 @@ func (f *AnonymousFuncSignature) ReturnTypes(returnTypes ...string) *AnonymousFu
 	return &AnonymousFuncSignature{
 		funcParameters: f.funcParameters,
 		returnTypes:    returnTypes,
+		callers:        f.callers,
 	}
 }
 
@@ -58,10 +63,11 @@ func (f *AnonymousFuncSignature) Generate(indentLevel int) (string, error) {
 	stmt := "("
 
 	typeExisted := true
+	typeMissingCaller := ""
 	params := make([]string, len(f.funcParameters))
 	for i, param := range f.funcParameters {
 		if param.name == "" {
-			return "", errmsg.FuncParameterNameIsEmptyErr()
+			return "", errmsg.FuncParameterNameIsEmptyErr(f.callers[i])
 		}
 
 		paramSet := param.name
@@ -69,11 +75,14 @@ func (f *AnonymousFuncSignature) Generate(indentLevel int) (string, error) {
 		if typeExisted {
 			paramSet += " " + param.typ
 		}
+		if !typeExisted {
+			typeMissingCaller = f.callers[i]
+		}
 		params[i] = paramSet
 	}
 
 	if !typeExisted {
-		return "", errmsg.LastFuncParameterTypeIsEmptyErr()
+		return "", errmsg.LastFuncParameterTypeIsEmptyErr(typeMissingCaller)
 	}
 
 	stmt += strings.Join(params, ", ") + ")"

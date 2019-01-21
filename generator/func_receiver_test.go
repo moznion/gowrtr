@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -25,11 +27,15 @@ func TestShouldGeneratingFuncReceiverCodeBeSuccessfulWithEmpty(t *testing.T) {
 func TestShouldGeneratingFuncReceiverRaisesErrorWhenFuncReceiverNameIsEmpty(t *testing.T) {
 	funcReceiver := NewFuncReceiver("", "*Foo")
 	_, err := funcReceiver.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncReceiverNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncReceiverNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGeneratingFuncReceiverRaisesErrorWhenFuncReceiverTypeIsEmpty(t *testing.T) {
 	funcReceiver := NewFuncReceiver("f", "")
 	_, err := funcReceiver.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncReceiverTypeIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncReceiverTypeIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }

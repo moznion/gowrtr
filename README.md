@@ -74,6 +74,16 @@ Please refer to the godoc: [![GoDoc](https://godoc.org/github.com/moznion/gowrtr
 
 Methods of this library act as immutable. It means it doesn't change any internal state implicitly, so you can take a snapshot of the code generator. That is useful to reuse and derive the code generator instance.
 
+### Debug friendly
+
+This library shows "where is a cause of the error" when code generator raises an error. This means each error message contains a pointer for the error source (i.e. file name and the line number).  This should be helpful for debugging.
+
+Error messages example:
+
+```
+[GOWRTR-14] condition of case must not be empty, but it gets empty (caused at /tmp/main.go:22)
+```
+
 ### Supported syntax
 
 - [x] `package`

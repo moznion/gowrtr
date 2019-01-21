@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -117,7 +119,9 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureIsNil(t
 		nil,
 	)
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.AnonymousFuncSignatureIsNilError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.AnonymousFuncSignatureIsNilError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureRaisesError(t *testing.T) {
@@ -128,7 +132,9 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureRaisesE
 		),
 	)
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncParameterNameIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncParameterNameIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateAnonymousFuncRaisesErrorWhenStatementRaisesError(t *testing.T) {
@@ -139,7 +145,9 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenStatementRaisesError(t *testi
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateAnonymousFuncRaisesErrorWhenFuncInvocationRaisesError(t *testing.T) {
@@ -148,5 +156,7 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenFuncInvocationRaisesError(t *
 		NewAnonymousFuncSignature(),
 	).Invocation(NewFuncInvocation(""))
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncInvocationParameterIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncInvocationParameterIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }

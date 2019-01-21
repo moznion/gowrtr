@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -73,10 +75,14 @@ func TestShouldGenerateCompositeLiteralWithEmptyKey(t *testing.T) {
 
 func TestShouldGenerateCompositeLiteralRaiseError(t *testing.T) {
 	_, err := NewCompositeLiteral("").AddField("foo", NewIf("")).Generate(0)
-	assert.EqualError(t, err, errmsg.IfConditionIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.IfConditionIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateCompositeLiteralRaiseErrorWhenValueIsEmpty(t *testing.T) {
 	_, err := NewCompositeLiteral("[]string").AddField("foo", NewRawStatement("")).Generate(0)
-	assert.EqualError(t, err, errmsg.ValueOfCompositeLiteralIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.ValueOfCompositeLiteralIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
