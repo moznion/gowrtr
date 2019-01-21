@@ -3,6 +3,8 @@ package generator
 import (
 	"fmt"
 	"strings"
+
+	"github.com/moznion/gowrtr/internal/errmsg"
 )
 
 type compositeLiteralField struct {
@@ -74,7 +76,15 @@ func (c *CompositeLiteral) Generate(indentLevel int) (string, error) {
 
 		genValue = strings.TrimSpace(genValue)
 
-		stmt += fmt.Sprintf("%s%s: %s,\n", nextLevelIndent, field.key, genValue)
+		stmt += nextLevelIndent
+
+		if key := field.key; key != "" {
+			stmt += key + ": "
+		}
+		if genValue == "" {
+			return "", errmsg.ValueOfCompositeLiteralIsEmptyError()
+		}
+		stmt += fmt.Sprintf("%s,\n", genValue)
 	}
 	stmt += fmt.Sprintf("%s}\n", indent)
 

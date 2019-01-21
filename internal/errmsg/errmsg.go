@@ -18,4 +18,5 @@ type errs struct {
 	CaseConditionIsEmptyError                         error `errmsg:"condition of case must not be empty, but it gets empty"`
 	IfConditionIsEmptyError                           error `errmsg:"condition of if must not be empty, but it gets empty"`
 	UnnamedReturnTypeAppearsAfterNamedReturnTypeError error `errmsg:"unnamed return type appears after named return type"`
+	ValueOfCompositeLiteralIsEmptyError               error `errmsg:"a value of composite literal must not be empty, but it gets empty"`
 }
