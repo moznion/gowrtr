@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -74,7 +76,9 @@ func TestShouldGenerateIfCodeGiveUpWhenStatementRaisesError(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateIfAndElseIfAndElseCode(t *testing.T) {
@@ -153,7 +157,9 @@ func TestShouldGenerateIfElseIfRaisesError(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateIfElseRaisesError(t *testing.T) {
@@ -164,5 +170,7 @@ func TestShouldGenerateIfElseRaisesError(t *testing.T) {
 	)
 
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }

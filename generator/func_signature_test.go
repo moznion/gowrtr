@@ -69,7 +69,9 @@ func TestShouldRaiseErrorWhenFuncNameIsEmpty(t *testing.T) {
 	sig := NewFuncSignature("")
 
 	_, err := sig.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldRaiseErrorWhenFuncParameterNameIsEmpty(t *testing.T) {
@@ -176,5 +178,7 @@ func TestShouldGeneratingFuncSignatureRaisesUnnamedRetTypeIsAfterNamedRetType(t 
 		AddReturnTypeStructs(NewFuncReturnType("string", "foo")).
 		AddReturnTypeStructs(NewFuncReturnType("error", ""))
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError("").Error(), " ")[0],
+	), err.Error())
 }

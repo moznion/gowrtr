@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -52,5 +54,7 @@ func TestShouldGenerateDefaultCaseRaisesErrorWhenStatementsRaisesError(t *testin
 		NewFunc(nil, NewFuncSignature("")),
 	)
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }

@@ -64,5 +64,7 @@ func TestShouldGenerateCaseRaisesErrorWhenStatementsRaisesError(t *testing.T) {
 		NewFunc(nil, NewFuncSignature("")),
 	)
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncNameIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }
