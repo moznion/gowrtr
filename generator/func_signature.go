@@ -37,6 +37,7 @@ type FuncSignature struct {
 	funcName       string
 	funcParameters []*FuncParameter
 	returnTypes    []*FuncReturnType
+	callers        []string
 }
 
 // NewFuncParameter returns a new `FuncSignature`.
@@ -74,6 +75,7 @@ func (f *FuncSignature) AddParameters(funcParameters ...*FuncParameter) *FuncSig
 		funcName:       f.funcName,
 		funcParameters: append(f.funcParameters, funcParameters...),
 		returnTypes:    f.returnTypes,
+		callers:        append(f.callers, fetchClientCallerLineAsSlice(len(funcParameters))...),
 	}
 }
 
@@ -84,6 +86,7 @@ func (f *FuncSignature) Parameters(funcParameters ...*FuncParameter) *FuncSignat
 		funcName:       f.funcName,
 		funcParameters: funcParameters,
 		returnTypes:    f.returnTypes,
+		callers:        fetchClientCallerLineAsSlice(len(funcParameters)),
 	}
 }
 
@@ -108,6 +111,7 @@ func (f *FuncSignature) AddReturnTypeStructs(returnTypes ...*FuncReturnType) *Fu
 		funcName:       f.funcName,
 		funcParameters: f.funcParameters,
 		returnTypes:    append(f.returnTypes, returnTypes...),
+		callers:        f.callers,
 	}
 }
 
@@ -132,6 +136,7 @@ func (f *FuncSignature) ReturnTypeStructs(returnTypes ...*FuncReturnType) *FuncS
 		funcName:       f.funcName,
 		funcParameters: f.funcParameters,
 		returnTypes:    returnTypes,
+		callers:        f.callers,
 	}
 }
 
@@ -144,10 +149,11 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 	stmt := f.funcName + "("
 
 	typeExisted := true
+	typeMissingCaller := ""
 	params := make([]string, len(f.funcParameters))
 	for i, param := range f.funcParameters {
 		if param.name == "" {
-			return "", errmsg.FuncParameterNameIsEmptyErr()
+			return "", errmsg.FuncParameterNameIsEmptyErr(f.callers[i])
 		}
 
 		paramSet := param.name
@@ -155,11 +161,14 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 		if typeExisted {
 			paramSet += " " + param.typ
 		}
+		if !typeExisted {
+			typeMissingCaller = f.callers[i]
+		}
 		params[i] = paramSet
 	}
 
 	if !typeExisted {
-		return "", errmsg.LastFuncParameterTypeIsEmptyErr()
+		return "", errmsg.LastFuncParameterTypeIsEmptyErr(typeMissingCaller)
 	}
 
 	stmt += strings.Join(params, ", ") + ")"

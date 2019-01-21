@@ -132,7 +132,9 @@ func TestShouldGenerateAnonymousFuncRaisesErrorWhenAnonymousFuncSignatureRaisesE
 		),
 	)
 	_, err := generator.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncParameterNameIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncParameterNameIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGenerateAnonymousFuncRaisesErrorWhenStatementRaisesError(t *testing.T) {

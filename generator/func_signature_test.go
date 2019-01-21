@@ -1,6 +1,8 @@
 package generator
 
 import (
+	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -78,7 +80,9 @@ func TestShouldRaiseErrorWhenFuncParameterNameIsEmpty(t *testing.T) {
 	)
 
 	_, err := sig.Generate(0)
-	assert.EqualError(t, err, errmsg.FuncParameterNameIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.FuncParameterNameIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldRaiseErrorWhenLastFuncParameterTypeIsEmpty(t *testing.T) {
@@ -89,7 +93,9 @@ func TestShouldRaiseErrorWhenLastFuncParameterTypeIsEmpty(t *testing.T) {
 	)
 
 	_, err := sig.Generate(0)
-	assert.EqualError(t, err, errmsg.LastFuncParameterTypeIsEmptyErr().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.LastFuncParameterTypeIsEmptyErr("").Error(), " ")[0],
+	), err.Error())
 }
 
 func TestShouldGeneratingFuncSignatureWithNamedReturnValue(t *testing.T) {
