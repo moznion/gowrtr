@@ -82,5 +82,7 @@ func TestShouldGenerateCompositeLiteralRaiseError(t *testing.T) {
 
 func TestShouldGenerateCompositeLiteralRaiseErrorWhenValueIsEmpty(t *testing.T) {
 	_, err := NewCompositeLiteral("[]string").AddField("foo", NewRawStatement("")).Generate(0)
-	assert.EqualError(t, err, errmsg.ValueOfCompositeLiteralIsEmptyError().Error())
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.ValueOfCompositeLiteralIsEmptyError("").Error(), " ")[0],
+	), err.Error())
 }

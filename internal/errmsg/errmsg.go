@@ -18,5 +18,5 @@ type errs struct {
 	CaseConditionIsEmptyError                         error `errmsg:"condition of case must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	IfConditionIsEmptyError                           error `errmsg:"condition of if must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	UnnamedReturnTypeAppearsAfterNamedReturnTypeError error `errmsg:"unnamed return type appears after named return type (caused at %s)" vars:"caller string"`
-	ValueOfCompositeLiteralIsEmptyError               error `errmsg:"a value of composite literal must not be empty, but it gets empty"`
+	ValueOfCompositeLiteralIsEmptyError               error `errmsg:"a value of composite literal must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 }
