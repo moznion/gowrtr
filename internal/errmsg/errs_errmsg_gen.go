@@ -81,6 +81,11 @@ func IfConditionIsEmptyError() error {
 	return errors.New(`[GOWRTR-15] condition of if must not be empty, but it gets empty`)
 }
 
+// UnnamedReturnTypeAppearsAfterNamedReturnTypeError returns the error.
+func UnnamedReturnTypeAppearsAfterNamedReturnTypeError() error {
+	return errors.New(`[GOWRTR-16] unnamed return type appears after named return type`)
+}
+
 // ErrsList returns the list of errors.
 func ErrsList() []string {
 	return []string{
@@ -99,5 +104,6 @@ func ErrsList() []string {
 		`[GOWRTR-13] code formatter raises error: command="%s", err="%s", msg="%s"`,
 		`[GOWRTR-14] condition of case must not be empty, but it gets empty`,
 		`[GOWRTR-15] condition of if must not be empty, but it gets empty`,
+		`[GOWRTR-16] unnamed return type appears after named return type`,
 	}
 }

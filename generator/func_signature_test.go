@@ -105,3 +105,70 @@ func TestShouldGeneratingFuncSignatureWithNamedReturnValue(t *testing.T) {
 		assert.Equal(t, "myFunc() (s string, err error)", sig)
 	}
 }
+
+func TestShouldGeneratingFuncSignatureWithReturnTypeStructs(t *testing.T) {
+	{
+		generator := NewFuncSignature("myFunc")
+		{
+			generator = generator.AddReturnTypeStructs(NewFuncReturnType("string"))
+			sig, err := generator.Generate(0)
+			assert.NoError(t, err)
+			assert.Equal(t, "myFunc() string", sig)
+		}
+
+		{
+			generator = generator.AddReturnTypeStructs(NewFuncReturnType("error"))
+			sig, err := generator.Generate(0)
+			assert.NoError(t, err)
+			assert.Equal(t, "myFunc() (string, error)", sig)
+		}
+
+		{
+			generator = generator.ReturnTypeStructs(NewFuncReturnType("error"))
+			sig, err := generator.Generate(0)
+			assert.NoError(t, err)
+			assert.Equal(t, "myFunc() error", sig)
+		}
+	}
+
+	{
+		generator := NewFuncSignature("myFunc")
+		{
+			generator = generator.AddReturnTypeStructs(NewFuncReturnType("string", "foo"))
+			sig, err := generator.Generate(0)
+			assert.NoError(t, err)
+			assert.Equal(t, "myFunc() (foo string)", sig)
+		}
+
+		{
+			generator = generator.AddReturnTypeStructs(NewFuncReturnType("error", "bar"))
+			sig, err := generator.Generate(0)
+			assert.NoError(t, err)
+			assert.Equal(t, "myFunc() (foo string, bar error)", sig)
+		}
+
+		{
+			generator = generator.ReturnTypeStructs(NewFuncReturnType("error", "foo"))
+			sig, err := generator.Generate(0)
+			assert.NoError(t, err)
+			assert.Equal(t, "myFunc() (foo error)", sig)
+		}
+	}
+
+	{
+		generator := NewFuncSignature("myFunc").
+			AddReturnTypeStructs(NewFuncReturnType("", "foo")).
+			AddReturnTypeStructs(NewFuncReturnType("string", "bar"))
+		sig, err := generator.Generate(0)
+		assert.NoError(t, err)
+		assert.Equal(t, "myFunc() (foo, bar string)", sig)
+	}
+}
+
+func TestShouldGeneratingFuncSignatureRaisesUnnamedRetTypeIsAfterNamedRetType(t *testing.T) {
+	generator := NewFuncSignature("myFunc").
+		AddReturnTypeStructs(NewFuncReturnType("string", "foo")).
+		AddReturnTypeStructs(NewFuncReturnType("error", ""))
+	_, err := generator.Generate(0)
+	assert.EqualError(t, err, errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError().Error())
+}

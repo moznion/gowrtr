@@ -12,17 +12,50 @@ type FuncParameter struct {
 	typ  string
 }
 
+// FuncReturnType represents a return type of the func.
+type FuncReturnType struct {
+	name string
+	typ  string
+}
+
+// Generate generates a return type of the func as golang code.
+func (frt *FuncReturnType) Generate(indentLevel int) (string, error) {
+	name := frt.name
+	typ := frt.typ
+
+	stmt := name
+	if name != "" && typ != "" {
+		stmt += " "
+	}
+	stmt += typ
+
+	return stmt, nil
+}
+
 // FuncSignature represents a code generator for the signature of the func.
 type FuncSignature struct {
 	funcName       string
 	funcParameters []*FuncParameter
-	returnTypes    []string
+	returnTypes    []*FuncReturnType
 }
 
 // NewFuncParameter returns a new `FuncSignature`.
 func NewFuncParameter(name string, typ string) *FuncParameter {
 	return &FuncParameter{
 		name: name,
+		typ:  typ,
+	}
+}
+
+// NewFuncReturnType returns a new `FuncReturnType`.
+// `name` is an optional parameter. If this parameter is specified, FuncReturnType generates code as named return type.
+func NewFuncReturnType(typ string, name ...string) *FuncReturnType {
+	n := ""
+	if len(name) > 0 {
+		n = name[0]
+	}
+	return &FuncReturnType{
+		name: n,
 		typ:  typ,
 	}
 }
@@ -55,8 +88,22 @@ func (f *FuncSignature) Parameters(funcParameters ...*FuncParameter) *FuncSignat
 }
 
 // AddReturnTypes adds return types of the func to `FuncSignature`. This does *not* set, just add.
+//
+// This method accepts a return type as `string`. If you want to use the parameter as named one,
+// please consider using `AddReturnTypeStructs()` instead of this (or use this method with string parameter like: `err error`).
+//
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) AddReturnTypes(returnTypes ...string) *FuncSignature {
+	types := make([]*FuncReturnType, len(returnTypes))
+	for i, typ := range returnTypes {
+		types[i] = NewFuncReturnType(typ)
+	}
+	return f.AddReturnTypeStructs(types...)
+}
+
+// AddReturnTypeStructs sets return types of the func to `FuncSignature`. This does *not* add, just set.
+// This method returns a *new* `FuncSignature`; it means this method acts as immutable.
+func (f *FuncSignature) AddReturnTypeStructs(returnTypes ...*FuncReturnType) *FuncSignature {
 	return &FuncSignature{
 		funcName:       f.funcName,
 		funcParameters: f.funcParameters,
@@ -65,8 +112,22 @@ func (f *FuncSignature) AddReturnTypes(returnTypes ...string) *FuncSignature {
 }
 
 // ReturnTypes sets return types of the func to `FuncSignature`. This does *not* add, just set.
+//
+// This method accepts a return type as `string`. If you want to use the parameter as named one,
+// please consider using `ReturnTypeStructs()` instead of this (or use this method with string parameter like: `err error`).
+//
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) ReturnTypes(returnTypes ...string) *FuncSignature {
+	types := make([]*FuncReturnType, len(returnTypes))
+	for i, typ := range returnTypes {
+		types[i] = NewFuncReturnType(typ)
+	}
+	return f.ReturnTypeStructs(types...)
+}
+
+// ReturnTypeStructs sets return types of the func to `FuncSignature`. This does *not* add, just set.
+// This method returns a *new* `FuncSignature`; it means this method acts as immutable.
+func (f *FuncSignature) ReturnTypeStructs(returnTypes ...*FuncReturnType) *FuncSignature {
 	return &FuncSignature{
 		funcName:       f.funcName,
 		funcParameters: f.funcParameters,
@@ -108,7 +169,7 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 	case 0:
 		// NOP
 	case 1:
-		retType := returnTypes[0]
+		retType, _ := returnTypes[0].Generate(0)
 		openingLit := " "
 		closingLit := ""
 		if strings.Contains(retType, " ") {
@@ -117,7 +178,21 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 		}
 		stmt += openingLit + retType + closingLit
 	default:
-		stmt += " (" + strings.Join(returnTypes, ", ") + ")"
+		namedRetTypeAppeared := false
+		retTypes := make([]string, len(returnTypes))
+		for i, r := range returnTypes {
+			retType, _ := r.Generate(0)
+			retTypes[i] = retType
+
+			isNamedRetType := strings.Contains(retType, " ")
+			if !namedRetTypeAppeared {
+				namedRetTypeAppeared = isNamedRetType
+			}
+			if namedRetTypeAppeared && !isNamedRetType {
+				return "", errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError()
+			}
+		}
+		stmt += " (" + strings.Join(retTypes, ", ") + ")"
 	}
 	return stmt, nil
 }
