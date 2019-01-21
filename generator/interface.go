@@ -10,6 +10,7 @@ import (
 type Interface struct {
 	name           string
 	funcSignatures []*FuncSignature
+	caller         string
 }
 
 // NewInterface returns a new `Interface`.
@@ -17,6 +18,7 @@ func NewInterface(name string, funcSignatures ...*FuncSignature) *Interface {
 	return &Interface{
 		name:           name,
 		funcSignatures: funcSignatures,
+		caller:         fetchClientCallerLine(),
 	}
 }
 
@@ -26,6 +28,7 @@ func (ig *Interface) AddSignatures(sig ...*FuncSignature) *Interface {
 	return &Interface{
 		name:           ig.name,
 		funcSignatures: append(ig.funcSignatures, sig...),
+		caller:         ig.caller,
 	}
 }
 
@@ -35,13 +38,14 @@ func (ig *Interface) Signatures(sig ...*FuncSignature) *Interface {
 	return &Interface{
 		name:           ig.name,
 		funcSignatures: sig,
+		caller:         ig.caller,
 	}
 }
 
 // Generate generates `interface` block as golang code.
 func (ig *Interface) Generate(indentLevel int) (string, error) {
 	if ig.name == "" {
-		return "", errmsg.InterfaceNameIsEmptyError()
+		return "", errmsg.InterfaceNameIsEmptyError(ig.caller)
 	}
 
 	indent := buildIndent(indentLevel)
