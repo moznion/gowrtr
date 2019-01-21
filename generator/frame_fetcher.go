@@ -11,6 +11,8 @@ func fetchClientCallerLine(skip ...int) string {
 	if len(skip) > 0 {
 		s = skip[0]
 	}
+
+	caller := ""
 	for {
 		pc, file, line, ok := runtime.Caller(s)
 		f := runtime.FuncForPC(pc)
@@ -23,10 +25,11 @@ func fetchClientCallerLine(skip ...int) string {
 			break
 		}
 
-		return fmt.Sprintf("%s:%d", file, line)
+		caller = fmt.Sprintf("%s:%d", file, line)
+		break
 	}
 
-	return ""
+	return caller
 }
 
 func fetchClientCallerLineAsSlice(size int, skip ...int) []string {
