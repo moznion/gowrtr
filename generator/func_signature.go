@@ -100,7 +100,7 @@ func (f *FuncSignature) Parameters(funcParameters ...*FuncParameter) *FuncSignat
 // AddReturnTypes adds return types of the func to `FuncSignature`. This does *not* set, just add.
 //
 // This method accepts a return type as `string`. If you want to use the parameter as named one,
-// please consider using `AddReturnTypeStructs()` instead of this (or use this method with string parameter like: `err error`).
+// please consider using `AddReturnTypeStatements()` instead of this (or use this method with string parameter like: `err error`).
 //
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) AddReturnTypes(returnTypes ...string) *FuncSignature {
@@ -108,12 +108,12 @@ func (f *FuncSignature) AddReturnTypes(returnTypes ...string) *FuncSignature {
 	for i, typ := range returnTypes {
 		types[i] = NewFuncReturnType(typ)
 	}
-	return f.AddReturnTypeStructs(types...)
+	return f.AddReturnTypeStatements(types...)
 }
 
-// AddReturnTypeStructs sets return types of the func to `FuncSignature`. This does *not* add, just set.
+// AddReturnTypeStatements sets return types of the func to `FuncSignature`. This does *not* add, just set.
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
-func (f *FuncSignature) AddReturnTypeStructs(returnTypes ...*FuncReturnType) *FuncSignature {
+func (f *FuncSignature) AddReturnTypeStatements(returnTypes ...*FuncReturnType) *FuncSignature {
 	return &FuncSignature{
 		funcName:           f.funcName,
 		funcParameters:     f.funcParameters,
@@ -127,7 +127,7 @@ func (f *FuncSignature) AddReturnTypeStructs(returnTypes ...*FuncReturnType) *Fu
 // ReturnTypes sets return types of the func to `FuncSignature`. This does *not* add, just set.
 //
 // This method accepts a return type as `string`. If you want to use the parameter as named one,
-// please consider using `ReturnTypeStructs()` instead of this (or use this method with string parameter like: `err error`).
+// please consider using `ReturnTypeStatements()` instead of this (or use this method with string parameter like: `err error`).
 //
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
 func (f *FuncSignature) ReturnTypes(returnTypes ...string) *FuncSignature {
@@ -135,12 +135,12 @@ func (f *FuncSignature) ReturnTypes(returnTypes ...string) *FuncSignature {
 	for i, typ := range returnTypes {
 		types[i] = NewFuncReturnType(typ)
 	}
-	return f.ReturnTypeStructs(types...)
+	return f.ReturnTypeStatements(types...)
 }
 
-// ReturnTypeStructs sets return types of the func to `FuncSignature`. This does *not* add, just set.
+// ReturnTypeStatements sets return types of the func to `FuncSignature`. This does *not* add, just set.
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
-func (f *FuncSignature) ReturnTypeStructs(returnTypes ...*FuncReturnType) *FuncSignature {
+func (f *FuncSignature) ReturnTypeStatements(returnTypes ...*FuncReturnType) *FuncSignature {
 	return &FuncSignature{
 		funcName:           f.funcName,
 		funcParameters:     f.funcParameters,

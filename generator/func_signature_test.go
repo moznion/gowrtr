@@ -118,21 +118,21 @@ func TestShouldGeneratingFuncSignatureWithReturnTypeStructs(t *testing.T) {
 	{
 		generator := NewFuncSignature("myFunc")
 		{
-			generator = generator.AddReturnTypeStructs(NewFuncReturnType("string"))
+			generator = generator.AddReturnTypeStatements(NewFuncReturnType("string"))
 			sig, err := generator.Generate(0)
 			assert.NoError(t, err)
 			assert.Equal(t, "myFunc() string", sig)
 		}
 
 		{
-			generator = generator.AddReturnTypeStructs(NewFuncReturnType("error"))
+			generator = generator.AddReturnTypeStatements(NewFuncReturnType("error"))
 			sig, err := generator.Generate(0)
 			assert.NoError(t, err)
 			assert.Equal(t, "myFunc() (string, error)", sig)
 		}
 
 		{
-			generator = generator.ReturnTypeStructs(NewFuncReturnType("error"))
+			generator = generator.ReturnTypeStatements(NewFuncReturnType("error"))
 			sig, err := generator.Generate(0)
 			assert.NoError(t, err)
 			assert.Equal(t, "myFunc() error", sig)
@@ -142,21 +142,21 @@ func TestShouldGeneratingFuncSignatureWithReturnTypeStructs(t *testing.T) {
 	{
 		generator := NewFuncSignature("myFunc")
 		{
-			generator = generator.AddReturnTypeStructs(NewFuncReturnType("string", "foo"))
+			generator = generator.AddReturnTypeStatements(NewFuncReturnType("string", "foo"))
 			sig, err := generator.Generate(0)
 			assert.NoError(t, err)
 			assert.Equal(t, "myFunc() (foo string)", sig)
 		}
 
 		{
-			generator = generator.AddReturnTypeStructs(NewFuncReturnType("error", "bar"))
+			generator = generator.AddReturnTypeStatements(NewFuncReturnType("error", "bar"))
 			sig, err := generator.Generate(0)
 			assert.NoError(t, err)
 			assert.Equal(t, "myFunc() (foo string, bar error)", sig)
 		}
 
 		{
-			generator = generator.ReturnTypeStructs(NewFuncReturnType("error", "foo"))
+			generator = generator.ReturnTypeStatements(NewFuncReturnType("error", "foo"))
 			sig, err := generator.Generate(0)
 			assert.NoError(t, err)
 			assert.Equal(t, "myFunc() (foo error)", sig)
@@ -165,8 +165,8 @@ func TestShouldGeneratingFuncSignatureWithReturnTypeStructs(t *testing.T) {
 
 	{
 		generator := NewFuncSignature("myFunc").
-			AddReturnTypeStructs(NewFuncReturnType("", "foo")).
-			AddReturnTypeStructs(NewFuncReturnType("string", "bar"))
+			AddReturnTypeStatements(NewFuncReturnType("", "foo")).
+			AddReturnTypeStatements(NewFuncReturnType("string", "bar"))
 		sig, err := generator.Generate(0)
 		assert.NoError(t, err)
 		assert.Equal(t, "myFunc() (foo, bar string)", sig)
@@ -175,8 +175,8 @@ func TestShouldGeneratingFuncSignatureWithReturnTypeStructs(t *testing.T) {
 
 func TestShouldGeneratingFuncSignatureRaisesUnnamedRetTypeIsAfterNamedRetType(t *testing.T) {
 	generator := NewFuncSignature("myFunc").
-		AddReturnTypeStructs(NewFuncReturnType("string", "foo")).
-		AddReturnTypeStructs(NewFuncReturnType("error", ""))
+		AddReturnTypeStatements(NewFuncReturnType("string", "foo")).
+		AddReturnTypeStatements(NewFuncReturnType("error", ""))
 	_, err := generator.Generate(0)
 	assert.Regexp(t, regexp.MustCompile(
 		`^\`+strings.Split(errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError("").Error(), " ")[0],
