@@ -49,9 +49,9 @@ func (g *Root) Statements(statements ...Statement) *Root {
 	}
 }
 
-// Gofmt enables `gofmt`. If `gofmt` is enabled, it applies `gofmt` on code generation phase.
+// EnableGofmt enables `gofmt`. If `gofmt` is enabled, it applies `gofmt` on code generation phase.
 // This method returns a *new* `Root`; it means this method acts as immutable.
-func (g *Root) Gofmt(gofmtOptions ...string) *Root {
+func (g *Root) EnableGofmt(gofmtOptions ...string) *Root {
 	return &Root{
 		statements:     g.statements,
 		gofmt:          true,
@@ -61,9 +61,9 @@ func (g *Root) Gofmt(gofmtOptions ...string) *Root {
 	}
 }
 
-// Goimports enables `goimports`. If `goimports` is enabled, it applies `goimports` on code generation phase.
+// EnableGoimports enables `goimports`. If `goimports` is enabled, it applies `goimports` on code generation phase.
 // This method returns a *new* `Root`; it means this method acts as immutable.
-func (g *Root) Goimports() *Root {
+func (g *Root) EnableGoimports() *Root {
 	return &Root{
 		statements:     g.statements,
 		gofmt:          g.gofmt,
@@ -151,7 +151,6 @@ func applyCodeFormatter(generatedCode string, formatterCmdName string, formatter
 	echoCmd.Wait()
 	w.Close()
 	err := formatterCmd.Wait()
-
 	if err != nil {
 		cmds := []string{formatterCmdName}
 		return "", errmsg.CodeFormatterError(strings.Join(append(cmds, formatterOpts...), " "), errout.String(), err)

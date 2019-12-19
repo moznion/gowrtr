@@ -71,9 +71,9 @@ func NewFuncSignature(funcName string) *FuncSignature {
 	}
 }
 
-// AddParameters adds parameters of the func to `FuncSignature`. This does *not* set, just add.
+// AddFuncParameters adds parameters of the func to `FuncSignature`. This does *not* set, just add.
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
-func (f *FuncSignature) AddParameters(funcParameters ...*FuncParameter) *FuncSignature {
+func (f *FuncSignature) AddFuncParameters(funcParameters ...*FuncParameter) *FuncSignature {
 	return &FuncSignature{
 		funcName:           f.funcName,
 		funcParameters:     append(f.funcParameters, funcParameters...),
@@ -84,9 +84,9 @@ func (f *FuncSignature) AddParameters(funcParameters ...*FuncParameter) *FuncSig
 	}
 }
 
-// Parameters sets parameters of the func to `FuncSignature`. This does *not* add, just set.
+// FuncParameters sets parameters of the func to `FuncSignature`. This does *not* add, just set.
 // This method returns a *new* `FuncSignature`; it means this method acts as immutable.
-func (f *FuncSignature) Parameters(funcParameters ...*FuncParameter) *FuncSignature {
+func (f *FuncSignature) FuncParameters(funcParameters ...*FuncParameter) *FuncSignature {
 	return &FuncSignature{
 		funcName:           f.funcName,
 		funcParameters:     funcParameters,
