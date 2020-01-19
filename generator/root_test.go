@@ -491,7 +491,7 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 		).EnableSyntaxChecking()
 
 		_, err := generator.Generate(0)
-		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="gofmt -e".+`), err.Error())
+		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command='gofmt -e'.+`), err.Error())
 	}
 
 	{
@@ -500,7 +500,7 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 		).Gofmt()
 
 		_, err := generator.Generate(0)
-		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="gofmt".+`), err.Error())
+		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command='gofmt'.+`), err.Error())
 	}
 
 	{
@@ -509,11 +509,11 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 		).Goimports()
 
 		_, err := generator.Generate(0)
-		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="goimports".+`), err.Error())
+		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command='goimports'.+`), err.Error())
 	}
 
 	{
 		_, err := applyCodeFormatter("", "not-existed-cmd")
-		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command="not-existed-cmd".+`), err.Error())
+		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command='not-existed-cmd'.+`), err.Error())
 	}
 }
