@@ -37,7 +37,7 @@ func (r *RawStatement) WithNewline(with bool) *RawStatement {
 
 // Generate generates a raw statement.
 func (r *RawStatement) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	newline := ""
 	if r.withNewline {

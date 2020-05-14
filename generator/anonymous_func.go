@@ -62,7 +62,7 @@ func (ifg *AnonymousFunc) Invocation(funcInvocation *FuncInvocation) *AnonymousF
 
 // Generate generates an anonymous func as golang code.
 func (ifg *AnonymousFunc) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	stmt := indent
 	if ifg.goFunc {

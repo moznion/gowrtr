@@ -68,8 +68,8 @@ func (c *CompositeLiteral) AddFieldRaw(key string, value interface{}) *Composite
 
 // Generate generates composite literal block as golang code.
 func (c *CompositeLiteral) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
-	nextLevelIndent := buildIndent(indentLevel + 1)
+	indent := BuildIndent(indentLevel)
+	nextLevelIndent := BuildIndent(indentLevel + 1)
 
 	stmt := fmt.Sprintf("%s%s{\n", indent, c.typ)
 	for i, field := range c.fields {

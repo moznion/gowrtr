@@ -48,7 +48,7 @@ func (c *Case) Generate(indentLevel int) (string, error) {
 		return "", errmsg.CaseConditionIsEmptyError(c.caller)
 	}
 
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 	nextIndentLevel := indentLevel + 1
 
 	stmt := fmt.Sprintf("%scase %s:\n", indent, condition)

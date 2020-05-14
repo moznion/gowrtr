@@ -36,7 +36,7 @@ func (ei *ElseIf) Statements(statements ...Statement) *ElseIf {
 
 // Generate generates `else-if` block as golang code.
 func (ei *ElseIf) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	stmt := fmt.Sprintf(" else if %s {\n", ei.condition)
 

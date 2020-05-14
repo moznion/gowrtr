@@ -16,7 +16,10 @@ func StructNameIsNilErr(caller string) error {
 }
 
 // StructNameIsNilErrWrap wraps the error.
-func StructNameIsNilErrWrap(caller string, err error) error {
+func StructNameIsNilErrWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-1] struct name must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -26,7 +29,10 @@ func StructFieldNameIsEmptyErr(caller string) error {
 }
 
 // StructFieldNameIsEmptyErrWrap wraps the error.
-func StructFieldNameIsEmptyErrWrap(caller string, err error) error {
+func StructFieldNameIsEmptyErrWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-2] field name must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -36,7 +42,10 @@ func StructFieldTypeIsEmptyErr(caller string) error {
 }
 
 // StructFieldTypeIsEmptyErrWrap wraps the error.
-func StructFieldTypeIsEmptyErrWrap(caller string, err error) error {
+func StructFieldTypeIsEmptyErrWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-3] field type must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -46,7 +55,10 @@ func FuncParameterNameIsEmptyErr(caller string) error {
 }
 
 // FuncParameterNameIsEmptyErrWrap wraps the error.
-func FuncParameterNameIsEmptyErrWrap(caller string, err error) error {
+func FuncParameterNameIsEmptyErrWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-4] func parameter name must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -56,7 +68,10 @@ func LastFuncParameterTypeIsEmptyErr(caller string) error {
 }
 
 // LastFuncParameterTypeIsEmptyErrWrap wraps the error.
-func LastFuncParameterTypeIsEmptyErrWrap(caller string, err error) error {
+func LastFuncParameterTypeIsEmptyErrWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-5] the last func parameter type must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -66,7 +81,10 @@ func FuncNameIsEmptyError(caller string) error {
 }
 
 // FuncNameIsEmptyErrorWrap wraps the error.
-func FuncNameIsEmptyErrorWrap(caller string, err error) error {
+func FuncNameIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-6] name of func must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -76,7 +94,10 @@ func InterfaceNameIsEmptyError(caller string) error {
 }
 
 // InterfaceNameIsEmptyErrorWrap wraps the error.
-func InterfaceNameIsEmptyErrorWrap(caller string, err error) error {
+func InterfaceNameIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-7] name of interface must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -86,7 +107,10 @@ func FuncReceiverNameIsEmptyError(caller string) error {
 }
 
 // FuncReceiverNameIsEmptyErrorWrap wraps the error.
-func FuncReceiverNameIsEmptyErrorWrap(caller string, err error) error {
+func FuncReceiverNameIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-8] name of func receiver must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -96,7 +120,10 @@ func FuncReceiverTypeIsEmptyError(caller string) error {
 }
 
 // FuncReceiverTypeIsEmptyErrorWrap wraps the error.
-func FuncReceiverTypeIsEmptyErrorWrap(caller string, err error) error {
+func FuncReceiverTypeIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-9] type of func receiver must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -106,7 +133,10 @@ func FuncSignatureIsNilError(caller string) error {
 }
 
 // FuncSignatureIsNilErrorWrap wraps the error.
-func FuncSignatureIsNilErrorWrap(caller string, err error) error {
+func FuncSignatureIsNilErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-10] func signature must not be nil, bit it gets nil (caused at %s)")
 }
 
@@ -116,7 +146,10 @@ func AnonymousFuncSignatureIsNilError(caller string) error {
 }
 
 // AnonymousFuncSignatureIsNilErrorWrap wraps the error.
-func AnonymousFuncSignatureIsNilErrorWrap(caller string, err error) error {
+func AnonymousFuncSignatureIsNilErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-11] anonymous func signature must not be nil, bit it gets nil (caused at %s)")
 }
 
@@ -126,17 +159,29 @@ func FuncInvocationParameterIsEmptyError(caller string) error {
 }
 
 // FuncInvocationParameterIsEmptyErrorWrap wraps the error.
-func FuncInvocationParameterIsEmptyErrorWrap(caller string, err error) error {
+func FuncInvocationParameterIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-12] a parameter of function invocation must not be nil, but it gets nil (caused at %s)")
 }
 
 // CodeFormatterError returns the error.
-func CodeFormatterError(cmd string, msg string, fmterr error) error {
+func CodeFormatterError(
+	cmd string,
+	msg string,
+	fmterr error,
+) error {
 	return fmt.Errorf(`[GOWRTR-13] code formatter raises error: command='%s', err='%s', msg='%s'`, cmd, msg, fmterr)
 }
 
 // CodeFormatterErrorWrap wraps the error.
-func CodeFormatterErrorWrap(cmd string, msg string, fmterr error, err error) error {
+func CodeFormatterErrorWrap(
+	cmd string,
+	msg string,
+	fmterr error,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-13] code formatter raises error: command='%s', err='%s', msg='%s'")
 }
 
@@ -146,7 +191,10 @@ func CaseConditionIsEmptyError(caller string) error {
 }
 
 // CaseConditionIsEmptyErrorWrap wraps the error.
-func CaseConditionIsEmptyErrorWrap(caller string, err error) error {
+func CaseConditionIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-14] condition of case must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -156,7 +204,10 @@ func IfConditionIsEmptyError(caller string) error {
 }
 
 // IfConditionIsEmptyErrorWrap wraps the error.
-func IfConditionIsEmptyErrorWrap(caller string, err error) error {
+func IfConditionIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-15] condition of if must not be empty, but it gets empty (caused at %s)")
 }
 
@@ -166,7 +217,10 @@ func UnnamedReturnTypeAppearsAfterNamedReturnTypeError(caller string) error {
 }
 
 // UnnamedReturnTypeAppearsAfterNamedReturnTypeErrorWrap wraps the error.
-func UnnamedReturnTypeAppearsAfterNamedReturnTypeErrorWrap(caller string, err error) error {
+func UnnamedReturnTypeAppearsAfterNamedReturnTypeErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-16] unnamed return type appears after named return type (caused at %s)")
 }
 
@@ -176,7 +230,10 @@ func ValueOfCompositeLiteralIsEmptyError(caller string) error {
 }
 
 // ValueOfCompositeLiteralIsEmptyErrorWrap wraps the error.
-func ValueOfCompositeLiteralIsEmptyErrorWrap(caller string, err error) error {
+func ValueOfCompositeLiteralIsEmptyErrorWrap(
+	caller string,
+	err error,
+) error {
 	return errors.Wrap(err, "[GOWRTR-17] a value of composite literal must not be empty, but it gets empty (caused at %s)")
 }
 

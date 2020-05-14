@@ -1,6 +1,7 @@
 module github.com/moznion/gowrtr
 
 require (
+	github.com/alecthomas/chroma v0.7.3
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/iancoleman/strcase v0.0.0-20191112232945-16388991a334 // indirect
 	github.com/moznion/go-errgen v1.8.1

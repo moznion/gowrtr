@@ -16,6 +16,6 @@ func NewPackage(packageName string) *Package {
 
 // Generate generates a package statement.
 func (pg *Package) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 	return fmt.Sprintf("%spackage %s\n", indent, pg.name), nil
 }

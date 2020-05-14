@@ -157,32 +157,57 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 		return "", errmsg.FuncNameIsEmptyError(f.funcNameCaller)
 	}
 
-	stmt := f.funcName + "("
+	stmt := f.funcName
 
+	typeBoundaries := []int{}
 	typeExisted := true
 	typeMissingCaller := ""
-	params := make([]string, len(f.funcParameters))
 	for i, param := range f.funcParameters {
 		if param.name == "" {
 			return "", errmsg.FuncParameterNameIsEmptyErr(f.paramCallers[i])
 		}
 
-		paramSet := param.name
 		typeExisted = param.typ != ""
 		if typeExisted {
-			paramSet += " " + param.typ
+			typeBoundaries = append(typeBoundaries, i)
 		}
-		if !typeExisted {
-			typeMissingCaller = f.paramCallers[i]
-		}
-		params[i] = paramSet
 	}
 
 	if !typeExisted {
 		return "", errmsg.LastFuncParameterTypeIsEmptyErr(typeMissingCaller)
 	}
 
-	stmt += strings.Join(params, ", ") + ")"
+	stmt += "("
+
+	groups := make([]string, len(typeBoundaries))
+	prevBoundary := 0
+	for groupIndex, boundary := range typeBoundaries {
+		group := f.funcParameters[prevBoundary : boundary+1]
+
+		chunks := make([]string, len(group))
+		for i, param := range group {
+			chunk := param.name
+			if param.typ != "" {
+				chunk += " " + param.typ
+			}
+			chunks[i] = chunk
+		}
+
+		groups[groupIndex] = strings.Join(chunks, ", ")
+
+		prevBoundary = boundary + 1
+	}
+
+	if len(groups) > 1 {
+		indent := BuildIndent(indentLevel)
+		nextIndent := BuildIndent(indentLevel + 1)
+
+		stmt += "\n" + indent + nextIndent + strings.Join(groups, ",\n"+nextIndent) + ",\n" + indent
+	} else if len(groups) == 1 {
+		stmt += groups[0]
+	}
+
+	stmt += ")"
 
 	returnTypes := f.returnTypes
 	switch len(returnTypes) {

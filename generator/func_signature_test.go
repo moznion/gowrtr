@@ -20,7 +20,7 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 			"myFunc",
 		).AddParameters(NewFuncParameter("foo", "string")),
 
-		"myFunc(foo string, bar int)": NewFuncSignature(
+		"myFunc(\n\tfoo string,\n\tbar int,\n)": NewFuncSignature(
 			"myFunc",
 		).AddParameters(
 			NewFuncParameter("foo", "string"),
@@ -34,17 +34,33 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 			NewFuncParameter("bar", "string"),
 		),
 
-		"myFunc(foo string, bar int) string": NewFuncSignature(
+		"myFunc(\n\tfoo string,\n\tbar int,\n) string": NewFuncSignature(
 			"myFunc",
 		).AddParameters(
 			NewFuncParameter("foo", "string"),
 			NewFuncParameter("bar", "int"),
 		).AddReturnTypes("string"),
 
-		"myFunc(foo string, bar int) (string, error)": NewFuncSignature(
+		"myFunc(\n\tfoo string,\n\tbar int,\n) (string, error)": NewFuncSignature(
 			"myFunc",
 		).AddParameters(
 			NewFuncParameter("foo", "string"),
+			NewFuncParameter("bar", "int"),
+		).AddReturnTypes("string", "error"),
+
+		"myFunc(\n\tfoo string,\n\tbux, bar int,\n) (string, error)": NewFuncSignature(
+			"myFunc",
+		).AddParameters(
+			NewFuncParameter("foo", "string"),
+			NewFuncParameter("bux", ""),
+			NewFuncParameter("bar", "int"),
+		).AddReturnTypes("string", "error"),
+
+		"myFunc(\n\tfoo, bux string,\n\tbar int,\n) (string, error)": NewFuncSignature(
+			"myFunc",
+		).AddParameters(
+			NewFuncParameter("foo", ""),
+			NewFuncParameter("bux", "string"),
 			NewFuncParameter("bar", "int"),
 		).AddReturnTypes("string", "error"),
 

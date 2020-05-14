@@ -34,7 +34,7 @@ func (e *Else) Statements(statements ...Statement) *Else {
 func (e *Else) Generate(indentLevel int) (string, error) {
 	stmt := fmt.Sprintf(" else {\n")
 
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 	nextIndentLevel := indentLevel + 1
 	for _, c := range e.statements {
 		gen, err := c.Generate(nextIndentLevel)

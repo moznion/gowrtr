@@ -86,7 +86,7 @@ func (ig *If) Else(block *Else) *If {
 
 // Generate generates `if` block as golang code.
 func (ig *If) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	if ig.condition == "" {
 		return "", errmsg.IfConditionIsEmptyError(ig.caller)

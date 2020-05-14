@@ -32,7 +32,7 @@ func (r *ReturnStatement) ReturnItems(returnItems ...string) *ReturnStatement {
 
 // Generate generates `return` statement as golang code.
 func (r *ReturnStatement) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	stmt := indent + "return"
 	if ret := strings.Join(r.returnItems, ", "); ret != "" {
