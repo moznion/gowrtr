@@ -36,7 +36,7 @@ func (c *CodeBlock) Statements(statements ...Statement) *CodeBlock {
 
 // Generate generates plain code block as golang code.
 func (c *CodeBlock) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	stmt := indent + "{\n"
 

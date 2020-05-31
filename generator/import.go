@@ -38,7 +38,7 @@ func (ig *Import) Generate(indentLevel int) (string, error) {
 		return "", nil
 	}
 
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 	stmt := indent + "import (\n"
 	for _, name := range ig.names {
 		if name == "" {

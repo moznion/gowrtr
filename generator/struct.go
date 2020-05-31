@@ -56,7 +56,7 @@ func (sg *Struct) Generate(indentLevel int) (string, error) {
 		return "", errmsg.StructNameIsNilErr(sg.nameCaller)
 	}
 
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 	stmt := fmt.Sprintf("%stype %s struct {\n", indent, sg.name)
 
 	for i, field := range sg.fields {

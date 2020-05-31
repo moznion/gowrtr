@@ -32,7 +32,7 @@ func (d *DefaultCase) Statements(statements ...Statement) *DefaultCase {
 
 // Generate generates `default` block as golang code.
 func (d *DefaultCase) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 	nextIndentLevel := indentLevel + 1
 
 	stmt := fmt.Sprintf("%sdefault:\n", indent)

@@ -24,6 +24,6 @@ func NewCommentf(comment string, args ...interface{}) *Comment {
 
 // Generate generates one line comment statement.
 func (c *Comment) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 	return fmt.Sprintf("%s//%s\n", indent, c.comment), nil
 }

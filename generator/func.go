@@ -44,7 +44,7 @@ func (fg *Func) Statements(statements ...Statement) *Func {
 
 // Generate generates a func block as golang code.
 func (fg *Func) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	stmt := indent + "func "
 

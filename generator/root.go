@@ -151,7 +151,6 @@ func applyCodeFormatter(generatedCode string, formatterCmdName string, formatter
 	echoCmd.Wait()
 	w.Close()
 	err := formatterCmd.Wait()
-
 	if err != nil {
 		cmds := []string{formatterCmdName}
 		return "", errmsg.CodeFormatterError(strings.Join(append(cmds, formatterOpts...), " "), errout.String(), err)

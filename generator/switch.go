@@ -49,7 +49,7 @@ func (s *Switch) Default(statement *DefaultCase) *Switch {
 
 // Generate generates `switch` statement as golang code.
 func (s *Switch) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	stmt := fmt.Sprintf("%sswitch %s {\n", indent, s.condition)
 	for _, statement := range s.caseStatements {

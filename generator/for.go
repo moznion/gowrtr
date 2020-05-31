@@ -36,7 +36,7 @@ func (fg *For) Statements(statements ...Statement) *For {
 
 // Generate generates a `for` block as golang code.
 func (fg *For) Generate(indentLevel int) (string, error) {
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	cond := fg.condition
 	stmt := fmt.Sprintf("%sfor %s", indent, cond)

@@ -48,7 +48,7 @@ func (ig *Interface) Generate(indentLevel int) (string, error) {
 		return "", errmsg.InterfaceNameIsEmptyError(ig.caller)
 	}
 
-	indent := buildIndent(indentLevel)
+	indent := BuildIndent(indentLevel)
 
 	nextIndentLevel := indentLevel + 1
 	stmt := fmt.Sprintf("%stype %s interface {\n", indent, ig.name)
