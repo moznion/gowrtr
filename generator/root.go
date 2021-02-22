@@ -132,25 +132,29 @@ func (g *Root) applyGoimports(generatedCode string) (string, error) {
 }
 
 func applyCodeFormatter(generatedCode string, formatterCmdName string, formatterOpts ...string) (string, error) {
-	echoCmd := exec.Command("echo", generatedCode)
 	formatterCmd := exec.Command(formatterCmdName, formatterOpts...)
-
-	r, w := io.Pipe()
-	echoCmd.Stdout = w
-	formatterCmd.Stdin = r
+	stdinPipe, _ := formatterCmd.StdinPipe()
 
 	var out, errout bytes.Buffer
 	formatterCmd.Stdout = &out
 	formatterCmd.Stderr = &errout
 
-	echoCmd.Start()
-	if err := formatterCmd.Start(); err != nil {
+	err := formatterCmd.Start()
+	if err != nil {
 		cmds := []string{formatterCmdName}
 		return "", errmsg.CodeFormatterError(strings.Join(append(cmds, formatterOpts...), " "), errout.String(), err)
 	}
-	echoCmd.Wait()
-	w.Close()
-	err := formatterCmd.Wait()
+
+	_, err = io.WriteString(stdinPipe, generatedCode)
+	if err != nil {
+		return "", err
+	}
+	err = stdinPipe.Close()
+	if err != nil {
+		return "", err
+	}
+
+	err = formatterCmd.Wait()
 	if err != nil {
 		cmds := []string{formatterCmdName}
 		return "", errmsg.CodeFormatterError(strings.Join(append(cmds, formatterOpts...), " "), errout.String(), err)

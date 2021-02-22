@@ -1,12 +1,12 @@
 package generator
 
 import (
+	"fmt"
 	"regexp"
 	"strings"
 	"testing"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
-
 	"github.com/stretchr/testify/assert"
 )
 
@@ -516,4 +516,32 @@ func TestShouldGenerateCodeRaiseErrorWhenCodeFormatterIsExited(t *testing.T) {
 		_, err := applyCodeFormatter("", "not-existed-cmd")
 		assert.Regexp(t, regexp.MustCompile(`^\[GOWRTR-13\] code formatter raises error: command='not-existed-cmd'.+`), err.Error())
 	}
+}
+
+// to check STDIN buffer behavior with code formatter
+func TestMassiveAmountCode(t *testing.T) {
+	generator := NewRoot(
+		NewComment(" THIS CODE WAS AUTO GENERATED"),
+		NewNewline(),
+		NewPackage("mypkg"),
+		NewNewline(),
+		NewImport("fmt"),
+		NewNewline(),
+	)
+
+	for i := 0; i <= 1000; i++ {
+		generator = generator.AddStatements(
+			NewFunc(
+				nil,
+				NewFuncSignature(fmt.Sprintf("f%d", i)),
+				NewRawStatement(
+					`fmt.Println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")`,
+				).WithNewline(true),
+			),
+		)
+	}
+
+	generated, err := generator.Gofmt().Generate(0)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, generated)
 }
