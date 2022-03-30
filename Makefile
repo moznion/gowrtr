@@ -3,12 +3,8 @@
 PKGS := $(shell go list ./... | grep -v go-errgen)
 
 check: test lint vet fmt-check
-ci-check: ci-test lint vet fmt-check
 
 test: errgen
-	go test -v -cover $(PKGS)
-
-ci-test: errgen
 	go test -v -cover -race -coverprofile=coverage.txt -covermode=atomic $(PKGS)
 
 test-coverage: errgen
@@ -16,7 +12,7 @@ test-coverage: errgen
 	go tool cover -html=cover.out -o cover.html
 
 lint:
-	golint -set_exit_status $(PKGS)
+	staticcheck ./...
 
 vet:
 	go vet $(PKGS)
