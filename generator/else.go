@@ -32,7 +32,7 @@ func (e *Else) Statements(statements ...Statement) *Else {
 
 // Generate generates `else` block as golang code.
 func (e *Else) Generate(indentLevel int) (string, error) {
-	stmt := fmt.Sprintf(" else {\n")
+	stmt := " else {\n"
 
 	indent := BuildIndent(indentLevel)
 	nextIndentLevel := indentLevel + 1
