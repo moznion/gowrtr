@@ -7,6 +7,7 @@ import (
 )
 
 // FuncInvocation represents a code generator for func invocation.
+// FIXME add function name and type-parameters, this would be a breaking change.
 type FuncInvocation struct {
 	parameters []string
 	callers    []string

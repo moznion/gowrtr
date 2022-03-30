@@ -8,7 +8,8 @@ import (
 func ExampleStruct_Generate() {
 	generator := NewStruct("MyStruct")
 	generator = generator.
-		AddField("foo", "string").
+		TypeParameters(TypeParameters{NewTypeParameter("T", "string")}).
+		AddField("foo", "T").
 		AddField("bar", "int64", `custom:"tag"`)
 
 	generated, err := generator.Generate(0)

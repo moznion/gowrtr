@@ -1,7 +1,7 @@
 package errmsg
 
 //go:generate errgen -type=errs -prefix=GOWRTR-
-type errs struct {
+type Errs struct {
 	StructNameIsNilErr                                error `errmsg:"struct name must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	StructFieldNameIsEmptyErr                         error `errmsg:"field name must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	StructFieldTypeIsEmptyErr                         error `errmsg:"field type must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
@@ -19,4 +19,6 @@ type errs struct {
 	IfConditionIsEmptyError                           error `errmsg:"condition of if must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	UnnamedReturnTypeAppearsAfterNamedReturnTypeError error `errmsg:"unnamed return type appears after named return type (caused at %s)" vars:"caller string"`
 	ValueOfCompositeLiteralIsEmptyError               error `errmsg:"a value of composite literal must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
+	TypeParameterParameterIsEmptyErr                  error `errmsg:"type-parameter's parameter must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
+	TypeParameterTypeIsEmptyErr                       error `errmsg:"type-parameter's type must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 }

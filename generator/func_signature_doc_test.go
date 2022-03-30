@@ -8,10 +8,12 @@ import (
 func ExampleFuncSignature_Generate() {
 	generator := NewFuncSignature(
 		"myFunc",
-	).AddParameters(
-		NewFuncParameter("foo", "string"),
+	).TypeParameters([]*TypeParameter{
+		NewTypeParameter("T", "string"),
+	}).AddParameters(
+		NewFuncParameter("foo", "T"),
 		NewFuncParameter("bar", "int"),
-	).AddReturnTypes("string", "error")
+	).AddReturnTypes("T", "error")
 
 	generated, err := generator.Generate(0)
 	if err != nil {

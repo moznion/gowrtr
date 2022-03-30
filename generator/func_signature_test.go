@@ -72,6 +72,15 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 		).AddReturnTypes("string", "error").
 			Parameters(NewFuncParameter("buz", "error")).
 			ReturnTypes("int64"),
+
+		"myFunc[T string](\n\tfoo T,\n\tbar int,\n) (T, error)": NewFuncSignature(
+			"myFunc",
+		).TypeParameters([]*TypeParameter{
+			NewTypeParameter("T", "string"),
+		}).AddParameters(
+			NewFuncParameter("foo", "T"),
+			NewFuncParameter("bar", "int"),
+		).AddReturnTypes("T", "error"),
 	}
 
 	for expected, signature := range dataset {
@@ -197,4 +206,17 @@ func TestShouldGeneratingFuncSignatureRaisesUnnamedRetTypeIsAfterNamedRetType(t 
 	assert.Regexp(t, regexp.MustCompile(
 		`^\`+strings.Split(errmsg.UnnamedReturnTypeAppearsAfterNamedReturnTypeError("").Error(), " ")[0],
 	), err.Error())
+}
+
+func TestShouldGenerateFuncSignatureRaiseErrorWhenInvalidTypeParameterHasGiven(t *testing.T) {
+	_, err := NewFuncSignature(
+		"myFunc",
+	).TypeParameters([]*TypeParameter{
+		NewTypeParameter("T", ""),
+	}).AddParameters(
+		NewFuncParameter("foo", "T"),
+	).AddReturnTypes("T", "error").Generate(0)
+
+	assert.Error(t, err)
+	assert.Equal(t, errmsg.TypeParameterTypeIsEmptyErrType, errmsg.IdentifyErrs(err))
 }
