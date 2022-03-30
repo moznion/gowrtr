@@ -40,6 +40,7 @@ type FuncSignature struct {
 	paramCallers       []string
 	funcNameCaller     string
 	returnTypesCallers []string
+	typeParameters     TypeParameters
 }
 
 // NewFuncParameter returns a new `FuncSignature`.
@@ -81,6 +82,7 @@ func (f *FuncSignature) AddParameters(funcParameters ...*FuncParameter) *FuncSig
 		paramCallers:       append(f.paramCallers, fetchClientCallerLineAsSlice(len(funcParameters))...),
 		funcNameCaller:     f.funcNameCaller,
 		returnTypesCallers: f.returnTypesCallers,
+		typeParameters:     f.typeParameters,
 	}
 }
 
@@ -94,6 +96,7 @@ func (f *FuncSignature) Parameters(funcParameters ...*FuncParameter) *FuncSignat
 		paramCallers:       fetchClientCallerLineAsSlice(len(funcParameters)),
 		funcNameCaller:     f.funcNameCaller,
 		returnTypesCallers: f.returnTypesCallers,
+		typeParameters:     f.typeParameters,
 	}
 }
 
@@ -121,6 +124,7 @@ func (f *FuncSignature) AddReturnTypeStatements(returnTypes ...*FuncReturnType) 
 		paramCallers:       f.paramCallers,
 		funcNameCaller:     f.funcNameCaller,
 		returnTypesCallers: append(f.returnTypesCallers, fetchClientCallerLineAsSlice(len(returnTypes))...),
+		typeParameters:     f.typeParameters,
 	}
 }
 
@@ -148,6 +152,20 @@ func (f *FuncSignature) ReturnTypeStatements(returnTypes ...*FuncReturnType) *Fu
 		paramCallers:       f.paramCallers,
 		funcNameCaller:     f.funcNameCaller,
 		returnTypesCallers: fetchClientCallerLineAsSlice(len(returnTypes)),
+		typeParameters:     f.typeParameters,
+	}
+}
+
+// TypeParameters sets the TypeParameters onto the caller FuncSignature.
+func (f *FuncSignature) TypeParameters(typeParameters TypeParameters) *FuncSignature {
+	return &FuncSignature{
+		funcName:           f.funcName,
+		funcParameters:     f.funcParameters,
+		returnTypes:        f.returnTypes,
+		paramCallers:       f.paramCallers,
+		funcNameCaller:     f.funcNameCaller,
+		returnTypesCallers: f.returnTypesCallers,
+		typeParameters:     typeParameters,
 	}
 }
 
@@ -159,7 +177,15 @@ func (f *FuncSignature) Generate(indentLevel int) (string, error) {
 
 	stmt := f.funcName
 
-	typeBoundaries := []int{}
+	if f.typeParameters != nil && len(f.typeParameters) > 0 {
+		typeParametersStmt, err := f.typeParameters.Generate(indentLevel)
+		if err != nil {
+			return "", err
+		}
+		stmt += typeParametersStmt
+	}
+
+	var typeBoundaries []int
 	typeExisted := true
 	typeMissingCaller := ""
 	for i, param := range f.funcParameters {

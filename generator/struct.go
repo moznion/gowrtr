@@ -15,10 +15,11 @@ type StructField struct {
 
 // Struct represents a code generator for `struct` notation.
 type Struct struct {
-	name          string
-	fields        []*StructField
-	nameCaller    string
-	fieldsCallers []string
+	name           string
+	fields         []*StructField
+	nameCaller     string
+	fieldsCallers  []string
+	typeParameters TypeParameters
 }
 
 // NewStruct returns a new `Struct`.
@@ -45,8 +46,20 @@ func (sg *Struct) AddField(name string, typ string, tag ...string) *Struct {
 			typ:  typ,
 			tag:  t,
 		}),
-		nameCaller:    sg.nameCaller,
-		fieldsCallers: append(sg.fieldsCallers, fetchClientCallerLine()),
+		nameCaller:     sg.nameCaller,
+		fieldsCallers:  append(sg.fieldsCallers, fetchClientCallerLine()),
+		typeParameters: sg.typeParameters,
+	}
+}
+
+// TypeParameters sets the TypeParameters onto the current caller Struct.
+func (sg *Struct) TypeParameters(typeParameters TypeParameters) *Struct {
+	return &Struct{
+		name:           sg.name,
+		fields:         sg.fields,
+		nameCaller:     sg.nameCaller,
+		fieldsCallers:  sg.fieldsCallers,
+		typeParameters: typeParameters,
 	}
 }
 
@@ -57,7 +70,17 @@ func (sg *Struct) Generate(indentLevel int) (string, error) {
 	}
 
 	indent := BuildIndent(indentLevel)
-	stmt := fmt.Sprintf("%stype %s struct {\n", indent, sg.name)
+
+	typeParametersStmt := ""
+	if sg.typeParameters != nil && len(sg.typeParameters) > 0 {
+		var err error
+		typeParametersStmt, err = sg.typeParameters.Generate(indentLevel)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	stmt := fmt.Sprintf("%stype %s%s struct {\n", indent, sg.name, typeParametersStmt)
 
 	for i, field := range sg.fields {
 		if field.name == "" {

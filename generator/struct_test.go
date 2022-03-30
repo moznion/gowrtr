@@ -41,6 +41,22 @@ func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 	}
 }
 
+func TestShouldGenerateStructStatementWithTypeParametersSuccessfully(t *testing.T) {
+	generator := NewStruct("TestStruct")
+	generator = generator.
+		TypeParameters(TypeParameters{NewTypeParameter("T", "string")}).
+		AddField("Foo", "T").
+		AddField("Bar", "int64", `json:"bar"`)
+
+	gen, err := generator.Generate(0)
+	expected := "type TestStruct[T string] struct {\n" +
+		"	Foo T\n" +
+		"	Bar int64 `json:\"bar\"`\n" +
+		"}\n"
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
+}
+
 func TestShouldRaiseErrorWhenStructNameIsEmpty(t *testing.T) {
 	structGenerator := NewStruct("")
 
@@ -64,4 +80,14 @@ func TestShouldRaiseErrorWhenFieldTypeIsEmpty(t *testing.T) {
 	assert.Regexp(t, regexp.MustCompile(
 		`^\`+strings.Split(errmsg.StructFieldTypeIsEmptyErr("").Error(), " ")[0],
 	), err.Error())
+}
+
+func TestShouldRaiseErrorWhenInvalidTypeParameterHasGiven(t *testing.T) {
+	generator := NewStruct("TestStruct")
+	generator = generator.
+		TypeParameters(TypeParameters{NewTypeParameter("", "string")}).
+		AddField("Foo", "T")
+	_, err := generator.Generate(0)
+	assert.Error(t, err)
+	assert.Equal(t, errmsg.TypeParameterParameterIsEmptyErrType, errmsg.IdentifyErrs(err))
 }

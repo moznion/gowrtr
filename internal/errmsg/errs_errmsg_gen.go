@@ -180,6 +180,26 @@ func ValueOfCompositeLiteralIsEmptyErrorWrap(caller string, err error) error {
 	return errors.Wrap(err, "[GOWRTR-17] a value of composite literal must not be empty, but it gets empty (caused at %s)")
 }
 
+// TypeParameterParameterIsEmptyErr returns the error.
+func TypeParameterParameterIsEmptyErr(caller string) error {
+	return fmt.Errorf(`[GOWRTR-18] type-parameter's parameter must not be empty, but it gets empty (caused at %s)`, caller)
+}
+
+// TypeParameterParameterIsEmptyErrWrap wraps the error.
+func TypeParameterParameterIsEmptyErrWrap(caller string, err error) error {
+	return errors.Wrap(err, "[GOWRTR-18] type-parameter's parameter must not be empty, but it gets empty (caused at %s)")
+}
+
+// TypeParameterTypeIsEmptyErr returns the error.
+func TypeParameterTypeIsEmptyErr(caller string) error {
+	return fmt.Errorf(`[GOWRTR-19] type-parameter's type must not be empty, but it gets empty (caused at %s)`, caller)
+}
+
+// TypeParameterTypeIsEmptyErrWrap wraps the error.
+func TypeParameterTypeIsEmptyErrWrap(caller string, err error) error {
+	return errors.Wrap(err, "[GOWRTR-19] type-parameter's type must not be empty, but it gets empty (caused at %s)")
+}
+
 // ErrsType represents the error type.
 type ErrsType int
 
@@ -219,13 +239,17 @@ const (
 	UnnamedReturnTypeAppearsAfterNamedReturnTypeErrorType
 	// ValueOfCompositeLiteralIsEmptyErrorType represents the error type for ValueOfCompositeLiteralIsEmptyError.
 	ValueOfCompositeLiteralIsEmptyErrorType
+	// TypeParameterParameterIsEmptyErrType represents the error type for TypeParameterParameterIsEmptyErr.
+	TypeParameterParameterIsEmptyErrType
+	// TypeParameterTypeIsEmptyErrType represents the error type for TypeParameterTypeIsEmptyErr.
+	TypeParameterTypeIsEmptyErrType
 	// ErrsUnknownType represents unknown type for Errs
 	ErrsUnknownType
 )
 
 // ListErrs returns the list of errors.
 func ListErrs() []string {
-	return []string{"[GOWRTR-1] struct name must not be empty, but it gets empty (caused at %s)", "[GOWRTR-2] field name must not be empty, but it gets empty (caused at %s)", "[GOWRTR-3] field type must not be empty, but it gets empty (caused at %s)", "[GOWRTR-4] func parameter name must not be empty, but it gets empty (caused at %s)", "[GOWRTR-5] the last func parameter type must not be empty, but it gets empty (caused at %s)", "[GOWRTR-6] name of func must not be empty, but it gets empty (caused at %s)", "[GOWRTR-7] name of interface must not be empty, but it gets empty (caused at %s)", "[GOWRTR-8] name of func receiver must not be empty, but it gets empty (caused at %s)", "[GOWRTR-9] type of func receiver must not be empty, but it gets empty (caused at %s)", "[GOWRTR-10] func signature must not be nil, bit it gets nil (caused at %s)", "[GOWRTR-11] anonymous func signature must not be nil, bit it gets nil (caused at %s)", "[GOWRTR-12] a parameter of function invocation must not be nil, but it gets nil (caused at %s)", "[GOWRTR-13] code formatter raises error: command='%s', err='%s', msg='%s'", "[GOWRTR-14] condition of case must not be empty, but it gets empty (caused at %s)", "[GOWRTR-15] condition of if must not be empty, but it gets empty (caused at %s)", "[GOWRTR-16] unnamed return type appears after named return type (caused at %s)", "[GOWRTR-17] a value of composite literal must not be empty, but it gets empty (caused at %s)"}
+	return []string{"[GOWRTR-1] struct name must not be empty, but it gets empty (caused at %s)", "[GOWRTR-2] field name must not be empty, but it gets empty (caused at %s)", "[GOWRTR-3] field type must not be empty, but it gets empty (caused at %s)", "[GOWRTR-4] func parameter name must not be empty, but it gets empty (caused at %s)", "[GOWRTR-5] the last func parameter type must not be empty, but it gets empty (caused at %s)", "[GOWRTR-6] name of func must not be empty, but it gets empty (caused at %s)", "[GOWRTR-7] name of interface must not be empty, but it gets empty (caused at %s)", "[GOWRTR-8] name of func receiver must not be empty, but it gets empty (caused at %s)", "[GOWRTR-9] type of func receiver must not be empty, but it gets empty (caused at %s)", "[GOWRTR-10] func signature must not be nil, bit it gets nil (caused at %s)", "[GOWRTR-11] anonymous func signature must not be nil, bit it gets nil (caused at %s)", "[GOWRTR-12] a parameter of function invocation must not be nil, but it gets nil (caused at %s)", "[GOWRTR-13] code formatter raises error: command='%s', err='%s', msg='%s'", "[GOWRTR-14] condition of case must not be empty, but it gets empty (caused at %s)", "[GOWRTR-15] condition of if must not be empty, but it gets empty (caused at %s)", "[GOWRTR-16] unnamed return type appears after named return type (caused at %s)", "[GOWRTR-17] a value of composite literal must not be empty, but it gets empty (caused at %s)", "[GOWRTR-18] type-parameter's parameter must not be empty, but it gets empty (caused at %s)", "[GOWRTR-19] type-parameter's type must not be empty, but it gets empty (caused at %s)"}
 }
 
 // IdentifyErrs checks the identity of an error
@@ -266,6 +290,10 @@ func IdentifyErrs(err error) ErrsType {
 		return UnnamedReturnTypeAppearsAfterNamedReturnTypeErrorType
 	case strings.HasPrefix(errStr, "[GOWRTR-17]"):
 		return ValueOfCompositeLiteralIsEmptyErrorType
+	case strings.HasPrefix(errStr, "[GOWRTR-18]"):
+		return TypeParameterParameterIsEmptyErrType
+	case strings.HasPrefix(errStr, "[GOWRTR-19]"):
+		return TypeParameterTypeIsEmptyErrType
 	default:
 		return ErrsUnknownType
 	}
