@@ -1,7 +1,7 @@
 package errmsg
 
 //go:generate errgen -type=errs -prefix=GOWRTR-
-type errs struct {
+type Errs struct {
 	StructNameIsNilErr                                error `errmsg:"struct name must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	StructFieldNameIsEmptyErr                         error `errmsg:"field name must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
 	StructFieldTypeIsEmptyErr                         error `errmsg:"field type must not be empty, but it gets empty (caused at %s)" vars:"caller string"`
