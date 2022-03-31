@@ -8,7 +8,7 @@ import (
 func ExampleFuncSignature_Generate() {
 	generator := NewFuncSignature(
 		"myFunc",
-	).TypeParameters([]*TypeParameter{
+	).TypeParameters(TypeParameters{
 		NewTypeParameter("T", "string"),
 	}).AddParameters(
 		NewFuncParameter("foo", "T"),

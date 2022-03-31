@@ -75,7 +75,7 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 
 		"myFunc[T string](\n\tfoo T,\n\tbar int,\n) (T, error)": NewFuncSignature(
 			"myFunc",
-		).TypeParameters([]*TypeParameter{
+		).TypeParameters(TypeParameters{
 			NewTypeParameter("T", "string"),
 		}).AddParameters(
 			NewFuncParameter("foo", "T"),
@@ -211,7 +211,7 @@ func TestShouldGeneratingFuncSignatureRaisesUnnamedRetTypeIsAfterNamedRetType(t 
 func TestShouldGenerateFuncSignatureRaiseErrorWhenInvalidTypeParameterHasGiven(t *testing.T) {
 	_, err := NewFuncSignature(
 		"myFunc",
-	).TypeParameters([]*TypeParameter{
+	).TypeParameters(TypeParameters{
 		NewTypeParameter("T", ""),
 	}).AddParameters(
 		NewFuncParameter("foo", "T"),
