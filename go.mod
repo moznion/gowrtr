@@ -1,6 +1,6 @@
 module github.com/moznion/gowrtr
 
-go 1.18
+go 1.19
 
 require (
 	github.com/moznion/go-errgen v1.8.1
