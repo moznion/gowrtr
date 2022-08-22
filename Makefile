@@ -3,6 +3,7 @@
 PKGS := $(shell go list ./... | grep -v go-errgen)
 
 check: test lint vet fmt-check
+check-ci: test vet fmt-check
 
 test: errgen
 	go test -v -cover -race -coverprofile=coverage.txt -covermode=atomic $(PKGS)
@@ -12,7 +13,7 @@ test-coverage: errgen
 	go tool cover -html=cover.out -o cover.html
 
 lint:
-	staticcheck ./...
+	golangci-lint run ./...
 
 vet:
 	go vet $(PKGS)
@@ -30,13 +31,12 @@ fmt:
 	goimports -w **/*.go
 
 installdeps:
-	GO111MODULE=on go mod vendor
-	GO111MODULE=on go mod tidy
+	go mod vendor
+	go mod tidy
 
 bootstrap: installdeps
-	GO111MODULE=on go get -u golang.org/x/lint/golint \
-		golang.org/x/tools/cmd/goimports \
-		github.com/moznion/go-errgen/cmd/errgen
+	go install golang.org/x/tools/cmd/goimports@latest
+	go install github.com/moznion/go-errgen/cmd/errgen@latest
 
 errgen:
 	go generate ./...
