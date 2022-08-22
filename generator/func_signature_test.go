@@ -81,6 +81,42 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 			NewFuncParameter("foo", "T"),
 			NewFuncParameter("bar", "int"),
 		).AddReturnTypes("T", "error"),
+
+		"myFunc[T string, U int64](\n\tfoo T,\n\tbar U,\n) (T, error)": NewFuncSignature(
+			"myFunc",
+		).TypeParameters(TypeParameters{
+			NewTypeParameter("T", "string"),
+			NewTypeParameter("U", "int64"),
+		}).AddParameters(
+			NewFuncParameter("foo", "T"),
+			NewFuncParameter("bar", "U"),
+		).AddReturnTypes("T", "error"),
+
+		"myFunc[T string, U int64](\n\tfoo T,\n\tbar U,\n) (MyStruct[T], error)": NewFuncSignature(
+			"myFunc",
+		).TypeParameters(TypeParameters{
+			NewTypeParameter("T", "string"),
+			NewTypeParameter("U", "int64"),
+		}).AddParameters(
+			NewFuncParameter("foo", "T"),
+			NewFuncParameter("bar", "U"),
+		).AddReturnTypeStatements(
+			NewFuncReturnTypeWithGenerics("MyStruct", TypeParameterNames{"T"}),
+			NewFuncReturnType("error"),
+		),
+
+		"myFunc[T string, U int64](\n\tfoo T,\n\tbar U,\n) (MyStruct[T, U], error)": NewFuncSignature(
+			"myFunc",
+		).TypeParameters(TypeParameters{
+			NewTypeParameter("T", "string"),
+			NewTypeParameter("U", "int64"),
+		}).AddParameters(
+			NewFuncParameter("foo", "T"),
+			NewFuncParameter("bar", "U"),
+		).AddReturnTypeStatements(
+			NewFuncReturnTypeWithGenerics("MyStruct", TypeParameterNames{"T", "U"}),
+			NewFuncReturnType("error"),
+		),
 	}
 
 	for expected, signature := range dataset {

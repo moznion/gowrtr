@@ -41,7 +41,7 @@ func TestShouldGenerateStructStatementBeSucceeded(t *testing.T) {
 	}
 }
 
-func TestShouldGenerateStructStatementWithTypeParametersSuccessfully(t *testing.T) {
+func TestShouldGenerateStructStatementWithTypeParameterSuccessfully(t *testing.T) {
 	generator := NewStruct("TestStruct")
 	generator = generator.
 		TypeParameters(TypeParameters{NewTypeParameter("T", "string")}).
@@ -52,6 +52,25 @@ func TestShouldGenerateStructStatementWithTypeParametersSuccessfully(t *testing.
 	expected := "type TestStruct[T string] struct {\n" +
 		"	Foo T\n" +
 		"	Bar int64 `json:\"bar\"`\n" +
+		"}\n"
+	assert.NoError(t, err)
+	assert.Equal(t, expected, gen)
+}
+
+func TestShouldGenerateStructStatementWithTypeParametersSuccessfully(t *testing.T) {
+	generator := NewStruct("TestStruct")
+	generator = generator.
+		TypeParameters(TypeParameters{
+			NewTypeParameter("T", "string"),
+			NewTypeParameter("U", "int64"),
+		}).
+		AddField("Foo", "T").
+		AddField("Bar", "U", `json:"bar"`)
+
+	gen, err := generator.Generate(0)
+	expected := "type TestStruct[T string, U int64] struct {\n" +
+		"	Foo T\n" +
+		"	Bar U `json:\"bar\"`\n" +
 		"}\n"
 	assert.NoError(t, err)
 	assert.Equal(t, expected, gen)

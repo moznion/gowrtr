@@ -8,17 +8,23 @@ import (
 
 // FuncReceiver represents a code generator for the receiver of the func.
 type FuncReceiver struct {
-	name   string
-	typ    string
-	caller string
+	name                       string
+	typ                        string
+	caller                     string
+	genericsTypeParameterNames TypeParameterNames
 }
 
 // NewFuncReceiver returns a new `FuncReceiver`.
 func NewFuncReceiver(name string, typ string) *FuncReceiver {
+	return NewFuncReceiverWithGenerics(name, typ, TypeParameterNames{})
+}
+
+func NewFuncReceiverWithGenerics(name string, typ string, genericsTypeParameterNames TypeParameterNames) *FuncReceiver {
 	return &FuncReceiver{
-		name:   name,
-		typ:    typ,
-		caller: fetchClientCallerLine(),
+		name:                       name,
+		typ:                        typ,
+		caller:                     fetchClientCallerLine(),
+		genericsTypeParameterNames: genericsTypeParameterNames,
 	}
 }
 
@@ -39,5 +45,10 @@ func (f *FuncReceiver) Generate(indentLevel int) (string, error) {
 		return "", errmsg.FuncReceiverTypeIsEmptyError(f.caller)
 	}
 
-	return fmt.Sprintf("(%s %s)", name, typ), nil
+	genericsTypeParam := ""
+	if len(f.genericsTypeParameterNames) > 0 {
+		genericsTypeParam, _ = f.genericsTypeParameterNames.Generate(0)
+	}
+
+	return fmt.Sprintf("(%s %s%s)", name, typ, genericsTypeParam), nil
 }

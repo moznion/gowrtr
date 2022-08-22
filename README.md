@@ -1,7 +1,7 @@
 gowrtr [![CircleCI](https://circleci.com/gh/moznion/gowrtr.svg?style=svg)](https://circleci.com/gh/moznion/gowrtr) [![codecov](https://codecov.io/gh/moznion/gowrtr/branch/master/graph/badge.svg)](https://codecov.io/gh/moznion/gowrtr) [![GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator?status.svg)](https://godoc.org/github.com/moznion/gowrtr/generator) [![Go Report Card](https://goreportcard.com/badge/github.com/moznion/gowrtr)](https://goreportcard.com/report/github.com/moznion/gowrtr)
 ==
 
-gowrtr (pronunciation:`go writer`) is a library that supports golang code generation.
+gowrtr (pronunciation:`go writer`) is a library that supports golang code generation. This library is [go generics](https://go.dev/doc/tutorial/generics) ready!
 
 This library is inspired by [square/javapoet](https://github.com/square/javapoet).
 
@@ -56,6 +56,72 @@ func main() {
 }
 ```
 
+Generics example is here:
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/moznion/gowrtr/generator"
+)
+
+func main() {
+	generated, err := generator.NewRoot(
+		generator.NewComment(" THIS CODE WAS AUTO GENERATED"),
+		generator.NewPackage("main"),
+		generator.NewNewline(),
+		generator.NewStruct("MyStruct").
+			TypeParameters(TypeParameters{
+				generator.NewTypeParameter("T", "any"),
+			}).AddField("anything", "T"),
+		generator.NewNewline(),
+		generator.NewFunc(
+			nil,
+			generator.NewFuncSignature("foo").
+				TypeParameters(TypeParameters{
+					generator.NewTypeParameter("U", "any"),
+				}).
+				ReturnTypeStatements(generator.NewFuncReturnTypeWithGenerics("MyStruct", generator.TypeParameterNames{"U"})),
+		).AddStatements(generator.NewComment("do something")),
+		generator.NewNewline(),
+		generator.NewFunc(
+			generator.NewFuncReceiverWithGenerics("s", "MyStruct", generator.TypeParameterNames{"T"}),
+			generator.NewFuncSignature("bar").
+				ReturnTypeStatements(generator.NewFuncReturnTypeWithGenerics("MyStruct", generator.TypeParameterNames{"T"})),
+		).AddStatements(generator.NewComment("do something")),
+	).
+		Gofmt("-s").
+		Goimports().
+		Generate(0)
+
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(generated)
+}
+```
+
+then it generates the following golang code:
+
+```go
+// THIS CODE WAS AUTO GENERATED
+package main
+
+type MyStruct[T any] struct {
+	anything T
+}
+
+func foo[U any]() MyStruct[U] {
+	//do something
+}
+
+func (s MyStruct[T]) bar() MyStruct[T] {
+	//do something
+}
+```
+
 And [GoDoc](https://godoc.org/github.com/moznion/gowrtr/generator) shows you a greater number of examples.
 
 Description
@@ -89,7 +155,9 @@ Error messages example:
 - [x] `package`
 - [x] `import`
 - [x] `struct`
+  - [x] generics type parameters
 - [x] `interface`
+  - [x] generics type parameters
 - [x] [composite literal](https://golang.org/doc/effective_go.html#composite_literals)
 - [x] `if`
   - [x] `else if`
@@ -100,6 +168,10 @@ Error messages example:
 - [x] `for`
 - [x] code block
 - [x] `func`
+  - [x] generics type parameters on the signature
+  - [x] generics type names on the receiver
+  - [x] generics type names on the return types
+  - [x] generics types on the invocation
 - [x] anonymous func
   - [x] immediately invoking
 - one line statement
@@ -107,6 +179,7 @@ Error messages example:
   - [x] newline
   - [x] `return`
   - [x] `comment`
+- [x] union types in the generics type parameters
 
 For developers of this library
 --

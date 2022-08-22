@@ -39,3 +39,17 @@ func TestShouldGeneratingFuncReceiverRaisesErrorWhenFuncReceiverTypeIsEmpty(t *t
 		`^\`+strings.Split(errmsg.FuncReceiverTypeIsEmptyError("").Error(), " ")[0],
 	), err.Error())
 }
+
+func TestShouldGeneratingFuncReceiverCodeWithGenericsTypeParamNameSuccessfully(t *testing.T) {
+	funcReceiver := NewFuncReceiverWithGenerics("f", "*Foo", TypeParameterNames{"T"})
+	gen, err := funcReceiver.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "(f *Foo[T])", gen)
+}
+
+func TestShouldGeneratingFuncReceiverCodeWithGenericsTypeParamNamesSuccessfully(t *testing.T) {
+	funcReceiver := NewFuncReceiverWithGenerics("f", "*Foo", TypeParameterNames{"T", "U"})
+	gen, err := funcReceiver.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "(f *Foo[T, U])", gen)
+}

@@ -11,6 +11,7 @@ type Interface struct {
 	name           string
 	funcSignatures []*FuncSignature
 	caller         string
+	typeParameters TypeParameters
 }
 
 // NewInterface returns a new `Interface`.
@@ -42,6 +43,16 @@ func (ig *Interface) Signatures(sig ...*FuncSignature) *Interface {
 	}
 }
 
+// TypeParameters makes a new Interface value based on the receiver value with the given generics TypeParameters.
+func (ig *Interface) TypeParameters(typeParameters TypeParameters) *Interface {
+	return &Interface{
+		name:           ig.name,
+		funcSignatures: ig.funcSignatures,
+		caller:         ig.caller,
+		typeParameters: typeParameters,
+	}
+}
+
 // Generate generates `interface` block as golang code.
 func (ig *Interface) Generate(indentLevel int) (string, error) {
 	if ig.name == "" {
@@ -50,8 +61,17 @@ func (ig *Interface) Generate(indentLevel int) (string, error) {
 
 	indent := BuildIndent(indentLevel)
 
+	typeParamStmt := ""
+	if len(ig.typeParameters) > 0 {
+		var err error
+		typeParamStmt, err = ig.typeParameters.Generate(0)
+		if err != nil {
+			return "", err
+		}
+	}
+
 	nextIndentLevel := indentLevel + 1
-	stmt := fmt.Sprintf("%stype %s interface {\n", indent, ig.name)
+	stmt := fmt.Sprintf("%stype %s%s interface {\n", indent, ig.name, typeParamStmt)
 	for _, sig := range ig.funcSignatures {
 		signatureStr, err := sig.Generate(nextIndentLevel)
 		if err != nil {

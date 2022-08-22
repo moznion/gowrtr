@@ -9,11 +9,13 @@ func ExampleInterface_Generate() {
 	generator := NewInterface(
 		"MyInterface",
 		NewFuncSignature("fooFunc").
-			AddParameters(NewFuncParameter("foo", "string")).
+			AddParameters(NewFuncParameter("foo", "T")).
 			AddReturnTypes("string", "error"),
 	).AddSignatures(
 		NewFuncSignature("barFunc"),
-	)
+	).TypeParameters(TypeParameters{
+		NewTypeParameter("T", "any"),
+	})
 
 	generated, err := generator.Generate(0)
 	if err != nil {

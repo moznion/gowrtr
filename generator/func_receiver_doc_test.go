@@ -14,3 +14,13 @@ func ExampleFuncReceiver_Generate() {
 	}
 	fmt.Println(generated)
 }
+
+func ExampleFuncReceiver_Generate_withGenericsTypeParameterNames() {
+	funcReceiver := NewFuncReceiverWithGenerics("f", "*Foo", TypeParameterNames{"T", "U"})
+
+	generated, err := funcReceiver.Generate(0)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(generated)
+}

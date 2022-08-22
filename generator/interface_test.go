@@ -44,6 +44,53 @@ func TestShouldGeneratingInterfaceCodeBeSuccessful(t *testing.T) {
 	}
 }
 
+func TestShouldGeneratingInterfaceCodeWithGenericsSuccessfully(t *testing.T) {
+	exp1 := `type myInterface[T string] interface {
+	myFunc1(foo T)
+	myFunc2(foo int64) (string, error)
+}
+`
+	exp2 := `type myInterface[T string, U int64] interface {
+	myFunc1(foo T)
+	myFunc2(foo U) (string, error)
+}
+`
+
+	dataset := map[string]*Interface{
+		exp1: NewInterface(
+			"myInterface",
+			NewFuncSignature("myFunc1").
+				AddParameters(NewFuncParameter("foo", "T")),
+		).AddSignatures(
+			NewFuncSignature("myFunc2").
+				AddParameters(NewFuncParameter("foo", "int64")).
+				AddReturnTypes("string", "error"),
+		).TypeParameters(TypeParameters{
+			NewTypeParameter("T", "string"),
+		}),
+		exp2: NewInterface(
+			"myInterface",
+			NewFuncSignature("myFunc1").
+				AddParameters(NewFuncParameter("foo", "T")),
+		).AddSignatures(
+			NewFuncSignature("myFunc2").
+				AddParameters(NewFuncParameter("foo", "U")).
+				AddReturnTypes("string", "error"),
+		).TypeParameters(
+			TypeParameters{
+				NewTypeParameter("T", "string"),
+				NewTypeParameter("U", "int64"),
+			},
+		),
+	}
+
+	for expected, in := range dataset {
+		got, err := in.Generate(0)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, got)
+	}
+}
+
 func TestShouldGeneratingInterfaceCodeWithSetter(t *testing.T) {
 	generator := NewInterface(
 		"myInterface",
@@ -123,5 +170,18 @@ func TestShouldRaiseErrorWhenFuncSignatureRaisesError(t *testing.T) {
 	_, err := in.Generate(0)
 	assert.Regexp(t, regexp.MustCompile(
 		`^\`+strings.Split(errmsg.FuncNameIsEmptyError("").Error(), " ")[0],
+	), err.Error())
+}
+
+func TestShouldRaiseErrorWhenGenericsTypeParameterIsInvalid(t *testing.T) {
+	_, err := NewInterface(
+		"myInterface",
+		NewFuncSignature("myFunc1").
+			AddParameters(NewFuncParameter("foo", "T")),
+	).TypeParameters(TypeParameters{
+		NewTypeParameter("", "string"),
+	}).Generate(0)
+	assert.Regexp(t, regexp.MustCompile(
+		`^\`+strings.Split(errmsg.TypeParameterParameterIsEmptyErr("").Error(), " ")[0],
 	), err.Error())
 }

@@ -31,6 +31,16 @@ func TestShouldGenerateFuncInvocationCode(t *testing.T) {
 	gen, err = generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "(buz)", gen)
+
+	generator = generator.GenericsTypes(TypeArguments{"string"})
+	gen, err = generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "[string](buz)", gen)
+
+	generator = generator.GenericsTypes(TypeArguments{"string", "int"})
+	gen, err = generator.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "[string, int](buz)", gen)
 }
 
 func TestShouldGenerateFuncInvocationRaisesErrorWhenParameterIsEmpty(t *testing.T) {

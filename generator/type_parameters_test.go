@@ -24,8 +24,20 @@ func TestShouldFailToGenerateTypeParametersWhenParameterIsEmpty(t *testing.T) {
 	assert.Equal(t, errmsg.TypeParameterParameterIsEmptyErrType, errmsg.IdentifyErrs(err))
 }
 
+func TestShouldGenerateUnionTypeParameterSuccessfully(t *testing.T) {
+	stmt, err := TypeParameters{NewTypeParameters("T", []string{"int", "uint"})}.Generate(0)
+	assert.NoError(t, err)
+	assert.Equal(t, "[T int | uint]", stmt)
+}
+
 func TestShouldFailToGenerateTypeParametersWhenTypeIsEmpty(t *testing.T) {
 	_, err := TypeParameters{NewTypeParameter("T", "")}.Generate(0)
+	assert.Error(t, err)
+	assert.Equal(t, errmsg.TypeParameterTypeIsEmptyErrType, errmsg.IdentifyErrs(err))
+}
+
+func TestShouldGenerateUnionTypeParametersWhenTypesSliceIsEmpty(t *testing.T) {
+	_, err := TypeParameters{NewTypeParameters("T", []string{})}.Generate(0)
 	assert.Error(t, err)
 	assert.Equal(t, errmsg.TypeParameterTypeIsEmptyErrType, errmsg.IdentifyErrs(err))
 }
