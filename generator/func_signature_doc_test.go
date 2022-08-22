@@ -13,7 +13,10 @@ func ExampleFuncSignature_Generate() {
 	}).AddParameters(
 		NewFuncParameter("foo", "T"),
 		NewFuncParameter("bar", "int"),
-	).AddReturnTypes("T", "error")
+	).AddReturnTypeStatements(
+		NewFuncReturnTypeWithTypeParam("MyStruct", []string{"T", "U"}),
+		NewFuncReturnType("error"),
+	)
 
 	generated, err := generator.Generate(0)
 	if err != nil {
