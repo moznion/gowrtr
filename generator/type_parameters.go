@@ -9,15 +9,20 @@ import (
 // TypeParameter is a "generic" type parameter. e,g. `T string`; T is a parameter and int is type.
 type TypeParameter struct {
 	parameter string
-	typ       string
+	types     []string
 	caller    string
 }
 
 // NewTypeParameter returns a new TypeParameter.
 func NewTypeParameter(parameter string, typ string) *TypeParameter {
+	return NewTypeParameters(parameter, []string{typ})
+}
+
+// NewTypeParameters returns a new TypeParameter. If the `types` argument has the multiple types, those types become a union type.
+func NewTypeParameters(parameter string, types []string) *TypeParameter {
 	return &TypeParameter{
 		parameter: parameter,
-		typ:       typ,
+		types:     types,
 		caller:    fetchClientCallerLine(),
 	}
 }
@@ -33,11 +38,22 @@ func (tps TypeParameters) Generate(indentLevel int) (string, error) {
 			return "", errmsg.TypeParameterParameterIsEmptyErr(tp.caller)
 		}
 
-		if tp.typ == "" {
+		if len(tp.types) <= 0 {
 			return "", errmsg.TypeParameterTypeIsEmptyErr(tp.caller)
 		}
 
-		typeParameterStmts[i] = tp.parameter + " " + tp.typ
+		isBlank := true
+		for _, typ := range tp.types {
+			if typ != "" {
+				isBlank = false
+				break
+			}
+		}
+		if isBlank {
+			return "", errmsg.TypeParameterTypeIsEmptyErr(tp.caller)
+		}
+
+		typeParameterStmts[i] = tp.parameter + " " + strings.Join(tp.types, " | ")
 	}
 
 	return "[" + strings.Join(typeParameterStmts, ", ") + "]", nil
