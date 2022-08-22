@@ -101,7 +101,7 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 			NewFuncParameter("foo", "T"),
 			NewFuncParameter("bar", "U"),
 		).AddReturnTypeStatements(
-			NewFuncReturnTypeWithTypeParam("MyStruct", []string{"T"}),
+			NewFuncReturnTypeWithGenerics("MyStruct", TypeParameterNames{"T"}),
 			NewFuncReturnType("error"),
 		),
 
@@ -114,7 +114,7 @@ func TestShouldGeneratingFuncSignatureBeSuccessful(t *testing.T) {
 			NewFuncParameter("foo", "T"),
 			NewFuncParameter("bar", "U"),
 		).AddReturnTypeStatements(
-			NewFuncReturnTypeWithTypeParam("MyStruct", []string{"T", "U"}),
+			NewFuncReturnTypeWithGenerics("MyStruct", TypeParameterNames{"T", "U"}),
 			NewFuncReturnType("error"),
 		),
 	}

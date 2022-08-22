@@ -2,7 +2,6 @@ package generator
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
 )
@@ -12,11 +11,15 @@ type FuncReceiver struct {
 	name                       string
 	typ                        string
 	caller                     string
-	genericsTypeParameterNames []string
+	genericsTypeParameterNames TypeParameterNames
 }
 
 // NewFuncReceiver returns a new `FuncReceiver`.
-func NewFuncReceiver(name string, typ string, genericsTypeParameterNames ...string) *FuncReceiver {
+func NewFuncReceiver(name string, typ string) *FuncReceiver {
+	return NewFuncReceiverWithGenerics(name, typ, TypeParameterNames{})
+}
+
+func NewFuncReceiverWithGenerics(name string, typ string, genericsTypeParameterNames TypeParameterNames) *FuncReceiver {
 	return &FuncReceiver{
 		name:                       name,
 		typ:                        typ,
@@ -44,7 +47,7 @@ func (f *FuncReceiver) Generate(indentLevel int) (string, error) {
 
 	genericsTypeParam := ""
 	if len(f.genericsTypeParameterNames) > 0 {
-		genericsTypeParam = "[" + strings.Join(f.genericsTypeParameterNames, ", ") + "]"
+		genericsTypeParam, _ = f.genericsTypeParameterNames.Generate(0)
 	}
 
 	return fmt.Sprintf("(%s %s%s)", name, typ, genericsTypeParam), nil

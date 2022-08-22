@@ -66,3 +66,11 @@ type TypeArguments []string
 func (tas TypeArguments) Generate(indentLevel int) (string, error) {
 	return "[" + strings.Join(tas, ", ") + "]", nil
 }
+
+// TypeParameterNames is an array of type parameter names (e.g. `T`) for go generics.
+type TypeParameterNames []string
+
+// Generate generates the type parameter names as golang code.
+func (tpn TypeParameterNames) Generate(indentLevel int) (string, error) {
+	return "[" + strings.Join(tpn, ", ") + "]", nil
+}

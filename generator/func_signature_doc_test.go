@@ -14,7 +14,7 @@ func ExampleFuncSignature_Generate() {
 		NewFuncParameter("foo", "T"),
 		NewFuncParameter("bar", "int"),
 	).AddReturnTypeStatements(
-		NewFuncReturnTypeWithTypeParam("MyStruct", []string{"T", "U"}),
+		NewFuncReturnTypeWithGenerics("MyStruct", TypeParameterNames{"T", "U"}),
 		NewFuncReturnType("error"),
 	)
 

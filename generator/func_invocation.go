@@ -1,7 +1,6 @@
 package generator
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/moznion/gowrtr/internal/errmsg"
@@ -11,7 +10,7 @@ import (
 type FuncInvocation struct {
 	parameters    []string
 	callers       []string
-	genericsTypes []string
+	genericsTypes TypeArguments
 }
 
 // NewFuncInvocation returns a new `FuncInvocation`.
@@ -19,7 +18,7 @@ func NewFuncInvocation(parameters ...string) *FuncInvocation {
 	return &FuncInvocation{
 		parameters:    parameters,
 		callers:       fetchClientCallerLineAsSlice(len(parameters)),
-		genericsTypes: []string{},
+		genericsTypes: TypeArguments{},
 	}
 }
 
@@ -44,7 +43,7 @@ func (fig *FuncInvocation) Parameters(parameters ...string) *FuncInvocation {
 }
 
 // GenericsTypes makes a new FuncInvocation value that is based on the receiver value with the given generics type names.
-func (fig *FuncInvocation) GenericsTypes(typeNames ...string) *FuncInvocation {
+func (fig *FuncInvocation) GenericsTypes(typeNames TypeArguments) *FuncInvocation {
 	return &FuncInvocation{
 		parameters:    fig.parameters,
 		callers:       fig.callers,
@@ -62,7 +61,7 @@ func (fig *FuncInvocation) Generate(indentLevel int) (string, error) {
 
 	generics := ""
 	if len(fig.genericsTypes) > 0 {
-		generics = fmt.Sprintf("[%s]", strings.Join(fig.genericsTypes, ", "))
+		generics, _ = fig.genericsTypes.Generate(0)
 	}
 
 	return generics + "(" + strings.Join(fig.parameters, ", ") + ")", nil

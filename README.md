@@ -32,8 +32,8 @@ func main() {
 			generator.NewRawStatement(`fmt.Println("hello, world!")`),
 		),
 	).
-	Gofmt("-s").
-	Goimports()
+		Gofmt("-s").
+		Goimports()
 
 	generated, err := generator.Generate(0)
 	if err != nil {
@@ -83,18 +83,18 @@ func main() {
 				TypeParameters(TypeParameters{
 					generator.NewTypeParameter("U", "any"),
 				}).
-				ReturnTypeStatements(generator.NewFuncReturnTypeWithTypeParam("MyStruct", []string{"U"})),
+				ReturnTypeStatements(generator.NewFuncReturnTypeWithGenerics("MyStruct", generator.TypeParameterNames{"U"})),
 		).AddStatements(generator.NewComment("do something")),
 		generator.NewNewline(),
 		generator.NewFunc(
-			generator.NewFuncReceiver("s", "MyStruct", "T"),
+			generator.NewFuncReceiverWithGenerics("s", "MyStruct", generator.TypeParameterNames{"T"}),
 			generator.NewFuncSignature("bar").
-				ReturnTypeStatements(generator.NewFuncReturnTypeWithTypeParam("MyStruct", []string{"T"})),
+				ReturnTypeStatements(generator.NewFuncReturnTypeWithGenerics("MyStruct", generator.TypeParameterNames{"T"})),
 		).AddStatements(generator.NewComment("do something")),
 	).
-	Gofmt("-s").
-	Goimports().
-	Generate(0)
+		Gofmt("-s").
+		Goimports().
+		Generate(0)
 
 	if err != nil {
 		panic(err)
@@ -179,6 +179,7 @@ Error messages example:
   - [x] newline
   - [x] `return`
   - [x] `comment`
+- [x] union types in the generics type parameters
 
 For developers of this library
 --

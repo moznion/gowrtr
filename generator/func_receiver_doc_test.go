@@ -16,7 +16,7 @@ func ExampleFuncReceiver_Generate() {
 }
 
 func ExampleFuncReceiver_Generate_withGenericsTypeParameterNames() {
-	funcReceiver := NewFuncReceiver("f", "*Foo", "T", "U")
+	funcReceiver := NewFuncReceiverWithGenerics("f", "*Foo", TypeParameterNames{"T", "U"})
 
 	generated, err := funcReceiver.Generate(0)
 	if err != nil {

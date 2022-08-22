@@ -32,12 +32,12 @@ func TestShouldGenerateFuncInvocationCode(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "(buz)", gen)
 
-	generator = generator.GenericsTypes("string")
+	generator = generator.GenericsTypes(TypeArguments{"string"})
 	gen, err = generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "[string](buz)", gen)
 
-	generator = generator.GenericsTypes("string", "int")
+	generator = generator.GenericsTypes(TypeArguments{"string", "int"})
 	gen, err = generator.Generate(0)
 	assert.NoError(t, err)
 	assert.Equal(t, "[string, int](buz)", gen)

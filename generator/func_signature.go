@@ -17,7 +17,7 @@ type FuncParameter struct {
 type FuncReturnType struct {
 	name                       string
 	typ                        string
-	genericsTypeParameterNames []string
+	genericsTypeParameterNames TypeParameterNames
 }
 
 // Generate generates a return type of the func as golang code.
@@ -32,7 +32,8 @@ func (frt *FuncReturnType) Generate(indentLevel int) (string, error) {
 	stmt += typ
 
 	if len(frt.genericsTypeParameterNames) > 0 {
-		stmt += "[" + strings.Join(frt.genericsTypeParameterNames, ", ") + "]"
+		paramNamesStmt, _ := frt.genericsTypeParameterNames.Generate(0)
+		stmt += paramNamesStmt
 	}
 
 	return stmt, nil
@@ -60,11 +61,11 @@ func NewFuncParameter(name string, typ string) *FuncParameter {
 // NewFuncReturnType returns a new `FuncReturnType`.
 // `name` is an optional parameter. If this parameter is specified, FuncReturnType generates code as named return type.
 func NewFuncReturnType(typ string, name ...string) *FuncReturnType {
-	return NewFuncReturnTypeWithTypeParam(typ, []string{}, name...)
+	return NewFuncReturnTypeWithGenerics(typ, []string{}, name...)
 }
 
-// NewFuncReturnTypeWithTypeParam ret	urns a new `FuncReturnType` with the generics type parameter name, e.g. `T`.
-func NewFuncReturnTypeWithTypeParam(typ string, genericsTypeParameterNames []string, name ...string) *FuncReturnType {
+// NewFuncReturnTypeWithGenerics ret	urns a new `FuncReturnType` with the generics type parameter name, e.g. `T`.
+func NewFuncReturnTypeWithGenerics(typ string, genericsTypeParameterNames TypeParameterNames, name ...string) *FuncReturnType {
 	n := ""
 	if len(name) > 0 {
 		n = name[0]
