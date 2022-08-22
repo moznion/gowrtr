@@ -3,10 +3,11 @@ package generator
 // CodeBlock represents a code generator for plain code block.
 //
 // example:
-// {
-//   // do something
-//   fmt.Println("blah blah")
-// }
+//
+//	{
+//	  // do something
+//	  fmt.Println("blah blah")
+//	}
 type CodeBlock struct {
 	statements []Statement
 }
